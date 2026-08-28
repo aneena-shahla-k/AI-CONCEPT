@@ -1,0 +1,64 @@
+.company-home-main {
+  position: relative;
+  background-color: #000000;
+  min-height: 100vh;
+}
+
+/* Global Sticky Floating AI Pill */
+.global-audio-pill {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9990;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(9, 9, 11, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #ffffff;
+  padding: 10px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(16, 185, 129, 0.15);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.global-audio-pill:hover {
+  transform: translateY(-2px) scale(1.03);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.9), 0 0 25px rgba(16, 185, 129, 0.3);
+}
+
+.global-audio-bars {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 14px;
+}
+
+.global-audio-bars span {
+  width: 2.5px;
+  background: #10b981;
+  border-radius: 2px;
+  animation: globalAudioWave 1.2s infinite ease-in-out;
+}
+
+.global-audio-bars span:nth-child(1) { height: 6px; animation-delay: 0.1s; }
+.global-audio-bars span:nth-child(2) { height: 14px; animation-delay: 0.3s; }
+.global-audio-bars span:nth-child(3) { height: 10px; animation-delay: 0.15s; }
+.global-audio-bars span:nth-child(4) { height: 8px; animation-delay: 0.4s; }
+
+@keyframes globalAudioWave {
+  0%, 100% { transform: scaleY(0.4); opacity: 0.6; }
+  50% { transform: scaleY(1.2); opacity: 1; }
+}
+
+@media (max-width: 600px) {
+  .global-audio-pill {
+    bottom: 20px;
+    right: 20px;
+    padding: 8px 14px;
+  }
+}

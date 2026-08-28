@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800;900&display=swap');
+
+.pf-simple-section {
+  position: relative;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 100px 0 120px;
+  font-family: 'Space Grotesk', -apple-system, sans-serif;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.pf-simple-container {
+  width: min(1240px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* Header */
+.pf-simple-header {
+  margin-bottom: 36px;
+}
+
+.pf-simple-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: #666666;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.pf-simple-dot {
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.pf-simple-title {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pf-simple-title-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.8px rgba(255, 255, 255, 0.8);
+}
+
+/* 2-Column Grid Layout */
+.pf-simple-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.pf-simple-card {
+  position: relative;
+  height: 380px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+}
+
+.pf-simple-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Image Card Layout */
+.pf-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.pf-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform 0.5s ease;
+}
+
+.pf-simple-card:hover .pf-card-img {
+  transform: scale(1.03);
+}
+
+.pf-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.85) 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 28px;
+}
+
+/* Text Layout (When no image is present) */
+.pf-card-text-layout {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+  box-sizing: border-box;
+}
+
+.pf-center-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(24px, 3.5vw, 42px);
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.12);
+  white-space: nowrap;
+  pointer-events: none;
+  text-transform: uppercase;
+}
+
+.pf-card-bottom-info,
+.pf-card-content {
+  position: relative;
+  z-index: 2;
+}
+
+.pf-card-bottom-info h3,
+.pf-card-content h3 {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.pf-card-bottom-info p,
+.pf-card-content p {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pf-card-arrow {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.pf-simple-card:hover .pf-card-arrow {
+  background: #ffffff;
+  color: #000000;
+  transform: rotate(45deg);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .pf-simple-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pf-simple-card {
+    height: 320px;
+  }
+}
+
+@media (max-width: 600px) {
+  .pf-simple-section {
+    padding: 70px 0;
+  }
+
+  .pf-simple-container {
+    width: calc(100% - 28px);
+  }
+
+  .pf-simple-card {
+    height: 280px;
+  }
+
+  .pf-card-text-layout,
+  .pf-img-overlay {
+    padding: 20px;
+  }
+}

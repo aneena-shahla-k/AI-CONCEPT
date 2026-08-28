@@ -1,13 +1,40 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --ac-ink: #111111;
+  --ac-muted: #6f716f;
+  --ac-line: rgba(17,17,17,.10);
+  --ac-paper: #f5f4ef;
+  --ac-white: #fffefb;
+  --ac-blue: #3f5cff;
+  --ac-orange: #ff7445;
+  --ac-lime: #c9f56d;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ac-paper);
 }
+
+body {
+  margin: 0;
+  font-family: "DM Sans", sans-serif;
+  color: var(--ac-ink);
+  background: var(--ac-paper);
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input, textarea { font: inherit; }
+button { -webkit-tap-highlight-color: transparent; }
+
+::selection {
+  background: var(--ac-ink);
+  color: var(--ac-white);
+}
+
+body, button, a, input, textarea { cursor: default; }
+button, a { cursor: pointer; }
+
+a { color: inherit; }
