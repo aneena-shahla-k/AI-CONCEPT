@@ -2,11 +2,11 @@
 
 .pf-simple-section {
   position: relative;
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #f8f9fb;
+  color: #0b0f19;
   padding: 100px 0 120px;
   font-family: 'Space Grotesk', -apple-system, sans-serif;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
 }
 
 .pf-simple-container {
@@ -26,7 +26,7 @@
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.25em;
-  color: #666666;
+  color: #64748b;
   text-transform: uppercase;
   margin-bottom: 12px;
 }
@@ -34,9 +34,8 @@
 .pf-simple-dot {
   width: 6px;
   height: 6px;
-  background: #ffffff;
+  background: #2563eb;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .pf-simple-title {
@@ -46,11 +45,12 @@
   line-height: 0.95;
   margin: 0;
   text-transform: uppercase;
+  color: #0b0f19;
 }
 
 .pf-simple-title-outline {
   color: transparent;
-  -webkit-text-stroke: 1.8px rgba(255, 255, 255, 0.8);
+  -webkit-text-stroke: 1.8px rgba(11, 15, 25, 0.4);
 }
 
 /* 2-Column Grid Layout */
@@ -65,15 +65,17 @@
   height: 380px;
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
   cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .pf-simple-card:hover {
   transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.3);
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
 }
 
 /* Image Card Layout */
@@ -98,7 +100,7 @@
 .pf-img-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.85) 100%);
+  background: linear-gradient(180deg, rgba(11, 15, 25, 0.05) 0%, rgba(11, 15, 25, 0.85) 100%);
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -115,6 +117,7 @@
   justify-content: flex-end;
   padding: 28px;
   box-sizing: border-box;
+  background: #f1f5f9;
 }
 
 .pf-center-watermark {
@@ -125,7 +128,7 @@
   font-size: clamp(24px, 3.5vw, 42px);
   font-weight: 900;
   letter-spacing: 0.05em;
-  color: rgba(255, 255, 255, 0.12);
+  color: rgba(15, 23, 42, 0.08);
   white-space: nowrap;
   pointer-events: none;
   text-transform: uppercase;
@@ -137,7 +140,6 @@
   z-index: 2;
 }
 
-.pf-card-bottom-info h3,
 .pf-card-content h3 {
   font-size: 24px;
   font-weight: 900;
@@ -147,12 +149,29 @@
   color: #ffffff;
 }
 
-.pf-card-bottom-info p,
 .pf-card-content p {
   font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.pf-card-bottom-info h3 {
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  margin: 0 0 6px;
+  text-transform: uppercase;
+  color: #0b0f19;
+}
+
+.pf-card-bottom-info p {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #64748b;
   margin: 0;
   text-transform: uppercase;
 }
@@ -164,18 +183,18 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
   display: grid;
   place-items: center;
-  color: #ffffff;
-  transition: background 0.2s, transform 0.2s;
+  color: #0b0f19;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .pf-simple-card:hover .pf-card-arrow {
-  background: #ffffff;
-  color: #000000;
+  background: #0b0f19;
+  color: #ffffff;
   transform: rotate(45deg);
 }
 

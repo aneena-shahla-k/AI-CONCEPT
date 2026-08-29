@@ -1,44 +1,36 @@
 import React, { useState } from "react";
+import { Bot } from "lucide-react";
 import CompanyNavbar from "../components/CompanyHome/CompanyNavbar";
 import CompanyHero from "../components/CompanyHome/CompanyHero";
-import SpeedSection from "../components/CompanyHome/SpeedSection";
-import StartProject from "../components/CompanyHome/StartProject";
-import FinalCTA from "../components/CompanyHome/FinalCTA";
 import ServicesSection from "../components/CompanyHome/ServicesSection";
+import SpeedSection from "../components/CompanyHome/SpeedSection";
+import ProjectScoper from "../components/CompanyHome/ProjectScoper";
 import PortfolioSection from "../components/CompanyHome/PortfolioSection";
 import ReviewSection from "../components/CompanyHome/ReviewSection";
-import EstimatorSection from "../components/CompanyHome/EstimatorSection";
+import StartProject from "../components/CompanyHome/StartProject";
+import FinalCTA from "../components/CompanyHome/FinalCTA";
 import AIChatDrawer from "../components/CompanyHome/AIChatDrawer";
+import BookingModal from "../components/CompanyHome/BookingModal";
 import "./CompanyHome.css";
 
 export default function CompanyHome() {
-  const [lockedSpec, setLockedSpec] = useState(null);
   const [isAiDrawerOpen, setIsAiDrawerOpen] = useState(false);
   const [heroSearchQuery, setHeroSearchQuery] = useState("");
-
-  const handleLockSpec = (spec) => {
-    setLockedSpec(spec);
-    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const handleOpenAiWithQuery = (query) => {
-    setHeroSearchQuery(query);
-    setIsAiDrawerOpen(true);
-  };
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
 
   return (
     <main className="company-home-main">
-      <CompanyNavbar />
-      <CompanyHero onSearchTrigger={handleOpenAiWithQuery} />
+      <CompanyNavbar onOpenBooking={() => setIsBookingOpen(true)} />
+      <CompanyHero onSearchTrigger={(q) => { setHeroSearchQuery(q); setIsAiDrawerOpen(true); }} />
       <ServicesSection />
       <SpeedSection />
-      <EstimatorSection onLockSpec={handleLockSpec} />
+      <ProjectScoper />
       <PortfolioSection />
-      <StartProject initialSpec={lockedSpec} />
+      <StartProject />
       <ReviewSection />
-      <FinalCTA />
+      <FinalCTA onOpenBooking={() => setIsBookingOpen(true)} />
 
-      {/* Global Floating AI Trigger with Bot Icon */}
+      {/* Global Persistent Floating AI Trigger */}
       <button
         type="button"
         className="global-audio-pill"
@@ -54,7 +46,7 @@ export default function CompanyHome() {
           <span />
           <span />
         </div>
-        
+        <Bot size={16} />
       </button>
 
       {/* Global AI Chat Drawer */}
@@ -65,6 +57,12 @@ export default function CompanyHome() {
           setHeroSearchQuery("");
         }}
         initialQuery={heroSearchQuery}
+      />
+
+      {/* Global 1:1 Meeting Booking Modal */}
+      <BookingModal
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
       />
     </main>
   );

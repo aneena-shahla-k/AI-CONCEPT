@@ -1,0 +1,230 @@
+.bk-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 15, 25, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 99999;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.bk-modal-container {
+  width: min(520px, 100%);
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+}
+
+.bk-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: #f8f9fb;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.bk-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bk-modal-badge {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #eff6ff;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  color: #2563eb;
+  display: grid;
+  place-items: center;
+}
+
+.bk-modal-title h4 {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0 0 2px;
+  color: #0b0f19;
+}
+
+.bk-modal-title p {
+  font-size: 11px;
+  color: #64748b;
+  margin: 0;
+}
+
+.bk-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: #64748b;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bk-modal-close:hover {
+  background: #0b0f19;
+  color: #ffffff;
+}
+
+.bk-modal-form {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bk-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.bk-input-group label {
+  display: block;
+  font-size: 8.5px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.bk-input-group input,
+.bk-input-group select {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #0b0f19;
+  font-family: inherit;
+  font-size: 12px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bk-input-group input:focus,
+.bk-input-group select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.bk-input-group input::placeholder {
+  color: #94a3b8;
+}
+
+.bk-actions-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.bk-whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #25d366;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.bk-whatsapp-btn:hover {
+  background: #20ba5a;
+  transform: translateY(-2px);
+}
+
+.bk-mail-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #0b0f19;
+  border: none;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.bk-mail-btn:hover {
+  background: #1e293b;
+  transform: translateY(-2px);
+}
+
+.bk-modal-success {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.bk-success-icon {
+  color: #059669;
+  margin-bottom: 14px;
+}
+
+.bk-modal-success h3 {
+  font-size: 20px;
+  font-weight: 900;
+  margin: 0 0 6px;
+  color: #0b0f19;
+}
+
+.bk-modal-success p {
+  font-size: 12.5px;
+  color: #64748b;
+  max-width: 360px;
+  line-height: 1.5;
+  margin: 0 0 20px;
+}
+
+.bk-done-btn {
+  padding: 8px 20px;
+  border-radius: 6px;
+  background: #0b0f19;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 10.5px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.bk-done-btn:hover {
+  background: #1e293b;
+}
+
+@media (max-width: 500px) {
+  .bk-form-grid,
+  .bk-actions-split {
+    grid-template-columns: 1fr;
+  }
+}

@@ -2,24 +2,12 @@
 
 .sp-contact {
   position: relative;
-  background-color: #000000;
-  color: #ffffff;
-  padding: 120px 0 140px;
+  background-color: #f8f9fb;
+  color: #0b0f19;
+  padding: 100px 0 120px;
   font-family: 'Space Grotesk', -apple-system, sans-serif;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
   overflow: hidden;
-}
-
-/* Background Subtle Grid */
-.sp-contact::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
 }
 
 .sp-contact__container {
@@ -41,17 +29,16 @@
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.25em;
-  color: #666666;
+  color: #64748b;
   text-transform: uppercase;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .sp-contact__dot {
   width: 6px;
   height: 6px;
-  background: #ffffff;
+  background: #2563eb;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
 }
 
 .sp-contact__title {
@@ -61,15 +48,16 @@
   line-height: 0.95;
   margin: 0 0 20px;
   text-transform: uppercase;
+  color: #0b0f19;
 }
 
 .sp-contact__title-outline {
   color: transparent;
-  -webkit-text-stroke: 1.8px rgba(255, 255, 255, 0.8);
+  -webkit-text-stroke: 1.8px rgba(11, 15, 25, 0.4);
 }
 
 .sp-contact__lead {
-  color: #8e8e99;
+  color: #64748b;
   font-size: 14.5px;
   line-height: 1.65;
   max-width: 460px;
@@ -78,7 +66,7 @@
 
 /* Facts List */
 .sp-contact__facts {
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
   display: flex;
   flex-direction: column;
 }
@@ -87,7 +75,7 @@
   display: flex;
   align-items: center;
   padding: 16px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
   gap: 20px;
 }
 
@@ -95,24 +83,24 @@
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.15em;
-  color: #ffffff;
+  color: #0b0f19;
   width: 90px;
   flex-shrink: 0;
 }
 
 .sp-fact-desc {
-  font-size: 12px;
-  color: #71717a;
+  font-size: 12.5px;
+  color: #64748b;
   line-height: 1.4;
 }
 
 /* Right Form Panel */
 .sp-contact__panel {
-  background: #09090b;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 20px;
   padding: 36px;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
 }
 
 .sp-form-header {
@@ -126,7 +114,7 @@
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.22em;
-  color: #666666;
+  color: #64748b;
 }
 
 .sp-security-tag {
@@ -136,7 +124,11 @@
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.12em;
-  color: #818cf8;
+  color: #2563eb;
+}
+
+.sp-security-tag svg {
+  color: #2563eb;
 }
 
 /* Types Grid */
@@ -152,42 +144,42 @@
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f8f9fb;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 12px;
   cursor: pointer;
   text-align: left;
-  color: #ffffff;
+  color: #0b0f19;
   font-family: inherit;
   transition: all 0.2s ease;
 }
 
 .sp-type-card:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.18);
+  background: #f1f5f9;
+  border-color: rgba(37, 99, 235, 0.3);
 }
 
 .sp-type-card.is-active {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #ffffff;
+  background: #eff6ff;
+  border-color: #2563eb;
 }
 
 .sp-type-card__icon {
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   display: grid;
   place-items: center;
-  color: #71717a;
+  color: #64748b;
   flex-shrink: 0;
   transition: color 0.2s;
 }
 
 .sp-type-card.is-active .sp-type-card__icon {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
+  color: #2563eb;
+  background: #ffffff;
 }
 
 .sp-type-card__text {
@@ -199,12 +191,13 @@
   font-size: 12px;
   font-weight: 800;
   letter-spacing: -0.01em;
+  color: #0b0f19;
 }
 
 .sp-type-card__text small {
   display: block;
-  font-size: 9px;
-  color: #71717a;
+  font-size: 9.5px;
+  color: #64748b;
   margin-top: 2px;
 }
 
@@ -212,16 +205,16 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid #cbd5e1;
   display: grid;
   place-items: center;
-  color: #000000;
+  color: #ffffff;
   flex-shrink: 0;
 }
 
 .sp-type-card.is-active .sp-type-card__indicator {
-  background: #ffffff;
-  border-color: #ffffff;
+  background: #2563eb;
+  border-color: #2563eb;
 }
 
 /* Fields */
@@ -243,34 +236,34 @@
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.18em;
-  color: #666666;
+  color: #64748b;
   margin-bottom: 8px;
 }
 
 .sp-field input,
 .sp-field textarea {
   width: 100%;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.12);
   border-radius: 10px;
   padding: 12px 14px;
-  color: #ffffff;
+  color: #0b0f19;
   font-family: inherit;
   font-size: 13px;
   outline: none;
   box-sizing: border-box;
-  transition: border-color 0.2s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .sp-field input:focus,
 .sp-field textarea:focus {
-  border-color: rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.05);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
 }
 
 .sp-field input::placeholder,
 .sp-field textarea::placeholder {
-  color: #55555b;
+  color: #94a3b8;
   font-size: 12px;
 }
 
@@ -280,10 +273,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 20px;
+  padding: 14px 22px;
   border-radius: 10px;
-  background: #ffffff;
-  color: #000000;
+  background: #0b0f19;
+  color: #ffffff;
   font-family: inherit;
   font-size: 11px;
   font-weight: 800;
@@ -294,15 +287,19 @@
 }
 
 .sp-submit-btn:hover {
-  background: #e4e4e7;
+  background: #1e293b;
   transform: translateY(-2px);
+}
+
+.sp-submit-btn svg {
+  color: #ffffff;
 }
 
 .sp-form-note {
   display: block;
   margin-top: 14px;
   font-size: 10px;
-  color: #666666;
+  color: #64748b;
   line-height: 1.45;
 }
 
@@ -319,11 +316,10 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #10b981;
-  color: #000000;
+  background: #059669;
+  color: #ffffff;
   display: grid;
   place-items: center;
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
 }
 
 .sp-success-tag {
@@ -332,7 +328,7 @@
   font-size: 9px;
   font-weight: 800;
   letter-spacing: 0.2em;
-  color: #10b981;
+  color: #059669;
 }
 
 .sp-contact__success h3 {
@@ -340,31 +336,30 @@
   font-weight: 900;
   letter-spacing: -0.03em;
   margin: 8px 0;
+  color: #0b0f19;
 }
 
 .sp-contact__success p {
   font-size: 13px;
-  color: #8e8e99;
+  color: #64748b;
   margin: 0 0 24px;
 }
 
 .sp-success-btn {
   padding: 10px 18px;
   border-radius: 8px;
-  background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #ffffff;
+  background: #f8f9fb;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  color: #0b0f19;
   font-family: inherit;
   font-size: 10px;
   font-weight: 800;
   letter-spacing: 0.1em;
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
 }
 
 .sp-success-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #ffffff;
+  background: #f1f5f9;
 }
 
 /* Responsive */

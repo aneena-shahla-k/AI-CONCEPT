@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { ArrowUpRight, Menu, X } from "lucide-react";
+import { ArrowUpRight, Menu, X} from "lucide-react";
 import "./CompanyNavbar.css";
 
 const links = [
   ["#services", "Services"],
   ["#speed", "Speed"],
-  ["#estimator", "Estimator"],
+  ["#scoper", "Scope Builder"],
   ["#work", "Work"],
-  ["#reviews", "Review"],
+  ["#reviews", "Reviews"],
 ];
 
-export default function CompanyNavbar() {
+export default function CompanyNavbar({ onOpenBooking }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -21,10 +21,7 @@ export default function CompanyNavbar() {
   }, []);
 
   const go = (selector) => {
-    const element = document.querySelector(selector);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
     setOpen(false);
   };
 
@@ -37,12 +34,10 @@ export default function CompanyNavbar() {
           className="ac-nav__brand"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         >
-         
           <span className="ac-nav__brand-name">AI CONCEPT</span>
-          <span className="ac-nav__brand-sub">LLC</span>
         </button>
 
-        {/* Desktop Links */}
+        {/* Center Nav Links + 1:1 Call Link */}
         <nav className="ac-nav__links">
           {links.map(([selector, label]) => (
             <button
@@ -54,20 +49,27 @@ export default function CompanyNavbar() {
               {label}
             </button>
           ))}
+          {/* Book 1:1 seamlessly inside nav */}
+          <button
+            type="button"
+            onClick={onOpenBooking}
+            className="ac-nav__link-btn ac-nav__link-highlight"
+          >
+            Book 1:1 Meet
+          </button>
         </nav>
 
-        {/* Right CTA */}
+        {/* Single Right Action */}
         <div className="ac-nav__right">
           <button
             type="button"
             className="ac-nav__cta"
             onClick={() => go("#contact")}
           >
-            <span>Start a project</span>
+            <span>START A PROJECT</span>
             <ArrowUpRight size={14} />
           </button>
 
-          {/* Mobile Hamburger Menu */}
           <button
             type="button"
             className="ac-nav__menu"
@@ -93,6 +95,18 @@ export default function CompanyNavbar() {
               <span className="ac-nav__mobile-text">{label}</span>
             </button>
           ))}
+
+          <button
+            type="button"
+            className="ac-nav__mobile-link"
+            onClick={() => {
+              setOpen(false);
+              onOpenBooking();
+            }}
+          >
+            <span className="ac-nav__mobile-num">06</span>
+            <span className="ac-nav__mobile-text">Book 1:1 Meeting</span>
+          </button>
 
           <button
             type="button"
