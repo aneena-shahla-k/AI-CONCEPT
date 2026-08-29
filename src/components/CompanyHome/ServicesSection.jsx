@@ -9,7 +9,6 @@ import {
   ArrowUpRight, 
   Check,
   X,
-  Sparkles,
   Zap,
   Send,
   CheckCircle2
@@ -189,7 +188,6 @@ ${userInput.notes || "None provided."}
             </h2>
 
             <div className="fc-header-badge">
-              <Sparkles size={13} />
               <span>CLICK TO CONFIGURE & DIRECT CONFIRM</span>
             </div>
           </div>

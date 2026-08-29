@@ -80,7 +80,7 @@ export default function SpeedSection() {
           {/* Left Narrative Card */}
           <div className="sp-narrative-card">
             <div className="sp-narrative-top">
-              <span className="sp-card-index">01 // VELOCITY</span>
+              <span className="sp-card-index">01 VELOCITY</span>
               <div className="sp-pulse-chip">
                 <span />
                 ACTIVE ENGINE
@@ -110,7 +110,7 @@ export default function SpeedSection() {
           {/* Right Giant Time Matrix */}
           <div className="sp-time-card">
             <div className="sp-time-header">
-              <span className="sp-card-index">02 // SPRINT CLUSTER</span>
+              <span className="sp-card-index">02 SPRINT CLUSTER</span>
               <span className="sp-security-tag">
                 <ShieldCheck size={13} /> QA VERIFIED
               </span>

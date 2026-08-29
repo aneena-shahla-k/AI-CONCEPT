@@ -7,7 +7,7 @@ const links = [
   ["#speed", "Speed"],
   ["#scoper", "Scope Builder"],
   ["#work", "Work"],
-  ["#reviews", "Reviews"],
+  // ["#reviews", "Reviews"],
 ];
 
 export default function CompanyNavbar({ onOpenBooking }) {

@@ -9,7 +9,7 @@ import {
   ArrowLeft, 
   Check, 
   Send, 
-  Sparkles
+  
 } from "lucide-react";
 import "./ProjectScoper.css";
 
@@ -415,7 +415,6 @@ ${clientData.customNotes || "None"}
                       {/* Live Scope Badge */}
                       <div className="scoper-summary-banner">
                         <div className="scoper-summary-left">
-                          <Sparkles size={16} />
                           <div>
                             <strong>{selectedPlatform.title} &bull; {selectedIndustry.name}</strong>
                             <span>{selectedFeatures.length} Custom Features Selected</span>

@@ -7,11 +7,12 @@ import SpeedSection from "../components/CompanyHome/SpeedSection";
 import ProjectScoper from "../components/CompanyHome/ProjectScoper";
 import PortfolioSection from "../components/CompanyHome/PortfolioSection";
 import ReviewSection from "../components/CompanyHome/ReviewSection";
-import StartProject from "../components/CompanyHome/StartProject";
+// import StartProject from "../components/CompanyHome/StartProject";
 import FinalCTA from "../components/CompanyHome/FinalCTA";
 import AIChatDrawer from "../components/CompanyHome/AIChatDrawer";
 import BookingModal from "../components/CompanyHome/BookingModal";
 import "./CompanyHome.css";
+import HeroScroll from "../components/CompanyHome/HeroScroll";
 
 export default function CompanyHome() {
   const [isAiDrawerOpen, setIsAiDrawerOpen] = useState(false);
@@ -21,12 +22,13 @@ export default function CompanyHome() {
   return (
     <main className="company-home-main">
       <CompanyNavbar onOpenBooking={() => setIsBookingOpen(true)} />
+        <HeroScroll/>
       <CompanyHero onSearchTrigger={(q) => { setHeroSearchQuery(q); setIsAiDrawerOpen(true); }} />
       <ServicesSection />
       <SpeedSection />
       <ProjectScoper />
       <PortfolioSection />
-      <StartProject />
+      {/* <StartProject /> */}
       <ReviewSection />
       <FinalCTA onOpenBooking={() => setIsBookingOpen(true)} />
 
