@@ -5,9 +5,8 @@ import {
   ShieldCheck, 
   CheckCircle2, 
   Check, 
-  X, 
-  AlertCircle, 
-  Send 
+  Clock, 
+  Activity 
 } from "lucide-react";
 import "./SpeedSection.css";
 
@@ -20,22 +19,26 @@ const sprintSteps = [
 ];
 
 export default function SpeedSection() {
+  const go = (selector) => document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
+
   const sectionRef = useRef(null);
   const [activeStep, setActiveStep] = useState(0);
   const [isIntersecting, setIsIntersecting] = useState(false);
 
-  // Fit Checker Modal States
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [fitStep, setFitStep] = useState(1); // 1: Questions, 2: Result
-  const [fitAnswers, setFitAnswers] = useState({
-    scopeType: "",
-    designReady: "",
-    timeline: "",
+  // Live Sprint Timer State (Counting down a 24-hour sprint window)
+  const [timeLeft, setTimeLeft] = useState({
+    hours: 23,
+    minutes: 42,
+    seconds: 18,
+    ms: 60,
   });
 
+  // Intersection Observer for Pipeline Animation
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => setIsIntersecting(entry.isIntersecting),
+      ([entry]) => {
+        setIsIntersecting(entry.isIntersecting);
+      },
       { threshold: 0.25 }
     );
 
@@ -43,6 +46,7 @@ export default function SpeedSection() {
     return () => observer.disconnect();
   }, []);
 
+  // Pipeline Step Progression
   useEffect(() => {
     if (!isIntersecting) {
       setActiveStep(0);
@@ -64,20 +68,30 @@ export default function SpeedSection() {
     return () => clearInterval(interval);
   }, [isIntersecting]);
 
-  const handleOpenFitModal = () => {
-    setIsModalOpen(true);
-    setFitStep(1);
-    setFitAnswers({ scopeType: "", designReady: "", timeline: "" });
-  };
+  // Live Micro-Countdown Loop
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev.ms > 0) {
+          return { ...prev, ms: prev.ms - 1 };
+        }
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1, ms: 99 };
+        }
+        if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59, ms: 99 };
+        }
+        if (prev.hours > 0) {
+          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59, ms: 99 };
+        }
+        return { hours: 24, minutes: 0, seconds: 0, ms: 0 };
+      });
+    }, 10);
 
-  const handleCloseFitModal = () => {
-    setIsModalOpen(false);
-  };
+    return () => clearInterval(timer);
+  }, []);
 
-  // 24-42 Hours sprint eligibility logic
-  const isSprintFit = 
-    fitAnswers.scopeType === "single_module" || 
-    fitAnswers.scopeType === "landing_page";
+  const format2 = (val) => String(val).padStart(2, "0");
 
   return (
     <section ref={sectionRef} className="sp-section" id="speed">
@@ -123,33 +137,64 @@ export default function SpeedSection() {
                 <Zap size={14} />
                 <span>Rapid delivery applies to defined, pre-approved project modules.</span>
               </div>
-              <button 
-                type="button"
-                className="sp-btn-cta" 
-                onClick={handleOpenFitModal}
-              >
+              <button className="sp-btn-cta" onClick={() => go("#scoper")}>
                 <span>Check project fit</span>
                 <ArrowUpRight size={15} />
               </button>
             </div>
           </div>
 
-          {/* Right Giant Time Matrix */}
-          <div className="sp-time-card">
+          {/* Right Live Sprint Clock & Timer Matrix */}
+          <div className="sp-time-card sp-timer-card">
             <div className="sp-time-header">
-              <span className="sp-card-index">02 SPRINT CLUSTER</span>
+              <div className="sp-timer-title-group">
+                <Clock size={14} className="sp-timer-icon" />
+                <span className="sp-card-index">LIVE SPRINT CLOCK</span>
+              </div>
               <span className="sp-security-tag">
                 <ShieldCheck size={13} /> QA VERIFIED
               </span>
             </div>
 
-            <div className="sp-time-center">
-              <div className="sp-time-giant">
-                <span className="sp-giant-num">24</span>
-                <span className="sp-giant-dash">–</span>
-                <span className="sp-giant-num">42</span>
+            <div className="sp-timer-center">
+              <div className="sp-timer-status-badge">
+                <Activity size={12} className="sp-pulse-icon" />
+                <span>ACTIVE SPRINT WINDOW</span>
               </div>
-              <span className="sp-giant-unit">HOURS RAPID DEPLOYMENT</span>
+
+              {/* Digital Countdown Matrix */}
+              <div className="sp-digital-clock">
+                <div className="sp-time-unit">
+                  <span className="sp-time-val">{format2(timeLeft.hours)}</span>
+                  <span className="sp-time-label">HRS</span>
+                </div>
+                <span className="sp-time-colon">:</span>
+                <div className="sp-time-unit">
+                  <span className="sp-time-val">{format2(timeLeft.minutes)}</span>
+                  <span className="sp-time-label">MIN</span>
+                </div>
+                <span className="sp-time-colon">:</span>
+                <div className="sp-time-unit">
+                  <span className="sp-time-val">{format2(timeLeft.seconds)}</span>
+                  <span className="sp-time-label">SEC</span>
+                </div>
+                <span className="sp-time-colon sp-colon-ms">:</span>
+                <div className="sp-time-unit sp-unit-ms">
+                  <span className="sp-time-val sp-ms-val">{format2(timeLeft.ms)}</span>
+                  <span className="sp-time-label">MS</span>
+                </div>
+              </div>
+
+              {/* Progress Line */}
+              <div className="sp-timer-progress-wrap">
+                <div className="sp-timer-bar">
+                  <div className="sp-timer-fill" />
+                </div>
+                <div className="sp-timer-meta">
+                  <span>TARGET: 24H LIVE DNS</span>
+                  <span className="sp-green-text">ON SCHEDULE</span>
+                </div>
+              </div>
             </div>
 
             <div className="sp-micro-strip">
@@ -228,131 +273,6 @@ export default function SpeedSection() {
         </div>
 
       </div>
-
-      {/* =========================================================
-          CHECK PROJECT FIT POPUP MODAL
-      ========================================================= */}
-      {isModalOpen && (
-        <div className="sp-modal-backdrop" onClick={handleCloseFitModal}>
-          <div className="sp-modal-panel" onClick={(e) => e.stopPropagation()}>
-            <div className="sp-modal-header">
-              <div>
-                <span className="sp-modal-tag">VELOCITY ELIGIBILITY</span>
-                <h3 className="sp-modal-title">PROJECT FIT CHECKER</h3>
-              </div>
-              <button 
-                type="button" 
-                className="sp-modal-close" 
-                onClick={handleCloseFitModal}
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            {fitStep === 1 ? (
-              <div className="sp-modal-body">
-                <p className="sp-modal-desc">
-                  Answer 3 quick questions to verify if your project qualifies for our <strong>24–42 hour rapid sprint engine</strong>.
-                </p>
-
-                {/* Q1: Scope Type */}
-                <div className="sp-quiz-block">
-                  <label>1. WHAT IS THE PRIMARY SCOPE?</label>
-                  <div className="sp-quiz-options">
-                    {[
-                      { id: "landing_page", label: "High-Converting Landing Page" },
-                      { id: "single_module", label: "Single Feature / Component Wireup" },
-                      { id: "full_platform", label: "Full Multi-Role SaaS / Mobile App" }
-                    ].map((opt) => (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        className={`sp-quiz-btn ${fitAnswers.scopeType === opt.id ? "is-selected" : ""}`}
-                        onClick={() => setFitAnswers({ ...fitAnswers, scopeType: opt.id })}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Q2: Design / Specs */}
-                <div className="sp-quiz-block">
-                  <label>2. ARE YOUR ASSETS & COPY READY?</label>
-                  <div className="sp-quiz-options">
-                    {[
-                      { id: "ready", label: "Yes, ready / clear references available" },
-                      { id: "need_help", label: "Need full UX wireframing from scratch" }
-                    ].map((opt) => (
-                      <button
-                        key={opt.id}
-                        type="button"
-                        className={`sp-quiz-btn ${fitAnswers.designReady === opt.id ? "is-selected" : ""}`}
-                        onClick={() => setFitAnswers({ ...fitAnswers, designReady: opt.id })}
-                      >
-                        {opt.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  className="sp-modal-submit-btn"
-                  disabled={!fitAnswers.scopeType || !fitAnswers.designReady}
-                  onClick={() => setFitStep(2)}
-                >
-                  <span>CALCULATE FIT RATING</span>
-                  <ArrowUpRight size={14} />
-                </button>
-              </div>
-            ) : (
-              /* Step 2: Result */
-              <div className="sp-modal-result">
-                {isSprintFit ? (
-                  <div className="sp-result-card is-success">
-                    <CheckCircle2 size={38} className="sp-result-icon" />
-                    <h4>100% SPRINT FIT DETECTED</h4>
-                    <p>
-                      Your requirement perfectly matches our <strong>24–42 Hour Rapid Engine</strong>. We can lock the brief and initiate component assembly immediately.
-                    </p>
-                    <button
-                      type="button"
-                      className="sp-modal-submit-btn"
-                      onClick={() => {
-                        handleCloseFitModal();
-                        document.querySelector("#scoper")?.scrollIntoView({ behavior: "smooth" });
-                      }}
-                    >
-                      <span>LOCK THIS SPRINT IN SCOPER</span>
-                      <Send size={14} />
-                    </button>
-                  </div>
-                ) : (
-                  <div className="sp-result-card is-custom">
-                    <AlertCircle size={38} className="sp-result-icon" />
-                    <h4>ENTERPRISE / FULL-STACK SCOPE</h4>
-                    <p>
-                      Your platform requires multi-module architecture (3–7 business days). Let’s configure your exact feature matrix using our Scope Builder.
-                    </p>
-                    <button
-                      type="button"
-                      className="sp-modal-submit-btn"
-                      onClick={() => {
-                        handleCloseFitModal();
-                        document.querySelector("#scoper")?.scrollIntoView({ behavior: "smooth" });
-                      }}
-                    >
-                      <span>GO TO SCOPE BUILDER</span>
-                      <ArrowUpRight size={14} />
-                    </button>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
     </section>
   );
 }

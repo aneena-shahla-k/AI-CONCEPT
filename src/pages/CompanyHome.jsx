@@ -13,6 +13,10 @@ import AIChatDrawer from "../components/CompanyHome/AIChatDrawer";
 import BookingModal from "../components/CompanyHome/BookingModal";
 import "./CompanyHome.css";
 import HeroScroll from "../components/CompanyHome/HeroScroll";
+import DesignCodeSlider from "../components/CompanyHome/DesignCodeSlider";
+import TerminalSimulator from "../components/CompanyHome/TerminalSimulator";
+import ArchitectureSection from "../components/CompanyHome/ArchitectureSection";
+import FloatingScopeWidget from "../components/CompanyHome/FloatingScopeWidget";
 
 export default function CompanyHome() {
   const [isAiDrawerOpen, setIsAiDrawerOpen] = useState(false);
@@ -32,7 +36,11 @@ export default function CompanyHome() {
       <ServicesSection />
       <SpeedSection />
       <ProjectScoper />
+      <FloatingScopeWidget/>
+      <ArchitectureSection/>
       <PortfolioSection />
+      <DesignCodeSlider/>
+      <TerminalSimulator/>
       {/* <StartProject /> */}
       <ReviewSection />
       <FinalCTA onOpenBooking={() => setIsBookingOpen(true)} />
