@@ -4,647 +4,290 @@ import React, {
   useRef,
   useState,
 } from "react";
-
 import {
+  motion,
   useMotionValueEvent,
   useScroll,
+  useTransform,
 } from "framer-motion";
-
 import "./HeroScroll.css";
+
+/* =========================================================
+   1. EDITABLE TEXT DATA (ഇവിടെ മാത്രം ടെക്സ്റ്റ് മാറ്റുക)
+   start & end: സ്ക്രോൾ റേഞ്ച് (0 = തുടക്കം, 1 = അവസാനം)
+========================================================= */
+const SCROLL_STEPS = [
+  {
+    id: 1,
+    start: 0.0,
+    end: 0.25,
+    title: "Next-Gen AI Experience",
+    desc: "Seamless visual motion crafted for the modern web.",
+    btnText: "Explore More",
+  },
+  {
+    id: 2,
+    start: 0.3,
+    end: 0.55,
+    title: "Realtime Performance",
+    desc: "Zero lag 60fps canvas-driven progressive rendering.",
+    btnText: "Learn Tech",
+  },
+  {
+    id: 3,
+    start: 0.6,
+    end: 0.85,
+    title: "Built For Conversions",
+    desc: "Engage your audience with immersive interactive storytelling.",
+    btnText: "Start Project",
+  },
+];
 
 /* =========================================================
    CONFIG
 ========================================================= */
-
 const DESKTOP_FRAMES = 80;
 const MOBILE_FRAMES = 72;
 
 const DESKTOP_PATH = (index) =>
-  `/global-desk/ezgif-frame-${String(
-    index + 1
-  ).padStart(3, "0")}.webp`;
+  `/global-desk/ezgif-frame-${String(index + 1).padStart(3, "0")}.webp`;
 
 const MOBILE_PATH = (index) =>
-  `/global-phone/ezgif-frame-${String(
-    index + 1
-  ).padStart(3, "0")}.webp`;
+  `/global-phone/ezgif-frame-${String(index + 1).padStart(3, "0")}.webp`;
 
 /* =========================================================
-   COMPONENT
+   TEXT STEP COMPONENT
 ========================================================= */
+const StepItem = ({ step, progress }) => {
+  const mid = (step.start + step.end) / 2;
 
+  // സ്ക്രോൾ ചെയ്യുമ്പോൾ ടെക്സ്റ്റ് സ്മൂത്തായി വന്ന് പോകാനുള്ള അനിമേഷൻ
+  const opacity = useTransform(
+    progress,
+    [step.start, step.start + 0.05, step.end - 0.05, step.end],
+    [0, 1, 1, 0]
+  );
+
+  const y = useTransform(
+    progress,
+    [step.start, mid, step.end],
+    [30, 0, -30]
+  );
+
+  return (
+    <motion.div
+      className="hero-content"
+      style={{
+        opacity,
+        y,
+        pointerEvents: "auto",
+      }}
+    >
+      <h1>{step.title}</h1>
+      {step.desc && <p>{step.desc}</p>}
+      {step.btnText && <button type="button">{step.btnText}</button>}
+    </motion.div>
+  );
+};
+
+/* =========================================================
+   MAIN COMPONENT
+========================================================= */
 const HeroScroll = () => {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
-
-  /*
-    Stores loaded Image objects.
-  */
   const imagesRef = useRef([]);
-
-  /*
-    Keeps track of images currently being loaded.
-  */
   const loadingRef = useRef(new Set());
-
-  /*
-    Currently displayed frame.
-  */
   const currentFrameRef = useRef(0);
-
-  /*
-    requestAnimationFrame reference.
-  */
   const animationFrameRef = useRef(null);
-
-  /*
-    Prevents unnecessary canvas resizing.
-  */
-  const canvasSizeRef = useRef({
-    width: 0,
-    height: 0,
-    dpr: 1,
-  });
+  const canvasSizeRef = useRef({ width: 0, height: 0, dpr: 1 });
 
   const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" &&
-      window.innerWidth <= 768
+    typeof window !== "undefined" && window.innerWidth <= 768
   );
-
   const [loaded, setLoaded] = useState(false);
-
-  /* =========================================================
-     SCROLL
-  ========================================================= */
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  /* =========================================================
-     DEVICE DETECTION
-  ========================================================= */
-
   useEffect(() => {
     const checkDevice = () => {
-      const mobile =
-        window.innerWidth <= 768;
-
-      setIsMobile((previous) => {
-        if (previous === mobile) {
-          return previous;
-        }
-
-        return mobile;
-      });
+      const mobile = window.innerWidth <= 768;
+      setIsMobile((prev) => (prev === mobile ? prev : mobile));
     };
-
     checkDevice();
-
-    window.addEventListener(
-      "resize",
-      checkDevice
-    );
-
-    return () => {
-      window.removeEventListener(
-        "resize",
-        checkDevice
-      );
-    };
+    window.addEventListener("resize", checkDevice);
+    return () => window.removeEventListener("resize", checkDevice);
   }, []);
 
-  /* =========================================================
-     FRAME CONFIG
-  ========================================================= */
-
-  const totalFrames = isMobile
-    ? MOBILE_FRAMES
-    : DESKTOP_FRAMES;
+  const totalFrames = isMobile ? MOBILE_FRAMES : DESKTOP_FRAMES;
 
   const getFramePath = useCallback(
-    (index) => {
-      return isMobile
-        ? MOBILE_PATH(index)
-        : DESKTOP_PATH(index);
-    },
+    (index) => (isMobile ? MOBILE_PATH(index) : DESKTOP_PATH(index)),
     [isMobile]
   );
 
-  /* =========================================================
-     RESIZE CANVAS
-  ========================================================= */
-
   const resizeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
+    if (!canvas) return;
 
-    if (!canvas) {
-      return;
-    }
+    const rect = canvas.getBoundingClientRect();
+    const width = Math.max(1, Math.round(rect.width));
+    const height = Math.max(1, Math.round(rect.height));
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const prev = canvasSizeRef.current;
 
-    const rect =
-      canvas.getBoundingClientRect();
+    if (prev.width === width && prev.height === height && prev.dpr === dpr) return;
 
-    const width = Math.max(
-      1,
-      Math.round(rect.width)
-    );
-
-    const height = Math.max(
-      1,
-      Math.round(rect.height)
-    );
-
-    /*
-      Limit DPR to 2 for better performance.
-    */
-    const dpr = Math.min(
-      window.devicePixelRatio || 1,
-      2
-    );
-
-    const previous =
-      canvasSizeRef.current;
-
-    /*
-      Do not resize if dimensions
-      haven't changed.
-    */
-    if (
-      previous.width === width &&
-      previous.height === height &&
-      previous.dpr === dpr
-    ) {
-      return;
-    }
-
-    canvas.width =
-      width * dpr;
-
-    canvas.height =
-      height * dpr;
-
-    canvasSizeRef.current = {
-      width,
-      height,
-      dpr,
-    };
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvasSizeRef.current = { width, height, dpr };
   }, []);
-
-  /* =========================================================
-     DRAW FRAME
-  ========================================================= */
 
   const drawFrame = useCallback(
     (index) => {
-      const canvas =
-        canvasRef.current;
-
-      const image =
-        imagesRef.current[index];
-
-      if (!canvas || !image) {
-        return;
-      }
-
-      /*
-        Don't draw incomplete images.
-      */
-      if (
-        !image.complete ||
-        image.naturalWidth === 0
-      ) {
-        return;
-      }
+      const canvas = canvasRef.current;
+      const image = imagesRef.current[index];
+      if (!canvas || !image || !image.complete || image.naturalWidth === 0) return;
 
       resizeCanvas();
+      const ctx = canvas.getContext("2d", { alpha: true });
+      if (!ctx) return;
 
-      const ctx =
-        canvas.getContext("2d", {
-          alpha: true,
-        });
+      const { width, height, dpr } = canvasSizeRef.current;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, width, height);
 
-      if (!ctx) {
-        return;
-      }
+      const imageRatio = image.naturalWidth / image.naturalHeight;
+      const canvasRatio = width / height;
+      let drawWidth, drawHeight;
 
-      const {
-        width,
-        height,
-        dpr,
-      } = canvasSizeRef.current;
-
-      /*
-        Reset transform.
-      */
-      ctx.setTransform(
-        dpr,
-        0,
-        0,
-        dpr,
-        0,
-        0
-      );
-
-      /*
-        Clear previous frame.
-      */
-      ctx.clearRect(
-        0,
-        0,
-        width,
-        height
-      );
-
-      /* -----------------------------------------------------
-         COVER IMAGE
-      ----------------------------------------------------- */
-
-      const imageRatio =
-        image.naturalWidth /
-        image.naturalHeight;
-
-      const canvasRatio =
-        width / height;
-
-      let drawWidth;
-      let drawHeight;
-
-      if (
-        imageRatio > canvasRatio
-      ) {
-        /*
-          Image is wider.
-        */
+      if (imageRatio > canvasRatio) {
         drawHeight = height;
-        drawWidth =
-          height * imageRatio;
+        drawWidth = height * imageRatio;
       } else {
-        /*
-          Image is taller.
-        */
         drawWidth = width;
-        drawHeight =
-          width / imageRatio;
+        drawHeight = width / imageRatio;
       }
 
-      const x =
-        (width - drawWidth) / 2;
-
-      const y =
-        (height - drawHeight) / 2;
-
-      ctx.drawImage(
-        image,
-        x,
-        y,
-        drawWidth,
-        drawHeight
-      );
+      const x = (width - drawWidth) / 2;
+      const y = (height - drawHeight) / 2;
+      ctx.drawImage(image, x, y, drawWidth, drawHeight);
     },
     [resizeCanvas]
   );
 
-  /* =========================================================
-     PRELOAD ONE FRAME
-  ========================================================= */
-
   const preloadFrame = useCallback(
     (index) => {
-      if (
-        index < 0 ||
-        index >= totalFrames
-      ) {
-        return;
-      }
-
-      /*
-        Already loaded.
-      */
-      if (imagesRef.current[index]) {
-        return;
-      }
-
-      /*
-        Already loading.
-      */
-      if (
-        loadingRef.current.has(index)
-      ) {
-        return;
-      }
+      if (index < 0 || index >= totalFrames || imagesRef.current[index] || loadingRef.current.has(index)) return;
 
       loadingRef.current.add(index);
-
       const image = new Image();
-
       image.decoding = "async";
-
       image.onload = () => {
-        imagesRef.current[index] =
-          image;
-
-        loadingRef.current.delete(
-          index
-        );
-
-        /*
-          If the frame that just loaded
-          is currently needed, draw it.
-        */
-        if (
-          index ===
-          currentFrameRef.current
-        ) {
-          drawFrame(index);
-        }
+        imagesRef.current[index] = image;
+        loadingRef.current.delete(index);
+        if (index === currentFrameRef.current) drawFrame(index);
       };
-
-      image.onerror = () => {
-        loadingRef.current.delete(
-          index
-        );
-      };
-
-      image.src =
-        getFramePath(index);
+      image.onerror = () => loadingRef.current.delete(index);
+      image.src = getFramePath(index);
     },
-    [
-      getFramePath,
-      totalFrames,
-      drawFrame,
-    ]
+    [getFramePath, totalFrames, drawFrame]
   );
-
-  /* =========================================================
-     PRELOAD RANGE
-  ========================================================= */
 
   const preloadFrames = useCallback(
     (start, count = 8) => {
-      const safeStart =
-        Math.max(0, start);
-
-      const end = Math.min(
-        safeStart + count,
-        totalFrames
-      );
-
-      for (
-        let i = safeStart;
-        i < end;
-        i++
-      ) {
-        preloadFrame(i);
-      }
+      const safeStart = Math.max(0, start);
+      const end = Math.min(safeStart + count, totalFrames);
+      for (let i = safeStart; i < end; i++) preloadFrame(i);
     },
-    [
-      preloadFrame,
-      totalFrames,
-    ]
+    [preloadFrame, totalFrames]
   );
-
-  /* =========================================================
-     INITIAL FRAME LOADING
-  ========================================================= */
 
   useEffect(() => {
     let cancelled = false;
-
-    /*
-      Reset previous frame data.
-    */
     imagesRef.current = [];
-
     loadingRef.current.clear();
-
     currentFrameRef.current = 0;
-
-    /*
-      Reset canvas size cache.
-    */
-    canvasSizeRef.current = {
-      width: 0,
-      height: 0,
-      dpr: 1,
-    };
-
+    canvasSizeRef.current = { width: 0, height: 0, dpr: 1 };
     setLoaded(false);
 
-    const firstImage =
-      new Image();
-
+    const firstImage = new Image();
     firstImage.decoding = "async";
-
     firstImage.onload = () => {
-      if (cancelled) {
-        return;
-      }
-
-      imagesRef.current[0] =
-        firstImage;
-
-      /*
-        Prepare canvas.
-      */
+      if (cancelled) return;
+      imagesRef.current[0] = firstImage;
       resizeCanvas();
-
-      /*
-        Draw first frame immediately.
-      */
       drawFrame(0);
-
       setLoaded(true);
-
-      /*
-        Start progressive loading.
-      */
       preloadFrames(1, 8);
     };
-
     firstImage.onerror = () => {
-      if (cancelled) {
-        return;
-      }
-
+      if (cancelled) return;
       setLoaded(false);
-
-      console.error(
-        "Failed to load hero frame:",
-        getFramePath(0)
-      );
+      console.error("Failed to load hero frame:", getFramePath(0));
     };
-
-    firstImage.src =
-      getFramePath(0);
+    firstImage.src = getFramePath(0);
 
     return () => {
       cancelled = true;
-
       firstImage.onload = null;
       firstImage.onerror = null;
     };
-  }, [
-    getFramePath,
-    resizeCanvas,
-    drawFrame,
-    preloadFrames,
-  ]);
+  }, [getFramePath, resizeCanvas, drawFrame, preloadFrames]);
 
-  /* =========================================================
-     SCROLL → FRAME
-  ========================================================= */
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    if (!loaded) return;
+    const clampedProgress = Math.max(0, Math.min(1, progress));
+    const frame = Math.min(totalFrames - 1, Math.floor(clampedProgress * (totalFrames - 1)));
 
-  useMotionValueEvent(
-    scrollYProgress,
-    "change",
-    (progress) => {
-      if (!loaded) {
-        return;
-      }
+    if (frame === currentFrameRef.current) return;
+    currentFrameRef.current = frame;
+    preloadFrames(frame, 8);
 
-      /*
-        Clamp scroll progress.
-      */
-      const clampedProgress =
-        Math.max(
-          0,
-          Math.min(1, progress)
-        );
-
-      /*
-        Convert scroll progress
-        to frame number.
-      */
-      const frame = Math.min(
-        totalFrames - 1,
-        Math.floor(
-          clampedProgress *
-            (totalFrames - 1)
-        )
-      );
-
-      /*
-        Avoid drawing the same frame.
-      */
-      if (
-        frame ===
-        currentFrameRef.current
-      ) {
-        return;
-      }
-
-      currentFrameRef.current =
-        frame;
-
-      /*
-        Load frames slightly ahead.
-      */
-      preloadFrames(frame, 8);
-
-      /*
-        Cancel previous RAF.
-      */
-      if (
-        animationFrameRef.current
-      ) {
-        cancelAnimationFrame(
-          animationFrameRef.current
-        );
-      }
-
-      /*
-        Draw through RAF.
-      */
-      animationFrameRef.current =
-        requestAnimationFrame(() => {
-          drawFrame(frame);
-        });
-    }
-  );
-
-  /* =========================================================
-     RESIZE
-  ========================================================= */
+    if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
+    animationFrameRef.current = requestAnimationFrame(() => drawFrame(frame));
+  });
 
   useEffect(() => {
     const handleResize = () => {
       resizeCanvas();
-
-      drawFrame(
-        currentFrameRef.current
-      );
+      drawFrame(currentFrameRef.current);
     };
-
-    window.addEventListener(
-      "resize",
-      handleResize
-    );
-
-    return () => {
-      window.removeEventListener(
-        "resize",
-        handleResize
-      );
-    };
-  }, [
-    resizeCanvas,
-    drawFrame,
-  ]);
-
-  /* =========================================================
-     CLEANUP
-  ========================================================= */
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [resizeCanvas, drawFrame]);
 
   useEffect(() => {
-    /*
-      Store the current Set reference so
-      ESLint doesn't complain about the
-      ref changing during cleanup.
-    */
-    const loadingSet =
-      loadingRef.current;
-
+    const loadingSet = loadingRef.current;
     return () => {
-      if (
-        animationFrameRef.current
-      ) {
-        cancelAnimationFrame(
-          animationFrameRef.current
-        );
-      }
-
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
       imagesRef.current = [];
-
       loadingSet.clear();
     };
   }, []);
 
-  /* =========================================================
-     RENDER
-  ========================================================= */
-
   return (
-    <section
-      ref={containerRef}
-      className="hero-scroll"
-    >
+    <section ref={containerRef} className="hero-scroll">
       <div className="hero-sticky">
-
         <canvas
           ref={canvasRef}
-          className={`hero-canvas ${
-            loaded
-              ? "is-loaded"
-              : ""
-          }`}
+          className={`hero-canvas ${loaded ? "is-loaded" : ""}`}
         />
 
-        {!loaded && (
-          <div className="hero-loader" />
-        )}
+        {/* സ്ക്രോൾ അനുസരിച്ച് മാറുന്ന ടെക്സ്റ്റുകൾ */}
+        {loaded &&
+          SCROLL_STEPS.map((step) => (
+            <StepItem
+              key={step.id}
+              step={step}
+              progress={scrollYProgress}
+            />
+          ))}
 
+        {!loaded && <div className="hero-loader" />}
       </div>
     </section>
   );

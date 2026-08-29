@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ArrowUpRight, Zap, ShieldCheck, CheckCircle2, Timer, Check } from "lucide-react";
+import { ArrowUpRight, Zap, ShieldCheck, CheckCircle2, Check } from "lucide-react";
 import "./SpeedSection.css";
 
 const sprintSteps = [
@@ -60,17 +60,14 @@ export default function SpeedSection() {
         <div className="sp-header">
           <div className="sp-eyebrow">
             <span className="sp-dot" />
-            <span>RAPID DELIVERY ENGINE // SYSTEM</span>
+            <span>RAPID DELIVERY SYSTEM</span>
           </div>
 
           <div className="sp-header__row">
             <h2 className="sp-title">
               24–42 <span className="sp-title-outline">HOURS</span>
             </h2>
-            <div className="sp-badge">
-              <Timer size={14} />
-              <span>SCOPED SPRINT WINDOW</span>
-            </div>
+            
           </div>
         </div>
 

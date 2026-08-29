@@ -18,7 +18,6 @@ import "./ServicesSection.css";
 const services = [
   {
     id: "01",
-    tag: "WEB / ARCHITECTURE",
     title: "WEB PLATFORMS",
     icon: Globe,
     deliverables: ["Next.js / React Setup", "Core Web Vitals 99+", "Custom UI Motion & Canvas"],
@@ -33,7 +32,6 @@ const services = [
   },
   {
     id: "02",
-    tag: "MOBILE / OS",
     title: "MOBILE APPS",
     icon: Smartphone,
     deliverables: ["Cross-Platform React Native", "60 FPS Fluid Motion", "Push Notification Architecture"],
@@ -48,7 +46,6 @@ const services = [
   },
   {
     id: "03",
-    tag: "RETAIL / ENGINE",
     title: "E-COMMERCE",
     icon: ShoppingBag,
     deliverables: ["Custom Headless Cart Flows", "Multi-Gateway Instant Payments", "Automated Invoice & WhatsApp Alerts"],
@@ -63,7 +60,6 @@ const services = [
   },
   {
     id: "04",
-    tag: "TIME / MATRIX",
     title: "BOOKING PLATFORMS",
     icon: Calendar,
     deliverables: ["Zero-Conflict Slot Locking", "Live Calendar & WhatsApp Sync", "Custom Doctor/Admin Management"],
@@ -78,7 +74,6 @@ const services = [
   },
   {
     id: "05",
-    tag: "NEURAL / AGENTS",
     title: "AI SOLUTIONS",
     icon: Bot,
     deliverables: ["Private Vector DB Training", "Automated Task Execution Bots", "Contextual PDF/Data Extractors"],
@@ -93,7 +88,6 @@ const services = [
   },
   {
     id: "06",
-    tag: "CORE / SAAS",
     title: "CUSTOM SOFTWARE / ERP",
     icon: Cpu,
     deliverables: ["Multi-Tenant RBAC Security", "High-Concurrency REST/GraphQL APIs", "Custom Accounting & Inventory POS"],
@@ -177,19 +171,10 @@ ${userInput.notes || "None provided."}
         
         {/* Header */}
         <div className="fc-header">
-          <div className="fc-eyebrow">
-            <span className="fc-dot" />
-            <span>WHAT WE BUILD // CAPABILITIES</span>
-          </div>
-
           <div className="fc-header-split">
             <h2 className="fc-main-title">
               OUR <span className="fc-title-outline">SERVICES</span>
             </h2>
-
-            <div className="fc-header-badge">
-              <span>CLICK TO CONFIGURE & DIRECT CONFIRM</span>
-            </div>
           </div>
         </div>
 
@@ -225,7 +210,7 @@ ${userInput.notes || "None provided."}
                   </div>
 
                   <div className="fc-inspect-trigger">
-                    <span>Configure</span>
+                    <span>Book Now</span>
                     <ArrowUpRight size={14} />
                   </div>
                 </div>

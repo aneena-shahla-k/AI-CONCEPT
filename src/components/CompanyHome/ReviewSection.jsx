@@ -41,7 +41,7 @@ export default function ReviewSection() {
         >
           <div className="rev-eyebrow">
             <span className="rev-dot" />
-            <span>CLIENT FEEDBACK // DIRECT INTAKE</span>
+            <span>CLIENT FEEDBACK</span>
           </div>
 
           <h2 className="rev-title">
