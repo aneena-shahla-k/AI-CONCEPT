@@ -474,14 +474,82 @@
   margin: 0 0 24px;
 }
 
-/* Responsive */
+/* Responsive Styles */
 @media (max-width: 860px) {
-  .scoper-platform-grid,
+  .scoper-container {
+    width: calc(100% - 24px);
+  }
+
+  .scoper-content {
+    padding: 20px 14px;
+  }
+
   .scoper-form-row {
     grid-template-columns: 1fr;
   }
 
-  .scoper-content {
-    padding: 24px 18px;
+  /* Core Platform Grid - 2 Cards per row */
+  .scoper-platform-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .scoper-platform-btn {
+    padding: 16px 12px;
+    border-radius: 12px;
+  }
+
+  .scoper-plat-icon {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 10px;
+  }
+
+  .scoper-platform-btn strong {
+    font-size: 12px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .scoper-platform-btn p {
+    font-size: 10.5px;
+    line-height: 1.35;
+  }
+
+  .scoper-plat-check {
+    top: 12px;
+    right: 12px;
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Stepper Tab adjustments for mobile */
+  .scoper-stepper {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .scoper-step-tab {
+    padding: 12px 6px;
+    font-size: 9px;
+    justify-content: center;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .scoper-step-tab span {
+    display: none; /* മൊബൈലിൽ സ്ഥലം ലാഭിക്കാൻ നമ്പറുകൾ ഹൈഡ് ചെയ്യാം */
+  }
+
+  /* Actions Buttons */
+  .scoper-actions {
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .scoper-next-btn,
+  .scoper-submit-btn,
+  .scoper-back-btn {
+    width: 100%;
+    justify-content: center;
   }
 }

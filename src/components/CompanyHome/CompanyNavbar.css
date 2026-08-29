@@ -53,19 +53,6 @@
   cursor: pointer;
 }
 
-.ac-nav__mark {
-  width: 30px;
-  height: 30px;
-  display: grid;
-  place-items: center;
-  border-radius: 9px;
-  background: #111;
-  color: #fff;
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 10px;
-  letter-spacing: -.05em;
-}
-
 .ac-nav__links {
   display: flex;
   gap: 28px;
@@ -117,53 +104,9 @@
   display: none;
 }
 
-/* 1:1 Link & Action Highlights */
 .ac-nav__link-highlight {
   color: #2563eb !important;
   font-weight: 700 !important;
-}
-
-.ac-nav__link-highlight:hover {
-  background: rgba(37, 99, 235, 0.08) !important;
-}
-
-.ac-nav__meeting-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 14px;
-  border-radius: 100px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #f1f5f9;
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.03em;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.ac-nav__meeting-btn:hover {
-  background: rgba(255, 255, 255, 0.09);
-  border-color: #38bdf8;
-  color: #38bdf8;
-}
-
-.ac-nav__mobile-meeting {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  padding: 12px 16px;
-  border-radius: 10px;
-  background: rgba(56, 189, 248, 0.08);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  color: #38bdf8;
-  font-family: inherit;
-  font-size: 12px;
-  font-weight: 800;
-  cursor: pointer;
 }
 
 /* Mobile Breakpoint */
@@ -267,5 +210,171 @@
     font-weight: 700;
     text-transform: uppercase;
     cursor: pointer;
+  }
+}
+
+/* =========================================================
+   PROJECT INTAKE POPUP MODAL
+========================================================= */
+
+.ac-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(11, 15, 25, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.ac-modal-panel {
+  width: min(540px, 100%);
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  padding: 28px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.ac-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.ac-modal-eyebrow {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #2563eb;
+  margin-bottom: 4px;
+}
+
+.ac-modal-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0b0f19;
+}
+
+.ac-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: #f8f9fb;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: #0b0f19;
+  transition: all 0.2s;
+}
+
+.ac-modal-close:hover {
+  background: #0b0f19;
+  color: #ffffff;
+}
+
+.ac-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ac-modal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ac-modal-field label {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.ac-modal-field input,
+.ac-modal-field select,
+.ac-modal-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  font-size: 12.5px;
+  font-family: inherit;
+  color: #0b0f19;
+  outline: none;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.ac-modal-field input:focus,
+.ac-modal-field select:focus,
+.ac-modal-field textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.ac-modal-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 13px 20px;
+  border-radius: 10px;
+  background: #0b0f19;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.ac-modal-submit-btn:hover {
+  background: #2563eb;
+}
+
+.ac-modal-success {
+  text-align: center;
+  padding: 24px 10px;
+}
+
+.ac-modal-success-icon {
+  color: #059669;
+  margin-bottom: 12px;
+}
+
+.ac-modal-success h4 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.ac-modal-success p {
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .ac-modal-row {
+    grid-template-columns: 1fr;
   }
 }

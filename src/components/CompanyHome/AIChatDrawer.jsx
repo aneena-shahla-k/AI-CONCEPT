@@ -11,33 +11,40 @@ import {
   VolumeX,
   RotateCcw,
   Zap,
+  Calendar,
 } from "lucide-react";
 import "./AIChatDrawer.css";
 
 const knowledgeBase = [
   {
+    keywords: ["meeting", "1:1", "call", "schedule", "meet", "consult", "book call", "zoom"],
+    response:
+      "You can schedule a direct 1:1 strategy meeting with our technical lead to discuss your product architecture and timeline.",
+    action: { label: "Book 1:1 Meeting", type: "booking" },
+  },
+  {
     keywords: ["speed", "24", "42", "time", "how fast", "hours", "delivery", "fast"],
     response:
       "Our rapid delivery engine ships scoped, single-focus modules in 24 to 42 hours. Full platforms typically take 3 to 6 business days after brief lock.",
-    action: { label: "View Speed Pipeline", target: "#speed" },
+    action: { label: "View Speed Pipeline", target: "#speed", type: "scroll" },
   },
   {
     keywords: ["service", "build", "offer", "web", "app", "mobile", "ai", "product"],
     response:
       "We engineer Web Platforms (Next.js/React), Native-grade Mobile Apps (iOS/Android), Headless E-Commerce, Custom Booking Engines, and Private AI Assistants.",
-    action: { label: "Explore Services", target: "#services" },
+    action: { label: "Explore Services", target: "#services", type: "scroll" },
   },
   {
     keywords: ["cost", "price", "package", "rate", "estimate", "pricing", "budget"],
     response:
       "We offer Sprint, Growth, and Custom Enterprise tiers. You can use our interactive Scope Estimator above to build and lock your exact feature matrix.",
-    action: { label: "Open Estimator", target: "#estimator" },
+    action: { label: "Open Scope Builder", target: "#scoper", type: "scroll" },
   },
   {
-    keywords: ["hire", "start", "contact", "order", "book", "call", "email", "talk"],
+    keywords: ["hire", "start", "contact", "order", "talk"],
     response:
       "You can submit your brief directly via our Start Project intake form. We review specifications and follow up within 24 hours.",
-    action: { label: "Start a Project", target: "#contact" },
+    action: { label: "Start a Project", target: "#scoper", type: "scroll" },
   },
   {
     keywords: ["location", "calicut", "office", "kerala", "where"],
@@ -47,17 +54,18 @@ const knowledgeBase = [
 ];
 
 const quickChips = [
+  "Book 1:1 Meeting",
   "How fast can you build?",
   "What services do you offer?",
   "How does pricing work?",
   "Start a project",
 ];
 
-export default function AIChatDrawer({ isOpen, onClose, initialQuery }) {
+export default function AIChatDrawer({ isOpen, onClose, initialQuery, onOpenBooking }) {
   const [messages, setMessages] = useState([
     {
       sender: "bot",
-      text: "Hello! I'm the AI Concept Assistant. Ask me anything about our delivery speed, architecture, or project scoping.",
+      text: "Hello! I'm the AI Concept Assistant. Ask me anything about our delivery speed, architecture, or schedule a 1:1 strategy call.",
       time: "Just now",
     },
   ]);
@@ -95,8 +103,8 @@ export default function AIChatDrawer({ isOpen, onClose, initialQuery }) {
       }
     }
     return {
-      text: "I can help with project scope, delivery timelines (24–42H), architecture stack, or initiating your project brief. What would you like to explore?",
-      action: { label: "Go to Project Intake", target: "#contact" },
+      text: "I can help with project scope, delivery timelines (24–42H), architecture stack, or scheduling a 1:1 meeting. What would you like to explore?",
+      action: { label: "Book 1:1 Meeting", type: "booking" },
     };
   };
 
@@ -138,11 +146,22 @@ export default function AIChatDrawer({ isOpen, onClose, initialQuery }) {
     }
   }, [isOpen, initialQuery, handleSend]);
 
-  const handleActionClick = (target) => {
+  const handleActionClick = (action) => {
     onClose();
-    setTimeout(() => {
-      document.querySelector(target)?.scrollIntoView({ behavior: "smooth" });
-    }, 200);
+    if (action.type === "booking") {
+      setTimeout(() => {
+        if (onOpenBooking) onOpenBooking();
+      }, 250);
+    } else if (action.type === "scroll" && action.target) {
+      setTimeout(() => {
+        const el = document.querySelector(action.target);
+        if (el) {
+          const yOffset = -70;
+          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }, 300);
+    }
   };
 
   return (
@@ -223,8 +242,9 @@ export default function AIChatDrawer({ isOpen, onClose, initialQuery }) {
                       <button
                         type="button"
                         className="ai-msg-action-btn"
-                        onClick={() => handleActionClick(m.action.target)}
+                        onClick={() => handleActionClick(m.action)}
                       >
+                        {m.action.type === "booking" && <Calendar size={13} />}
                         <span>{m.action.label}</span>
                         <ArrowUpRight size={13} />
                       </button>
@@ -275,7 +295,7 @@ export default function AIChatDrawer({ isOpen, onClose, initialQuery }) {
             >
               <input
                 type="text"
-                placeholder="Ask about speed, packages, or custom builds..."
+                placeholder="Ask about speed, 1:1 meeting, or custom builds..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
               />

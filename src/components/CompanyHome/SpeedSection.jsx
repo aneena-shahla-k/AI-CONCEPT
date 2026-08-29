@@ -1,5 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
-import { ArrowUpRight, Zap, ShieldCheck, CheckCircle2, Check } from "lucide-react";
+import { 
+  ArrowUpRight, 
+  Zap, 
+  ShieldCheck, 
+  CheckCircle2, 
+  Check, 
+  X, 
+  AlertCircle, 
+  Send 
+} from "lucide-react";
 import "./SpeedSection.css";
 
 const sprintSteps = [
@@ -11,18 +20,22 @@ const sprintSteps = [
 ];
 
 export default function SpeedSection() {
-  const go = (selector) => document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
-
   const sectionRef = useRef(null);
   const [activeStep, setActiveStep] = useState(0);
   const [isIntersecting, setIsIntersecting] = useState(false);
 
-  // Trigger every time the section enters/leaves viewport
+  // Fit Checker Modal States
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [fitStep, setFitStep] = useState(1); // 1: Questions, 2: Result
+  const [fitAnswers, setFitAnswers] = useState({
+    scopeType: "",
+    designReady: "",
+    timeline: "",
+  });
+
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsIntersecting(entry.isIntersecting);
-      },
+      ([entry]) => setIsIntersecting(entry.isIntersecting),
       { threshold: 0.25 }
     );
 
@@ -30,7 +43,6 @@ export default function SpeedSection() {
     return () => observer.disconnect();
   }, []);
 
-  // Runs once on every entry, then stays complete until user leaves section
   useEffect(() => {
     if (!isIntersecting) {
       setActiveStep(0);
@@ -52,6 +64,21 @@ export default function SpeedSection() {
     return () => clearInterval(interval);
   }, [isIntersecting]);
 
+  const handleOpenFitModal = () => {
+    setIsModalOpen(true);
+    setFitStep(1);
+    setFitAnswers({ scopeType: "", designReady: "", timeline: "" });
+  };
+
+  const handleCloseFitModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // 24-42 Hours sprint eligibility logic
+  const isSprintFit = 
+    fitAnswers.scopeType === "single_module" || 
+    fitAnswers.scopeType === "landing_page";
+
   return (
     <section ref={sectionRef} className="sp-section" id="speed">
       <div className="sp-container">
@@ -67,7 +94,6 @@ export default function SpeedSection() {
             <h2 className="sp-title">
               24–42 <span className="sp-title-outline">HOURS</span>
             </h2>
-            
           </div>
         </div>
 
@@ -97,7 +123,11 @@ export default function SpeedSection() {
                 <Zap size={14} />
                 <span>Rapid delivery applies to defined, pre-approved project modules.</span>
               </div>
-              <button className="sp-btn-cta" onClick={() => go("#contact")}>
+              <button 
+                type="button"
+                className="sp-btn-cta" 
+                onClick={handleOpenFitModal}
+              >
                 <span>Check project fit</span>
                 <ArrowUpRight size={15} />
               </button>
@@ -140,7 +170,7 @@ export default function SpeedSection() {
 
         </div>
 
-        {/* Re-triggering Execution Pipeline */}
+        {/* Execution Pipeline */}
         <div className="sp-pipeline-wrap">
           <div className="sp-pipeline-header">
             <span className="sp-pipeline-label">EXECUTION PHASES</span>
@@ -168,7 +198,6 @@ export default function SpeedSection() {
                   className={`sp-step ${isCompleted ? "is-completed" : ""} ${isCurrent ? "is-current" : ""}`}
                 >
                   <div className="sp-step-top">
-                    {/* Circle Badge */}
                     <div className="sp-step-circle">
                       {isCompleted ? (
                         <Check size={14} strokeWidth={3} className="sp-check-pop" />
@@ -177,7 +206,6 @@ export default function SpeedSection() {
                       )}
                     </div>
 
-                    {/* Connecting Line Tracker */}
                     {idx < sprintSteps.length - 1 && (
                       <div className="sp-step-line">
                         <div 
@@ -200,6 +228,131 @@ export default function SpeedSection() {
         </div>
 
       </div>
+
+      {/* =========================================================
+          CHECK PROJECT FIT POPUP MODAL
+      ========================================================= */}
+      {isModalOpen && (
+        <div className="sp-modal-backdrop" onClick={handleCloseFitModal}>
+          <div className="sp-modal-panel" onClick={(e) => e.stopPropagation()}>
+            <div className="sp-modal-header">
+              <div>
+                <span className="sp-modal-tag">VELOCITY ELIGIBILITY</span>
+                <h3 className="sp-modal-title">PROJECT FIT CHECKER</h3>
+              </div>
+              <button 
+                type="button" 
+                className="sp-modal-close" 
+                onClick={handleCloseFitModal}
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {fitStep === 1 ? (
+              <div className="sp-modal-body">
+                <p className="sp-modal-desc">
+                  Answer 3 quick questions to verify if your project qualifies for our <strong>24–42 hour rapid sprint engine</strong>.
+                </p>
+
+                {/* Q1: Scope Type */}
+                <div className="sp-quiz-block">
+                  <label>1. WHAT IS THE PRIMARY SCOPE?</label>
+                  <div className="sp-quiz-options">
+                    {[
+                      { id: "landing_page", label: "High-Converting Landing Page" },
+                      { id: "single_module", label: "Single Feature / Component Wireup" },
+                      { id: "full_platform", label: "Full Multi-Role SaaS / Mobile App" }
+                    ].map((opt) => (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        className={`sp-quiz-btn ${fitAnswers.scopeType === opt.id ? "is-selected" : ""}`}
+                        onClick={() => setFitAnswers({ ...fitAnswers, scopeType: opt.id })}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Q2: Design / Specs */}
+                <div className="sp-quiz-block">
+                  <label>2. ARE YOUR ASSETS & COPY READY?</label>
+                  <div className="sp-quiz-options">
+                    {[
+                      { id: "ready", label: "Yes, ready / clear references available" },
+                      { id: "need_help", label: "Need full UX wireframing from scratch" }
+                    ].map((opt) => (
+                      <button
+                        key={opt.id}
+                        type="button"
+                        className={`sp-quiz-btn ${fitAnswers.designReady === opt.id ? "is-selected" : ""}`}
+                        onClick={() => setFitAnswers({ ...fitAnswers, designReady: opt.id })}
+                      >
+                        {opt.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  className="sp-modal-submit-btn"
+                  disabled={!fitAnswers.scopeType || !fitAnswers.designReady}
+                  onClick={() => setFitStep(2)}
+                >
+                  <span>CALCULATE FIT RATING</span>
+                  <ArrowUpRight size={14} />
+                </button>
+              </div>
+            ) : (
+              /* Step 2: Result */
+              <div className="sp-modal-result">
+                {isSprintFit ? (
+                  <div className="sp-result-card is-success">
+                    <CheckCircle2 size={38} className="sp-result-icon" />
+                    <h4>100% SPRINT FIT DETECTED</h4>
+                    <p>
+                      Your requirement perfectly matches our <strong>24–42 Hour Rapid Engine</strong>. We can lock the brief and initiate component assembly immediately.
+                    </p>
+                    <button
+                      type="button"
+                      className="sp-modal-submit-btn"
+                      onClick={() => {
+                        handleCloseFitModal();
+                        document.querySelector("#scoper")?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                    >
+                      <span>LOCK THIS SPRINT IN SCOPER</span>
+                      <Send size={14} />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="sp-result-card is-custom">
+                    <AlertCircle size={38} className="sp-result-icon" />
+                    <h4>ENTERPRISE / FULL-STACK SCOPE</h4>
+                    <p>
+                      Your platform requires multi-module architecture (3–7 business days). Let’s configure your exact feature matrix using our Scope Builder.
+                    </p>
+                    <button
+                      type="button"
+                      className="sp-modal-submit-btn"
+                      onClick={() => {
+                        handleCloseFitModal();
+                        document.querySelector("#scoper")?.scrollIntoView({ behavior: "smooth" });
+                      }}
+                    >
+                      <span>GO TO SCOPE BUILDER</span>
+                      <ArrowUpRight size={14} />
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </section>
   );
 }

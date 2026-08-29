@@ -22,8 +22,13 @@ export default function CompanyHome() {
   return (
     <main className="company-home-main">
       <CompanyNavbar onOpenBooking={() => setIsBookingOpen(true)} />
-        <HeroScroll/>
-      <CompanyHero onSearchTrigger={(q) => { setHeroSearchQuery(q); setIsAiDrawerOpen(true); }} />
+      <HeroScroll />
+      <CompanyHero
+        onSearchTrigger={(q) => {
+          setHeroSearchQuery(q);
+          setIsAiDrawerOpen(true);
+        }}
+      />
       <ServicesSection />
       <SpeedSection />
       <ProjectScoper />
@@ -59,6 +64,7 @@ export default function CompanyHome() {
           setHeroSearchQuery("");
         }}
         initialQuery={heroSearchQuery}
+        onOpenBooking={() => setIsBookingOpen(true)}
       />
 
       {/* Global 1:1 Meeting Booking Modal */}

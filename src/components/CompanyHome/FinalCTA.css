@@ -302,3 +302,167 @@
     gap: 12px;
   }
 }
+
+/* Append to FinalCTA.css */
+
+.fn-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(11, 15, 25, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.fn-modal-panel {
+  width: min(540px, 100%);
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+  padding: 28px;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.fn-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.fn-modal-eyebrow {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #2563eb;
+  margin-bottom: 4px;
+}
+
+.fn-modal-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 800;
+  color: #0b0f19;
+}
+
+.fn-modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  background: #f8f9fb;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  color: #0b0f19;
+  transition: all 0.2s;
+}
+
+.fn-modal-close:hover {
+  background: #0b0f19;
+  color: #ffffff;
+}
+
+.fn-modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.fn-modal-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.fn-modal-field label {
+  display: block;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.fn-modal-field input,
+.fn-modal-field select,
+.fn-modal-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(15, 23, 42, 0.14);
+  font-size: 12.5px;
+  font-family: inherit;
+  color: #0b0f19;
+  outline: none;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+
+.fn-modal-field input:focus,
+.fn-modal-field select:focus,
+.fn-modal-field textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.fn-modal-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 6px;
+  padding: 13px 20px;
+  border-radius: 10px;
+  background: #0b0f19;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.fn-modal-submit-btn:hover {
+  background: #2563eb;
+}
+
+.fn-modal-success {
+  text-align: center;
+  padding: 24px 10px;
+}
+
+.fn-modal-success-icon {
+  color: #059669;
+  margin-bottom: 12px;
+}
+
+.fn-modal-success h4 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.fn-modal-success p {
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+@media (max-width: 600px) {
+  .fn-modal-row {
+    grid-template-columns: 1fr;
+  }
+}
