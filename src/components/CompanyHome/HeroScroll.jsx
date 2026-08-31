@@ -7,17 +7,13 @@ const SCROLL_STEPS = [
     id: 1,
     start: 0.0,
     end: 0.25,
-    title: "Strategy & Asset Handover",
-    desc: "Rapid wireframe lock & strategic architecture initialization.",
-    btnText: "Explore Capabilities",
+    
   },
   {
     id: 3,
     start: 0.85,
     end: 1.0,
-    title: "Production Ready",
-    desc: "Global DNS launch, Lighthouse 99+ score and high conversion.",
-    btnText: "Lock Your Sprint",
+    
   },
 ];
 
