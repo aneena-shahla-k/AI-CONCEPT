@@ -1,49 +1,62 @@
 import React, { useState } from "react";
-import { Bot } from "lucide-react";
 import CompanyNavbar from "../components/CompanyHome/CompanyNavbar";
-import CompanyHero from "../components/CompanyHome/CompanyHero";
+// import CompanyHero from "../components/CompanyHome/CompanyHero";
 import ServicesSection from "../components/CompanyHome/ServicesSection";
 import SpeedSection from "../components/CompanyHome/SpeedSection";
-import ProjectScoper from "../components/CompanyHome/ProjectScoper";
 import PortfolioSection from "../components/CompanyHome/PortfolioSection";
 import ReviewSection from "../components/CompanyHome/ReviewSection";
-// import StartProject from "../components/CompanyHome/StartProject";
 import FinalCTA from "../components/CompanyHome/FinalCTA";
 import AIChatDrawer from "../components/CompanyHome/AIChatDrawer";
 import BookingModal from "../components/CompanyHome/BookingModal";
 import "./CompanyHome.css";
 import HeroScroll from "../components/CompanyHome/HeroScroll";
-import DesignCodeSlider from "../components/CompanyHome/DesignCodeSlider";
-import TerminalSimulator from "../components/CompanyHome/TerminalSimulator";
-import ArchitectureSection from "../components/CompanyHome/ArchitectureSection";
-import FloatingScopeWidget from "../components/CompanyHome/FloatingScopeWidget";
+import AboutAIConcept from "../components/CompanyHome/AboutAIConcept";
+import { ServiceSection, CtaBanner, ProcessSection, SpeedTiersSection } from "../components/CompanyHome/AgencySections";
+import MarqueeSection from "../components/CompanyHome/MarqueeSection";
 
 export default function CompanyHome() {
   const [isAiDrawerOpen, setIsAiDrawerOpen] = useState(false);
   const [heroSearchQuery, setHeroSearchQuery] = useState("");
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
   return (
     <main className="company-home-main">
-      <CompanyNavbar onOpenBooking={() => setIsBookingOpen(true)} />
+      <CompanyNavbar 
+        onOpenBooking={() => setIsBookingOpen(true)} 
+        isOpenProjectDirectly={isProjectModalOpen}
+        onCloseProjectModal={() => setIsProjectModalOpen(false)}
+      />
       <HeroScroll />
-      <CompanyHero
+      {/* <CompanyHero
         onSearchTrigger={(q) => {
           setHeroSearchQuery(q);
           setIsAiDrawerOpen(true);
         }}
+      /> */}
+      <AboutAIConcept />
+      <MarqueeSection />
+      <ServiceSection />
+      
+      {/* Connected 1:1 Booking modal trigger */}
+      <SpeedTiersSection onOpenBooking={() => setIsBookingOpen(true)} />
+      
+      <ProcessSection />
+      
+      {/* Connected 1:1 Booking modal & Start A Project triggers */}
+      <CtaBanner 
+        onOpenBooking={() => setIsBookingOpen(true)} 
+        onOpenProject={() => setIsProjectModalOpen(true)}
       />
+
       <ServicesSection />
       <SpeedSection />
-      <ProjectScoper />
-      <FloatingScopeWidget/>
-      <ArchitectureSection/>
       <PortfolioSection />
-      <DesignCodeSlider/>
-      <TerminalSimulator/>
-      {/* <StartProject /> */}
       <ReviewSection />
-      <FinalCTA onOpenBooking={() => setIsBookingOpen(true)} />
+      <FinalCTA 
+          onOpenBooking={() => setIsBookingOpen(true)} 
+          onOpenProject={() => setIsProjectModalOpen(true)}
+      />
 
       {/* Global Persistent Floating AI Trigger */}
       <button
@@ -61,7 +74,6 @@ export default function CompanyHome() {
           <span />
           <span />
         </div>
-        <Bot size={16} />
       </button>
 
       {/* Global AI Chat Drawer */}

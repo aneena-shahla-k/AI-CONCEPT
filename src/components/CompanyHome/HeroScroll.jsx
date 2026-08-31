@@ -1,40 +1,24 @@
-import React, {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-
-import {
-  motion,
-  useMotionValueEvent,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-
+import React, {useCallback,useEffect,useRef,useState} from "react";
+import {motion,useMotionValueEvent,useScroll,useTransform} from "framer-motion";
 import "./HeroScroll.css";
-
-/* =========================================================
-   SCROLL TEXT STEPS
-========================================================= */
 
 const SCROLL_STEPS = [
   {
     id: 1,
     start: 0.0,
     end: 0.25,
-    title: "Next-Gen AI Experience",
-    desc: "Seamless visual motion crafted for the modern web.",
-    btnText: "Explore More",
+    // title: "Next-Gen AI Experience",
+    // desc: "Seamless visual motion crafted for the modern web.",
+    // btnText: "Explore More",
   },
 
   {
     id: 3,
     start: 0.85,
     end: 1.0,
-    title: "Built For Conversions",
-    desc: "Engage your audience with immersive interactive storytelling.",
-    btnText: "Start Project",
+    // title: "Built For Conversions",
+    // desc: "Engage your audience with immersive interactive storytelling.",
+    // btnText: "Start Project",
   },
 ];
 
@@ -42,7 +26,7 @@ const SCROLL_STEPS = [
    CONFIG
 ========================================================= */
 
-const TOTAL_FRAMES = 80;
+const TOTAL_FRAMES = 88;
 
 const FRAME_PATH = (index) =>
   `/global-desk/ezgif-frame-${String(
@@ -105,78 +89,40 @@ const StepItem = ({ step, progress }) => {
   );
 };
 
-/* =========================================================
-   MAIN COMPONENT
-========================================================= */
-
 const HeroScroll = () => {
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
-
-  /*
-    Loaded Image objects
-  */
   const imagesRef = useRef([]);
-
-  /*
-    Frames currently being downloaded
-  */
   const loadingRef = useRef(new Set());
-
-  /*
-    Currently displayed frame
-  */
   const currentFrameRef = useRef(0);
-
-  /*
-    requestAnimationFrame reference
-  */
   const animationFrameRef = useRef(null);
-
-  /*
-    Canvas dimensions cache
-  */
   const canvasSizeRef = useRef({
     width: 0,
     height: 0,
     dpr: 1,
   });
-
   const [loaded, setLoaded] = useState(false);
-
-  /* =========================================================
-     SCROLL PROGRESS
-  ========================================================= */
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  /* =========================================================
-     RESIZE CANVAS
-  ========================================================= */
-
   const resizeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
-
     if (!canvas) {
       return;
     }
-
     const rect =
       canvas.getBoundingClientRect();
-
     const width = Math.max(
       1,
       Math.round(rect.width)
     );
-
     const height = Math.max(
       1,
       Math.round(rect.height)
     );
-
     /*
       Maximum DPR = 2.
       Prevents unnecessary high-resolution
@@ -575,10 +521,6 @@ const HeroScroll = () => {
     }
   );
 
-  /* =========================================================
-     WINDOW RESIZE
-  ========================================================= */
-
   useEffect(() => {
     const handleResize = () => {
       resizeCanvas();
@@ -604,16 +546,7 @@ const HeroScroll = () => {
     drawFrame,
   ]);
 
-  /* =========================================================
-     CLEANUP
-  ========================================================= */
-
   useEffect(() => {
-    /*
-      Keep a stable reference for cleanup.
-      This also prevents the ESLint warning
-      about loadingRef.current.
-    */
     const loadingSet =
       loadingRef.current;
 
@@ -632,21 +565,12 @@ const HeroScroll = () => {
     };
   }, []);
 
-  /* =========================================================
-     RENDER
-  ========================================================= */
-
   return (
     <section
       ref={containerRef}
       className="hero-scroll"
     >
       <div className="hero-sticky">
-
-        {/* ===================================================
-            HERO CANVAS
-        =================================================== */}
-
         <canvas
           ref={canvasRef}
           className={`hero-canvas ${
@@ -655,10 +579,6 @@ const HeroScroll = () => {
               : ""
           }`}
         />
-
-        {/* ===================================================
-            SCROLL TEXT
-        =================================================== */}
 
         {loaded &&
           SCROLL_STEPS.map(
@@ -672,11 +592,6 @@ const HeroScroll = () => {
               />
             )
           )}
-
-        {/* ===================================================
-            LOADER
-        =================================================== */}
-
         {!loaded && (
           <div className="hero-loader" />
         )}

@@ -1,17 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700;800;900&family=JetBrains+Mono:wght@700;800&display=swap');
-
+/* Container & Theme Styling */
 .sp-section {
   position: relative;
-  background-color: #f8f9fb;
-  color: #0b0f19;
+  background-color: #0a0a0a;
+  color: #f5f5f5;
   padding: 100px 0 120px;
-  font-family: 'Space Grotesk', -apple-system, sans-serif;
-  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sp-glow-top {
+  position: absolute;
+  top: -80px;
+  left: 30%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.sp-glow-bottom {
+  position: absolute;
+  bottom: -80px;
+  right: 10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  pointer-events: none;
 }
 
 .sp-container {
   width: min(1240px, calc(100% - 48px));
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .sp-header {
@@ -22,19 +44,23 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.25em;
-  color: #64748b;
-  text-transform: uppercase;
-  margin-bottom: 14px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: #22d3ee;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  padding: 6px 14px;
+  border-radius: 50px;
+  margin-bottom: 20px;
 }
 
-.sp-dot {
-  width: 6px;
-  height: 6px;
-  background: #2563eb;
-  border-radius: 50%;
+.sp-cyan-icon {
+  color: #22d3ee;
+}
+
+.sp-amber-icon {
+  color: #f59e0b;
 }
 
 .sp-header__row {
@@ -42,42 +68,60 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .sp-title {
-  font-size: clamp(38px, 5.5vw, 68px);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 0.95;
+  font-size: clamp(32px, 4.5vw, 54px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
   margin: 0;
-  text-transform: uppercase;
-  color: #0b0f19;
+  color: #ffffff;
 }
 
-.sp-title-outline {
-  color: transparent;
-  -webkit-text-stroke: 1.8px rgba(11, 15, 25, 0.4);
+.sp-title-gradient {
+  background: linear-gradient(90deg, #22d3ee, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Workspace */
+.sp-header-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #d4d4d4;
+  background: rgba(23, 23, 23, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 100px;
+  backdrop-filter: blur(8px);
+}
+
+/* Workspace Grid */
 .sp-workspace {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
-  gap: 20px;
+  gap: 24px;
   margin-bottom: 24px;
 }
 
 .sp-narrative-card,
 .sp-time-card {
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(23, 23, 23, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
-  padding: 36px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 320px;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .sp-narrative-top,
@@ -89,9 +133,9 @@
 
 .sp-card-index {
   font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  color: #94a3b8;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: #737373;
 }
 
 .sp-timer-title-group {
@@ -100,53 +144,50 @@
   gap: 8px;
 }
 
-.sp-timer-icon {
-  color: #2563eb;
-}
-
 .sp-security-tag {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 9.5px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #059669;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #34d399;
 }
 
 .sp-pulse-chip {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #059669;
-  background: #ecfdf5;
-  border: 1px solid rgba(5, 150, 105, 0.2);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.1);
+  border: 1px solid rgba(52, 211, 153, 0.25);
   padding: 4px 10px;
   border-radius: 100px;
 }
 
-.sp-pulse-chip span {
-  width: 5px;
-  height: 5px;
-  background: #059669;
+.sp-green-dot {
+  width: 6px;
+  height: 6px;
+  background: #34d399;
   border-radius: 50%;
+  box-shadow: 0 0 6px #34d399;
 }
 
 .sp-narrative-body h3 {
-  font-size: clamp(24px, 2.5vw, 32px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-  margin: 18px 0 10px;
-  color: #0b0f19;
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 18px 0 12px;
+  color: #ffffff;
 }
 
 .sp-narrative-body p {
   font-size: 14px;
-  color: #64748b;
+  color: #a3a3a3;
   line-height: 1.6;
   margin: 0;
 }
@@ -156,49 +197,43 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 20px;
-  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   gap: 20px;
+  flex-wrap: wrap;
 }
 
 .sp-note {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
-  color: #64748b;
+  font-size: 12px;
+  color: #a3a3a3;
   max-width: 320px;
-}
-
-.sp-note svg {
-  color: #0b0f19;
-  flex-shrink: 0;
 }
 
 .sp-btn-cta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 20px;
-  border-radius: 10px;
-  background: #0b0f19;
-  color: #ffffff;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: #22d3ee;
+  color: #0a0a0a;
   font-family: inherit;
-  font-size: 11px;
-  font-weight: 800;
+  font-size: 12px;
+  font-weight: 700;
   border: none;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .sp-btn-cta:hover {
-  background: #1e293b;
+  background: #67e8f9;
   transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(34, 211, 238, 0.3);
 }
 
-/* =========================================================
-   LIVE SPRINT CLOCK & TIMER STYLES
-========================================================= */
-
+/* Digital Clock & Micro-Timer Matrix */
 .sp-timer-center {
   margin: 14px 0 20px;
   display: flex;
@@ -211,13 +246,13 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.15em;
-  color: #2563eb;
-  background: #eff6ff;
-  border: 1px solid rgba(37, 99, 235, 0.2);
-  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #22d3ee;
+  background: rgba(34, 211, 238, 0.08);
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  padding: 4px 12px;
   border-radius: 100px;
   margin-bottom: 14px;
 }
@@ -235,12 +270,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  font-family: 'JetBrains Mono', monospace;
-  background: #f8f9fb;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  gap: 8px;
+  font-family: monospace;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 12px 20px;
+  padding: 14px 20px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -255,33 +290,32 @@
 .sp-time-val {
   font-size: clamp(26px, 3.2vw, 36px);
   font-weight: 800;
-  color: #0b0f19;
+  color: #ffffff;
   line-height: 1;
   letter-spacing: -0.04em;
 }
 
 .sp-ms-val {
-  color: #2563eb;
+  color: #22d3ee;
 }
 
 .sp-time-label {
-  font-size: 8.5px;
-  font-weight: 800;
+  font-size: 9px;
+  font-weight: 700;
   letter-spacing: 0.1em;
-  color: #94a3b8;
+  color: #737373;
   margin-top: 4px;
-  font-family: 'Space Grotesk', sans-serif;
 }
 
 .sp-time-colon {
   font-size: 24px;
   font-weight: 800;
-  color: #cbd5e1;
+  color: #525252;
   margin-bottom: 12px;
 }
 
 .sp-colon-ms {
-  color: #93c5fd;
+  color: rgba(34, 211, 238, 0.5);
 }
 
 /* Progress Wrap */
@@ -293,7 +327,7 @@
 .sp-timer-bar {
   width: 100%;
   height: 5px;
-  background: #f1f5f9;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   overflow: hidden;
 }
@@ -301,7 +335,7 @@
 .sp-timer-fill {
   width: 82%;
   height: 100%;
-  background: linear-gradient(90deg, #2563eb, #059669);
+  background: linear-gradient(90deg, #22d3ee, #34d399);
   border-radius: 10px;
 }
 
@@ -310,14 +344,14 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 8px;
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #64748b;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #737373;
 }
 
 .sp-green-text {
-  color: #059669;
+  color: #34d399;
 }
 
 .sp-micro-strip {
@@ -325,7 +359,7 @@
   flex-wrap: wrap;
   gap: 12px;
   padding-top: 18px;
-  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sp-micro-item {
@@ -333,21 +367,23 @@
   align-items: center;
   gap: 6px;
   font-size: 11px;
-  font-weight: 600;
-  color: #64748b;
+  font-weight: 500;
+  color: #a3a3a3;
 }
 
 .sp-micro-item svg {
-  color: #059669;
+  color: #34d399;
 }
 
-/* Pipeline Section Box */
+/* Execution Pipeline Wrap */
 .sp-pipeline-wrap {
-  background: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  background: rgba(23, 23, 23, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   padding: 32px;
-  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.03);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .sp-pipeline-header {
@@ -355,27 +391,38 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 12px;
 }
 
 .sp-pipeline-label {
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.25em;
-  color: #64748b;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #737373;
 }
 
 .sp-live-status-pill {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #059669;
-  background: #eff6ff;
-  border: 1px solid rgba(37, 99, 235, 0.2);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: #34d399;
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.2);
   padding: 5px 14px;
   border-radius: 100px;
+}
+
+.sp-live-blink {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #34d399;
+  box-shadow: 0 0 8px #34d399;
+  animation: pulseBeat 1.2s infinite;
 }
 
 .sp-pipeline {
@@ -401,38 +448,42 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: #f1f5f9;
-  border: 1.5px solid #cbd5e1;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
   display: grid;
   place-items: center;
   font-size: 11px;
-  font-weight: 800;
-  color: #64748b;
+  font-weight: 700;
+  color: #737373;
   flex-shrink: 0;
+  transition: all 0.3s ease;
 }
 
 .sp-step.is-completed .sp-step-circle {
-  background: #059669;
-  border-color: #059669;
-  color: #ffffff;
+  background: #34d399;
+  border-color: #34d399;
+  color: #0a0a0a;
+  box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
 }
 
 .sp-step.is-current .sp-step-circle {
-  border-color: #0b0f19;
-  color: #0b0f19;
-  background: #ffffff;
+  border-color: #22d3ee;
+  color: #22d3ee;
+  background: rgba(34, 211, 238, 0.1);
+  box-shadow: 0 0 12px rgba(34, 211, 238, 0.3);
 }
 
 .sp-step-line {
   flex: 1;
   height: 2px;
-  background: #e2e8f0;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 2px;
+  overflow: hidden;
 }
 
 .sp-step-line-fill {
   height: 100%;
-  background: #059669;
+  background: #34d399;
 }
 
 .sp-step:last-child .sp-step-line {
@@ -442,18 +493,19 @@
 
 .sp-step h4 {
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 700;
   margin: 0 0 4px;
-  color: #0b0f19;
+  color: #ffffff;
 }
 
 .sp-step p {
-  font-size: 11.5px;
-  color: #64748b;
+  font-size: 12px;
+  color: #a3a3a3;
   line-height: 1.45;
   margin: 0;
 }
 
+/* Responsive Breakpoints */
 @media (max-width: 992px) {
   .sp-workspace {
     grid-template-columns: 1fr;
@@ -473,7 +525,7 @@
   }
   .sp-pipeline {
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    gap: 16px;
   }
   .sp-step-line {
     display: none;

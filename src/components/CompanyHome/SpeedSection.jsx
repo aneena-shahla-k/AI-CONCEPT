@@ -6,7 +6,8 @@ import {
   CheckCircle2, 
   Check, 
   Clock, 
-  Activity 
+  Activity,
+  Sparkles
 } from "lucide-react";
 import "./SpeedSection.css";
 
@@ -95,19 +96,27 @@ export default function SpeedSection() {
 
   return (
     <section ref={sectionRef} className="sp-section" id="speed">
+      {/* Background Ambient Glows */}
+      <div className="sp-glow-top" />
+      <div className="sp-glow-bottom" />
+
       <div className="sp-container">
         
         {/* Top Header */}
         <div className="sp-header">
           <div className="sp-eyebrow">
-            <span className="sp-dot" />
+            <Sparkles size={12} className="sp-cyan-icon" />
             <span>RAPID DELIVERY SYSTEM</span>
           </div>
 
           <div className="sp-header__row">
             <h2 className="sp-title">
-              24–42 <span className="sp-title-outline">HOURS</span>
+              24–42 <span className="sp-title-gradient">HOURS SPRINT</span>
             </h2>
+            <div className="sp-header-chip">
+              <Zap size={13} className="sp-amber-icon" />
+              <span>GUARANTEED WINDOW</span>
+            </div>
           </div>
         </div>
 
@@ -117,15 +126,15 @@ export default function SpeedSection() {
           {/* Left Narrative Card */}
           <div className="sp-narrative-card">
             <div className="sp-narrative-top">
-              <span className="sp-card-index">01 VELOCITY</span>
+              <span className="sp-card-index"> VELOCITY FIRST</span>
               <div className="sp-pulse-chip">
-                <span />
+                <span className="sp-green-dot" />
                 ACTIVE ENGINE
               </div>
             </div>
 
             <div className="sp-narrative-body">
-              <h3>How fast can an idea become a product?</h3>
+              <h3>How fast can an idea become a reality?</h3>
               <p>
                 For clearly scoped deliverables, our sprint pipeline transforms an approved brief 
                 into a live, production-grade digital experience in a focused 24 to 42-hour delivery window.
@@ -134,11 +143,11 @@ export default function SpeedSection() {
 
             <div className="sp-narrative-footer">
               <div className="sp-note">
-                <Zap size={14} />
+                <Zap size={14} className="sp-amber-icon" />
                 <span>Rapid delivery applies to defined, pre-approved project modules.</span>
               </div>
-              <button className="sp-btn-cta" onClick={() => go("#scoper")}>
-                <span>Check project fit</span>
+              <button className="sp-btn-cta" onClick={() => go("#sprint-tiers")}>
+                <span>Check Project Fit</span>
                 <ArrowUpRight size={15} />
               </button>
             </div>
@@ -148,7 +157,7 @@ export default function SpeedSection() {
           <div className="sp-time-card sp-timer-card">
             <div className="sp-time-header">
               <div className="sp-timer-title-group">
-                <Clock size={14} className="sp-timer-icon" />
+                <Clock size={14} className="sp-cyan-icon" />
                 <span className="sp-card-index">LIVE SPRINT CLOCK</span>
               </div>
               <span className="sp-security-tag">

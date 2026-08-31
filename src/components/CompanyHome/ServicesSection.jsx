@@ -7,24 +7,25 @@ import {
   Bot, 
   Cpu, 
   ArrowUpRight, 
-  Check,
-  X,
-  Zap,
-  Send,
-  CheckCircle2
+  Check, 
+  X,  
+  Send, 
+  CheckCircle2,
 } from "lucide-react";
 import "./ServicesSection.css";
 
 const services = [
   {
     id: "01",
+    tag: "High-Performance Web",
     title: "WEB PLATFORMS",
     icon: Globe,
-    deliverables: ["Next.js / React Setup", "Core Web Vitals 99+", "Custom UI Motion & Canvas"],
+    desc: "Speed-tuned interactive web experiences engineered with modern frameworks and smooth canvas animations.",
+    deliverables: ["Next.js / React 19", "Core Web Vitals 99+", "Custom Canvas Motion"],
     tools: ["React 19", "Next.js", "Tailwind CSS", "Framer Motion", "Vercel Edge"],
     selectableFeatures: [
       "Custom Landing Page & Visual Narrative",
-      "Dynamic CMS & Blog Integration",
+      "Dynamic CMS & Headless Blog",
       "Interactive 3D / Canvas Scroll Motion",
       "High-Conversion Lead Capture Funnel",
       "Multi-Language & Global CDN Setup"
@@ -32,9 +33,11 @@ const services = [
   },
   {
     id: "02",
+    tag: "Native Mobile",
     title: "MOBILE APPS",
     icon: Smartphone,
-    deliverables: ["Cross-Platform React Native", "60 FPS Fluid Motion", "Push Notification Architecture"],
+    desc: "Cross-platform mobile applications delivering 60 FPS fluid motion, biometric safety, and instant sync.",
+    deliverables: ["React Native / Expo", "60 FPS Fluid Motion", "Push Architecture"],
     tools: ["React Native", "Expo", "Swift Bridge", "Firebase", "Redux Toolkit"],
     selectableFeatures: [
       "iOS & Android Dual Store Ready",
@@ -46,10 +49,12 @@ const services = [
   },
   {
     id: "03",
-    title: "E-COMMERCE",
+    tag: "Conversion & Retail",
+    title: "E-COMMERCE & SHOPIFY",
     icon: ShoppingBag,
-    deliverables: ["Custom Headless Cart Flows", "Multi-Gateway Instant Payments", "Automated Invoice & WhatsApp Alerts"],
-    tools: ["Shopify Headless", "Stripe API", "Razorpay", "Twilio / WhatsApp API", "Medusa.js"],
+    desc: "Lightning-fast headless stores, sub-second checkout pipelines, and automated multi-channel alert systems.",
+    deliverables: ["Headless Cart Flows", "Multi-Gateway Instant Payments", "Automated WhatsApp Alerts"],
+    tools: ["Shopify Headless", "Stripe API", "Razorpay", "Twilio / WhatsApp", "Medusa.js"],
     selectableFeatures: [
       "Sub-Second Headless Checkout",
       "Payment Gateways (Stripe, UPI, Cards)",
@@ -60,9 +65,11 @@ const services = [
   },
   {
     id: "04",
+    tag: "Real-time Booking",
     title: "BOOKING PLATFORMS",
     icon: Calendar,
-    deliverables: ["Zero-Conflict Slot Locking", "Live Calendar & WhatsApp Sync", "Custom Doctor/Admin Management"],
+    desc: "Conflict-free slot locking engines integrated with live WhatsApp notifications and Google Calendar sync.",
+    deliverables: ["Zero-Conflict Slot Engine", "Live Calendar & WhatsApp Sync", "Practitioner Dashboard"],
     tools: ["Node.js", "WebSockets", "Google Calendar API", "PostgreSQL", "Twilio"],
     selectableFeatures: [
       "Real-Time Conflict-Free Slot Locking",
@@ -74,9 +81,11 @@ const services = [
   },
   {
     id: "05",
+    tag: "Autonomous Intelligence",
     title: "AI SOLUTIONS",
     icon: Bot,
-    deliverables: ["Private Vector DB Training", "Automated Task Execution Bots", "Contextual PDF/Data Extractors"],
+    desc: "Context-aware private AI bots, automated invoice parsers, and intelligent inbound lead qualifiers.",
+    deliverables: ["Private Vector DB Training", "Automated Task Bots", "Contextual Data Extractors"],
     tools: ["OpenAI API", "LangChain", "FastAPI", "Pinecone", "Python Core"],
     selectableFeatures: [
       "Custom AI Bot Trained on Company Docs",
@@ -88,10 +97,12 @@ const services = [
   },
   {
     id: "06",
+    tag: "Enterprise Architecture",
     title: "CUSTOM SOFTWARE / ERP",
     icon: Cpu,
-    deliverables: ["Multi-Tenant RBAC Security", "High-Concurrency REST/GraphQL APIs", "Custom Accounting & Inventory POS"],
-    tools: ["PostgreSQL", "Docker", "Node / Express", "Redis Cache", "AWS Architecture"],
+    desc: "Enterprise multi-role RBAC architecture, cloud database sync, and high-concurrency API integrations.",
+    deliverables: ["Multi-Tenant RBAC Security", "High-Concurrency REST APIs", "Custom Billing & POS"],
+    tools: ["PostgreSQL", "Docker", "Node / Express", "Redis Cache", "AWS Cloud"],
     selectableFeatures: [
       "Multi-Role Staff Access (RBAC)",
       "Multi-Branch Live Inventory & POS Sync",
@@ -107,7 +118,6 @@ export default function ServicesSection() {
   const [selectedFeatures, setSelectedFeatures] = useState([]);
   const [submitted, setSubmitted] = useState(false);
 
-  // User input states
   const [userInput, setUserInput] = useState({
     name: "",
     email: "",
@@ -118,7 +128,7 @@ export default function ServicesSection() {
 
   const handleOpenModal = (service) => {
     setSelectedModalService(service);
-    setSelectedFeatures(service.selectableFeatures.slice(0, 2)); // Pre-check first 2
+    setSelectedFeatures(service.selectableFeatures.slice(0, 2));
     setSubmitted(false);
   };
 
@@ -167,14 +177,25 @@ ${userInput.notes || "None provided."}
 
   return (
     <section className="fc-services" id="services">
+      {/* Background Ambient Glow */}
+      <div className="fc-glow-top-right" />
+      <div className="fc-glow-bottom-left" />
+
       <div className="fc-container">
         
-        {/* Header */}
+        {/* Section Eyebrow & Header */}
         <div className="fc-header">
+          <div className="fc-eyebrow">
+            OUR CAPABILITIES
+          </div>
+          
           <div className="fc-header-split">
             <h2 className="fc-main-title">
-              OUR <span className="fc-title-outline">SERVICES</span>
+              ENGINEERED FOR <span className="fc-title-highlight">SCALE & SPEED.</span>
             </h2>
+            <div className="fc-header-badge">
+              <span>CUSTOM SPECIFICATIONS</span>
+            </div>
           </div>
         </div>
 
@@ -210,7 +231,7 @@ ${userInput.notes || "None provided."}
                   </div>
 
                   <div className="fc-inspect-trigger">
-                    <span>Book Now</span>
+                    <span>Configure</span>
                     <ArrowUpRight size={14} />
                   </div>
                 </div>
@@ -221,7 +242,7 @@ ${userInput.notes || "None provided."}
 
       </div>
 
-      {/* Direct In-Modal Configure & Instant Confirm Drawer/Modal */}
+      {/* Direct In-Modal Drawer */}
       {selectedModalService && (
         <div className="fc-modal-backdrop" onClick={handleCloseModal}>
           <div className="fc-modal-panel" onClick={(e) => e.stopPropagation()}>
@@ -266,14 +287,13 @@ ${userInput.notes || "None provided."}
                 <div className="fc-modal-techs">
                   {selectedModalService.tools.map((tool) => (
                     <span key={tool} className="fc-tech-pill">
-                      <Zap size={10} /> {tool}
                     </span>
                   ))}
                 </div>
 
                 {/* Interactive Feature Checkboxes */}
                 <div className="fc-modal-block">
-                  <span className="fc-block-label">01 SELECT REQUIRED MODULES</span>
+                  <span className="fc-block-label">01 // SELECT REQUIRED MODULES</span>
                   <div className="fc-modal-feature-list">
                     {selectedModalService.selectableFeatures.map((feat) => {
                       const isChecked = selectedFeatures.includes(feat);
@@ -296,7 +316,7 @@ ${userInput.notes || "None provided."}
 
                 {/* Direct User Contact Inputs */}
                 <div className="fc-modal-block">
-                  <span className="fc-block-label">02 YOUR PROJECT DETAILS</span>
+                  <span className="fc-block-label">02 // YOUR PROJECT DETAILS</span>
                   <div className="fc-modal-inputs-grid">
                     <div className="fc-input-wrap">
                       <label>YOUR NAME *</label>
@@ -304,7 +324,7 @@ ${userInput.notes || "None provided."}
                         type="text" 
                         name="name" 
                         required 
-                        placeholder="Full name"
+                        placeholder="Full Name"
                         value={userInput.name}
                         onChange={handleInputChange}
                       />

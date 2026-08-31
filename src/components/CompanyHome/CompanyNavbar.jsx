@@ -5,11 +5,15 @@ import "./CompanyNavbar.css";
 const links = [
   ["#services", "Services"],
   ["#speed", "Speed"],
-  ["#scoper", "Scope Builder"],
   ["#work", "Work"],
+  ["#reviews", "Reviews"],
 ];
 
-export default function CompanyNavbar({ onOpenBooking }) {
+export default function CompanyNavbar({
+  onOpenBooking,
+  isOpenProjectDirectly = false,
+  onCloseProjectModal,
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,6 +34,15 @@ export default function CompanyNavbar({ onOpenBooking }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Sync external open trigger (e.g., from CTA Banner click)
+  useEffect(() => {
+    if (isOpenProjectDirectly) {
+      setIsModalOpen(true);
+      setOpen(false);
+      setSubmitted(false);
+    }
+  }, [isOpenProjectDirectly]);
+
   const go = (selector) => {
     document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
     setOpen(false);
@@ -44,6 +57,9 @@ export default function CompanyNavbar({ onOpenBooking }) {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSubmitted(false);
+    if (onCloseProjectModal) {
+      onCloseProjectModal();
+    }
   };
 
   const handleChange = (e) => {
@@ -88,6 +104,7 @@ ${formData.notes || "None provided"}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <span className="ac-nav__brand-name">AI CONCEPT</span>
+            <span className="ac-nav__brand-badge">LLC</span>
           </button>
 
           {/* Center Nav Links */}
@@ -111,7 +128,7 @@ ${formData.notes || "None provided"}
             </button>
           </nav>
 
-          {/* Single Right Action */}
+          {/* Right Action Buttons */}
           <div className="ac-nav__right">
             <button
               type="button"
@@ -153,11 +170,11 @@ ${formData.notes || "None provided"}
               className="ac-nav__mobile-link"
               onClick={() => {
                 setOpen(false);
-                onOpenBooking();
+                if (onOpenBooking) onOpenBooking();
               }}
             >
-              <span className="ac-nav__mobile-num">06</span>
-              <span className="ac-nav__mobile-text">Book 1:1 Meeting</span>
+              <span className="ac-nav__mobile-num">05</span>
+              <span className="ac-nav__mobile-text ac-nav__link-highlight">Book 1:1 Meeting</span>
             </button>
 
             <button

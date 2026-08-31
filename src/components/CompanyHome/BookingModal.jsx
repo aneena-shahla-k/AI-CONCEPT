@@ -20,9 +20,8 @@ export default function BookingModal({ isOpen, onClose }) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // WhatsApp വഴി നേരിട്ട് ബുക്ക് ചെയ്യാനുള്ള ഫങ്ഷൻ
   const handleWhatsAppBooking = () => {
-    const phoneNumber = "919000000000"; // നിങ്ങളുടെ WhatsApp നമ്പർ ഇവിടെ നൽകുക
+    const phoneNumber = "919000000000"; 
     const message = encodeURIComponent(
       `*NEW 1:1 DISCOVERY CALL REQUEST*\n\n` +
       `*Name:* ${formData.name || "Client"}\n` +
@@ -37,7 +36,6 @@ export default function BookingModal({ isOpen, onClose }) {
     setSubmitted(true);
   };
 
-  // ഇമെയിൽ വഴി അയയ്ക്കാനുള്ള ഫങ്ഷൻ
   const handleEmailBooking = (e) => {
     e.preventDefault();
     const subject = encodeURIComponent(`1:1 Call Request: ${formData.name}`);
@@ -63,15 +61,15 @@ export default function BookingModal({ isOpen, onClose }) {
         <div className="bk-modal-header">
           <div className="bk-modal-title">
             <div className="bk-modal-badge">
-              <Calendar size={14} />
+              <Calendar size={15} />
             </div>
             <div>
               <h4>BOOK 1:1 DISCOVERY CALL</h4>
-              <p>Quick 15-minute architectural & roadmap session</p>
+              <p>Quick 15-minute architectural & sprint roadmap session</p>
             </div>
           </div>
           <button type="button" className="bk-modal-close" onClick={onClose}>
-            <X size={18} />
+            <X size={16} />
           </button>
         </div>
 
@@ -107,7 +105,7 @@ export default function BookingModal({ isOpen, onClose }) {
               </div>
 
               <div className="bk-input-group">
-                <label>WHATSAPP / PHONE NUMBER *</label>
+                <label>WHATSAPP / PHONE *</label>
                 <input
                   type="text"
                   name="contact"
@@ -158,13 +156,24 @@ export default function BookingModal({ isOpen, onClose }) {
               </select>
             </div>
 
+            <div className="bk-input-group">
+              <label>BRIEF AGENDA / NOTES</label>
+              <input
+                type="text"
+                name="notes"
+                placeholder="Mention target goals or requirements..."
+                value={formData.notes}
+                onChange={handleChange}
+              />
+            </div>
+
             <div className="bk-actions-split">
               <button
                 type="button"
                 className="bk-whatsapp-btn"
                 onClick={handleWhatsAppBooking}
               >
-                <MessageSquare size={15} />
+                <MessageSquare size={14} />
                 <span>BOOK VIA WHATSAPP</span>
               </button>
 

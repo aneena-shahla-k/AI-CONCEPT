@@ -1,0 +1,175 @@
+.mq-section {
+  position: relative;
+  background-color: #0a0a0a;
+  padding: 36px 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Side Fade Gradients */
+.mq-section::before,
+.mq-section::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 140px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.mq-section::before {
+  left: 0;
+  background: linear-gradient(to right, #0a0a0a 0%, transparent 100%);
+}
+
+.mq-section::after {
+  right: 0;
+  background: linear-gradient(to left, #0a0a0a 0%, transparent 100%);
+}
+
+.mq-glow-ambient {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 80px;
+  background: radial-gradient(ellipse, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.mq-track-wrap {
+  display: flex;
+  overflow: hidden;
+  user-select: none;
+  width: 100%;
+}
+
+.mq-track {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-shrink: 0;
+  will-change: transform;
+}
+
+/* Animations */
+.mq-track-left {
+  animation: mqScrollLeft 28s linear infinite;
+}
+
+.mq-track-right {
+  animation: mqScrollRight 32s linear infinite;
+}
+
+.mq-section:hover .mq-track {
+  animation-play-state: paused;
+}
+
+@keyframes mqScrollLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes mqScrollRight {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/* Top Statements Track */
+.mq-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  background: rgba(23, 23, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(8px);
+}
+
+.mq-icon-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mq-cyan-icon {
+  color: #22d3ee;
+}
+
+.mq-accent-icon {
+  color: #f59e0b;
+}
+
+.mq-text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.mq-divider {
+  color: rgba(34, 211, 238, 0.4);
+  font-size: 10px;
+  margin-left: 4px;
+}
+
+/* Bottom Tech Stack Track */
+.mq-tech-wrap {
+  opacity: 0.75;
+}
+
+.mq-tech-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mq-tech-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 6px #22d3ee;
+}
+
+.mq-tech-text {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #a3a3a3;
+  font-family: monospace;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .mq-section {
+    padding: 24px 0;
+    gap: 12px;
+  }
+
+  .mq-section::before,
+  .mq-section::after {
+    width: 60px;
+  }
+
+  .mq-text {
+    font-size: 10px;
+  }
+}
