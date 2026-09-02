@@ -110,8 +110,8 @@ const CoreConcept = () => {
         <div className="concept-header">
           <span className="concept-tag">OUR CORE CONCEPT</span>
           <h2 className="concept-title">
-            Your Concept.<br />
-            Our Blueprint.<br />
+            Your Concept
+            Our Blueprint,<br />
             <span className="highlight-text">Your Execution.</span>
           </h2>
         </div>

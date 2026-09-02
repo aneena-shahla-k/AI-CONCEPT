@@ -11,12 +11,12 @@ const solutionItems = [
   { label: "ERP Solutions", slug: "erp-solutions" },
   { label: "Custom Software", slug: "custom-software" },
   { label: "AI Solutions", slug: "ai-solutions" },
-  { label: "Automation", slug: "ai-solutions" },
 ];
 
 export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage = "home" }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
   
   const navRef = useRef(null);
   const navLinksRef = useRef(null);
@@ -25,10 +25,12 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
   const lastScrollY = useRef(0);
   const closeTimeoutRef = useRef(null);
 
-  // 1. GSAP Smart Auto-Hide on Scroll
+  // GSAP Auto-Hide on Scroll (Desktop only)
   useEffect(() => {
     const handleScroll = () => {
       const currentScroll = window.scrollY;
+      if (mobileOpen) return; // Don't hide navbar if mobile menu is open
+
       if (currentScroll > 50 && currentScroll > lastScrollY.current) {
         gsap.to(navRef.current, { y: -100, duration: 0.35, ease: "power2.out" });
       } else {
@@ -39,9 +41,9 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [mobileOpen]);
 
-  // 2. Sliding Pill Indicator
+  // Desktop Hover Pill
   const handleItemHover = (e) => {
     const link = e.currentTarget;
     if (!navLinksRef.current || !pillRef.current) return;
@@ -63,26 +65,21 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
     }
   };
 
-  // 3. Robust Dropdown Hover Handlers (Prevents menu disappearing)
   const handleDropdownEnter = () => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-    }
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
     setDropdownOpen(true);
   };
 
   const handleDropdownLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setDropdownOpen(false);
-    }, 280); // 280ms cushion delay so moving to menu doesn't close it
+    }, 280);
   };
 
-  // 4. Click Handler for Solutions and Pages
-  const handleItemSelect = (e, page, slug = null) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleItemSelect = (page, slug = null) => {
     setMobileOpen(false);
     setDropdownOpen(false);
+    setMobileSolutionsOpen(false);
 
     if (onNavigate) {
       onNavigate(page, slug);
@@ -97,13 +94,13 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
         <button
           type="button"
           className="ac-nav__brand"
-          onClick={(e) => handleItemSelect(e, "home")}
+          onClick={() => handleItemSelect("home")}
         >
           <span className="ac-nav__brand-name">AI CONCEPT</span>
           <span className="ac-nav__brand-badge">LLC</span>
         </button>
 
-        {/* Desktop Navigation */}
+        {/* Desktop Navigation Links */}
         <nav 
           ref={navLinksRef} 
           className="ac-nav__links"
@@ -115,7 +112,7 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
             type="button"
             className={`ac-nav__link-btn ${currentPage === "home" ? "active-link" : ""}`}
             onMouseEnter={handleItemHover}
-            onClick={(e) => handleItemSelect(e, "home")}
+            onClick={() => handleItemSelect("home")}
           >
             Home
           </button>
@@ -124,12 +121,12 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
             type="button"
             className={`ac-nav__link-btn ${currentPage === "growth-plans" ? "active-link" : ""}`}
             onMouseEnter={handleItemHover}
-            onClick={(e) => handleItemSelect(e, "growth-plans")}
+            onClick={() => handleItemSelect("growth-plans")}
           >
             Growth Plans
           </button>
 
-          {/* Solutions Dropdown Wrapper with Safe Hover */}
+          {/* Solutions Dropdown */}
           <div
             className="ac-nav__dropdown-wrap"
             onMouseEnter={handleDropdownEnter}
@@ -157,8 +154,7 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
                       key={idx}
                       type="button"
                       className="ac-dropdown-item"
-                      onMouseDown={(e) => handleItemSelect(e, "solution-detail", item.slug)}
-                      onClick={(e) => handleItemSelect(e, "solution-detail", item.slug)}
+                      onClick={() => handleItemSelect("solution-detail", item.slug)}
                     >
                       <span className="ac-dropdown-dot" />
                       <span>{item.label}</span>
@@ -173,7 +169,7 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
             type="button"
             className={`ac-nav__link-btn ${currentPage === "ai" ? "active-link" : ""}`}
             onMouseEnter={handleItemHover}
-            onClick={(e) => handleItemSelect(e, "ai")}
+            onClick={() => handleItemSelect("ai")}
           >
             AI
           </button>
@@ -182,7 +178,7 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
             type="button"
             className={`ac-nav__link-btn ${currentPage === "industries" ? "active-link" : ""}`}
             onMouseEnter={handleItemHover}
-            onClick={(e) => handleItemSelect(e, "industries")}
+            onClick={() => handleItemSelect("industries")}
           >
             Industries
           </button>
@@ -191,7 +187,7 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
             type="button"
             className={`ac-nav__link-btn ${currentPage === "work" ? "active-link" : ""}`}
             onMouseEnter={handleItemHover}
-            onClick={(e) => handleItemSelect(e, "work")}
+            onClick={() => handleItemSelect("work")}
           >
             Our Work
           </button>
@@ -200,7 +196,7 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
             type="button"
             className={`ac-nav__link-btn ${currentPage === "about" ? "active-link" : ""}`}
             onMouseEnter={handleItemHover}
-            onClick={(e) => handleItemSelect(e, "about")}
+            onClick={() => handleItemSelect("about")}
           >
             About
           </button>
@@ -209,18 +205,18 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
             type="button"
             className={`ac-nav__link-btn ${currentPage === "contact" ? "active-link" : ""}`}
             onMouseEnter={handleItemHover}
-            onClick={(e) => handleItemSelect(e, "contact")}
+            onClick={() => handleItemSelect("contact")}
           >
             Contact
           </button>
         </nav>
 
-        {/* Right CTA */}
+        {/* Right CTA (Desktop) & Mobile Toggle */}
         <div className="ac-nav__right">
           <button
             ref={ctaRef}
             type="button"
-            className="ac-nav__cta"
+            className="ac-nav__cta desktop-only-cta"
             onClick={onOpenProject}
           >
             <span>START A PROJECT</span>
@@ -229,13 +225,120 @@ export default function CompanyNavbar({ onOpenProject, onNavigate, currentPage =
 
           <button
             type="button"
-            className="ac-nav__menu"
+            className="ac-nav__menu-btn"
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
           >
-            {mobileOpen ? <X size={18} /> : <Menu size={18} />}
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </div>
+
+      {/* Mobile Drawer Dropdown Menu */}
+      {mobileOpen && (
+        <div className="ac-mobile-drawer">
+          <div className="ac-mobile-links">
+            <button
+              type="button"
+              className={`ac-mobile-link ${currentPage === "home" ? "active" : ""}`}
+              onClick={() => handleItemSelect("home")}
+            >
+              Home
+            </button>
+
+            <button
+              type="button"
+              className={`ac-mobile-link ${currentPage === "growth-plans" ? "active" : ""}`}
+              onClick={() => handleItemSelect("growth-plans")}
+            >
+              Growth Plans
+            </button>
+
+            {/* Mobile Solutions Accordion */}
+            <div className="ac-mobile-accordion">
+              <button
+                type="button"
+                className="ac-mobile-link ac-mobile-accordion-toggle"
+                onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
+              >
+                <span>Solutions</span>
+                <ChevronDown size={14} className={mobileSolutionsOpen ? "is-rotated" : ""} />
+              </button>
+
+              {mobileSolutionsOpen && (
+                <div className="ac-mobile-subitems">
+                  {solutionItems.map((item, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      className="ac-mobile-sublink"
+                      onClick={() => handleItemSelect("solution-detail", item.slug)}
+                    >
+                      <span className="ac-dropdown-dot" />
+                      <span>{item.label}</span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <button
+              type="button"
+              className={`ac-mobile-link ${currentPage === "ai" ? "active" : ""}`}
+              onClick={() => handleItemSelect("ai")}
+            >
+              AI
+            </button>
+
+            <button
+              type="button"
+              className={`ac-mobile-link ${currentPage === "industries" ? "active" : ""}`}
+              onClick={() => handleItemSelect("industries")}
+            >
+              Industries
+            </button>
+
+            <button
+              type="button"
+              className={`ac-mobile-link ${currentPage === "work" ? "active" : ""}`}
+              onClick={() => handleItemSelect("work")}
+            >
+              Our Work
+            </button>
+
+            <button
+              type="button"
+              className={`ac-mobile-link ${currentPage === "about" ? "active" : ""}`}
+              onClick={() => handleItemSelect("about")}
+            >
+              About
+            </button>
+
+            <button
+              type="button"
+              className={`ac-mobile-link ${currentPage === "contact" ? "active" : ""}`}
+              onClick={() => handleItemSelect("contact")}
+            >
+              Contact
+            </button>
+          </div>
+
+          {/* START A PROJECT inside Mobile Drawer */}
+          <div className="ac-mobile-footer">
+            <button
+              type="button"
+              className="ac-mobile-cta-btn"
+              onClick={() => {
+                setMobileOpen(false);
+                if (onOpenProject) onOpenProject();
+              }}
+            >
+              <span>START A PROJECT</span>
+              <ArrowUpRight size={15} />
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 }

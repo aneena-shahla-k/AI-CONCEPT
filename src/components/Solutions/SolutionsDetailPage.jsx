@@ -6,7 +6,7 @@ export const solutionsData = {
   "website-development": {
     title: "Websites & Digital Platforms",
     badge: "FRONTEND & WEB SYSTEMS",
-    tagline: "Ultra-Fast, Canvas-Driven Web Experiences Engineered for High Conversion",
+    tagline: "Ultra-Fast, Canvas-Driven Web Experiences for High Conversion",
     lead: "We build decoupled, headless web applications and corporate hubs with modern frameworks, sub-second load times, and custom back-office CMS architectures.",
     timeline: "24h - 48h Sprint Available",
     deliverables: [

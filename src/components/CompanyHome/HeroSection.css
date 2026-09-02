@@ -1,172 +1,210 @@
 .hero-container {
   position: relative;
+  width: 100%;
+  height: 100vh;
   min-height: 100vh;
-  background-color: #020617;
-  color: #ffffff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 80px 24px 40px;
-  box-sizing: border-box;
+  background-color: #030712;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: system-ui, -apple-system, sans-serif;
+  color: #ffffff;
 }
 
-/* Background Animated Line */
-.gps-line-bg {
+/* Full Screen Background Video */
+.hero-bg-video {
   position: absolute;
   top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Base Vignette Overlay */
+.hero-video-overlay {
+  position: absolute;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #06b6d4, transparent);
-  opacity: 0.2;
-  animation: pulse 2s infinite ease-in-out;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(3, 7, 18, 0.45) 0%,
+    rgba(3, 7, 18, 0.15) 50%,
+    #030712 100%
+  );
+  z-index: 2;
+  transition: background 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+              backdrop-filter 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.1; }
-  50% { opacity: 0.4; }
+/* വീഡിയോ അവസാനിക്കുമ്പോൾ ബാക്ക്ഗ്രൗണ്ട് സാവധാനം ഇരുണ്ട് ബ്ലർ ആകുന്നു */
+.hero-video-overlay.is-dimmed {
+  background: radial-gradient(
+    circle at center,
+    rgba(3, 7, 18, 0.82) 0%,
+    rgba(3, 7, 18, 0.95) 100%
+  );
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
-/* Timer Badge */
-.timer-badge {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  background-color: rgba(15, 23, 42, 0.8);
-  border: 1px solid #1e293b;
-  padding: 8px 16px;
-  border-radius: 50px;
-  margin-bottom: 24px;
-  backdrop-filter: blur(8px);
-}
-
-.live-dot {
-  width: 8px;
-  height: 8px;
-  background-color: #10b981;
-  border-radius: 50%;
-}
-
-.timer-label {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: #94a3b8;
-  text-transform: uppercase;
-}
-
-.timer-clock {
-  font-family: monospace;
-  color: #06b6d4;
-  font-weight: bold;
-  font-size: 14px;
-}
-
-/* Main Content Styling */
-.hero-content {
-  max-width: 850px;
+/* Master Reveal Container */
+.hero-content-reveal {
+  position: relative;
+  z-index: 3;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 24px;
   text-align: center;
-  z-index: 10;
+  pointer-events: none;
 }
 
-.sub-heading {
-  color: #06b6d4;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 1px;
+.hero-content-reveal.is-visible {
+  pointer-events: auto;
+}
+
+/* STAGGERED SMOOTH ANIMATION ITEMS */
+.hero-anim-item {
+  opacity: 0;
+  transform: translateY(35px);
+  filter: blur(8px); /* തുടക്കത്തിൽ ചെറിയ ബ്ലർ നൽകുന്നു */
+  transition: opacity 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Reveal ആകുമ്പോൾ ബ്ലർ മാറി മുകളിലേക്ക് സോഫ്റ്റായി ഫ്ലോട്ട് ചെയ്യുന്നു */
+.hero-content-reveal.is-visible .hero-anim-item {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* ഓരോ എലമെന്റും ഒന്നിന് പുറകെ ഒന്നായി വരാനുള്ള ഡിലേ */
+.delay-1 {
+  transition-delay: 0.1s;
+}
+
+.delay-2 {
+  transition-delay: 0.28s;
+}
+
+.delay-3 {
+  transition-delay: 0.46s;
+}
+
+.delay-4 {
+  transition-delay: 0.65s;
+}
+
+/* Typography & Badges */
+.hero-eyebrow {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
   text-transform: uppercase;
-  display: block;
-  margin-bottom: 12px;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-bottom: 22px;
 }
 
-.main-heading {
-  font-size: 48px;
+.hero-heading {
+  font-size: clamp(34px, 5.2vw, 56px);
   font-weight: 800;
-  line-height: 1.2;
-  margin-bottom: 24px;
-  color: #f8fafc;
-}
-
-.description {
-  font-size: 18px;
-  color: #94a3b8;
-  line-height: 1.6;
-  margin-bottom: 32px;
-}
-
-.description strong {
+  line-height: 1.16;
+  letter-spacing: -0.025em;
+  margin: 0 0 20px;
   color: #ffffff;
+}
+
+.hero-gradient-text {
+  background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+  font-size: clamp(14px, 1.8vw, 16.5px);
+  color: #cbd5e1;
+  line-height: 1.65;
+  max-width: 720px;
+  margin: 0 auto 32px;
 }
 
 /* Buttons */
-.button-group {
+.hero-button-group {
   display: flex;
-  gap: 16px;
   justify-content: center;
+  gap: 14px;
   flex-wrap: wrap;
 }
 
-.btn {
-  padding: 14px 28px;
-  font-size: 16px;
-  font-weight: 600;
+.hero-btn {
+  padding: 13px 26px;
   border-radius: 12px;
+  font-size: 13.5px;
+  font-weight: 700;
   cursor: pointer;
   border: none;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
-.btn-primary {
-  background-color: #06b6d4;
-  color: #020617;
-}
-
-.btn-primary:hover {
-  background-color: #22d3ee;
-}
-
-.btn-secondary {
-  background-color: #0f172a;
+.hero-btn-primary {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
   color: #ffffff;
-  border: 1px solid #334155;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35);
 }
 
-.btn-secondary:hover {
-  background-color: #1e293b;
+.hero-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(168, 85, 247, 0.45);
 }
 
-/* Concept Grid */
-.concept-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
-  max-width: 1000px;
-  width: 100%;
-  margin-top: 60px;
-  padding-top: 30px;
-  border-top: 1px solid #1e293b;
+.hero-btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #f8fafc;
 }
 
-.concept-card {
-  background-color: rgba(15, 23, 42, 0.5);
-  border: 1px solid #1e293b;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
+.hero-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  transform: translateY(-2px);
 }
 
-.concept-card h3 {
-  color: #06b6d4;
-  margin-top: 0;
-  margin-bottom: 8px;
-  font-size: 18px;
-}
+/* Mobile View Adjustments */
+@media (max-width: 768px) {
+  .hero-container {
+    height: 100vh;
+    height: 100dvh;
+    padding: 0 16px;
+  }
 
-.concept-card p {
-  color: #94a3b8;
-  font-size: 13px;
-  margin: 0;
+  .hero-eyebrow {
+    font-size: 10.5px;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+  }
+
+  .hero-button-group {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-btn {
+    width: 100%;
+    text-align: center;
+  }
 }

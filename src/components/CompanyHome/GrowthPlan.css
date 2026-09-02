@@ -250,30 +250,105 @@
 
 @media (max-width: 768px) {
   .growth-plan-section {
-    padding: 60px 16px;
+    padding: 60px 14px;
+  }
+
+  .growth-header {
+    margin-bottom: 36px;
   }
 
   .growth-main-title {
-    font-size: 30px;
+    font-size: 28px;
+    line-height: 1.2;
   }
 
+  .growth-lead-text {
+    font-size: 14px;
+  }
+
+  /* 2 Cards per row on Mobile */
   .blueprint-grid {
-    grid-template-columns: 1fr;
-    gap: 16px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
   }
 
+  .blueprint-card {
+    padding: 16px 14px;
+    border-radius: 14px;
+  }
+
+  .card-top-meta {
+    margin-bottom: 10px;
+  }
+
+  .step-number {
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+
+  .step-category {
+    font-size: 9px;
+    letter-spacing: 0.3px;
+  }
+
+  .card-heading {
+    font-size: 14px;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .card-question {
+    font-size: 11px;
+    margin-bottom: 8px;
+    line-height: 1.35;
+  }
+
+  .card-detail {
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .card-route-indicator {
+    margin-top: 12px;
+  }
+
+  /* Banner adjustments */
   .gps-handoff-banner {
     flex-direction: column;
     align-items: stretch;
-    padding: 24px;
+    padding: 20px;
+    border-radius: 16px;
+    gap: 16px;
   }
 
   .gps-banner-content {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .gps-icon-wrapper {
+    width: 42px;
+    height: 42px;
+  }
+
+  .gps-icon-wrapper svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .gps-banner-title {
+    font-size: 16px;
+  }
+
+  .gps-banner-subtitle {
+    font-size: 12px;
   }
 
   .gps-cta-button {
     justify-content: center;
+    padding: 12px 18px;
+    font-size: 13px;
   }
 }

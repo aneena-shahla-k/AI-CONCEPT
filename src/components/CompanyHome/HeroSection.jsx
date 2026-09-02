@@ -1,55 +1,115 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './HeroSection.css';
+import vid from "../../videos/hero-video-2.mp4";
 
-const HeroSection = () => {
-  const [timeLeft, setTimeLeft] = useState({ hours: 23, minutes: 59, seconds: 59 });
+const HeroSection = ({ onNavigate, onOpenProject }) => {
+  const videoRef = useRef(null);
+  const sectionRef = useRef(null);
+  const [hasPlayed, setHasPlayed] = useState(false);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1 };
-        if (prev.minutes > 0) return { ...prev, minutes: 59, seconds: 59 };
-        if (prev.hours > 0) return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
-        return prev;
-      });
-    }, 1000);
-    return () => clearInterval(timer);
-  }, []);
+    const currentSection = sectionRef.current;
 
-  const formatNumber = (num) => String(num).padStart(2, '0');
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        if (entry.isIntersecting && !hasPlayed) {
+          video.play().catch(error => {
+            console.log("Autoplay was prevented, requires user interaction.", error);
+            setShowContent(true);
+          });
+          setHasPlayed(true);
+        }
+      },
+      {
+        threshold: 0.3,
+      }
+    );
+
+    if (currentSection) {
+      observer.observe(currentSection);
+    }
+
+    return () => {
+      if (currentSection) {
+        observer.unobserve(currentSection);
+      }
+    };
+  }, [hasPlayed]);
+
+  // വീഡിയോ തീരാൻ 0.5 സെക്കൻഡ് ബാക്കിയുള്ളപ്പോൾ തന്നെ സ്മൂത്തായി ട്രാൻസിഷൻ തുടങ്ങും
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (video && video.duration) {
+      if (video.duration - video.currentTime <= 0.5 && !showContent) {
+        setShowContent(true);
+      }
+    }
+  };
+
+  const handleVideoEnded = () => {
+    setShowContent(true);
+  };
 
   return (
-    <section className="hero-container">
-      {/* Dynamic Background Route Line */}
-      <div className="gps-line-bg"></div>
+    <section ref={sectionRef} className="hero-container">
+      {/* Background Video */}
+      <video
+        ref={videoRef}
+        className="hero-bg-video"
+        loop={false}
+        muted
+        playsInline
+        onTimeUpdate={handleTimeUpdate}
+        onEnded={handleVideoEnded}
+      >
+        <source src={vid} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-      {/* Countdown Timer Badge */}
-      <div className="timer-badge">
-        <span className="live-dot"></span>
-        <span className="timer-label">Accelerated Sprint</span>
-        <span className="timer-clock">
-          {formatNumber(timeLeft.hours)}:{formatNumber(timeLeft.minutes)}:{formatNumber(timeLeft.seconds)}
+      {/* Dark overlay */}
+      <div className={`hero-video-overlay ${showContent ? 'is-dimmed' : ''}`} />
+
+      {/* Ultra Smooth Staggered Content Reveal */}
+      <div className={`hero-content-reveal ${showContent ? 'is-visible' : ''}`}>
+        <span className="hero-eyebrow hero-anim-item delay-1">
+          Selling a GPS route, not driving the car
         </span>
-      </div>
 
-      {/* Main Content */}
-      <div className="hero-content">
-        <span className="sub-heading">Your Concept. Our Blueprint. Your Execution.</span>
-        <h1 className="main-heading">
-          Build Your Business. Follow the Route. Grow Faster.
+        <h1 className="hero-heading hero-anim-item delay-2">
+          Build Your Business. <br />
+          <span className="hero-gradient-text">Follow the Route. Grow Faster.</span>
         </h1>
-        <p className="description">
-          We sell a <strong>GPS route</strong>, not drive the car. We create ready-made Growth Plans, business systems, custom software, and AI platforms. You run the business.
+
+        <p className="hero-description hero-anim-item delay-3">
+          We create ready-made Growth Plans, business systems, software, AI solutions, and digital platforms that show you where to go and how to get there. You run the business. We build the roadmap and technology.
         </p>
 
-        {/* Action Buttons */}
-        <div className="button-group">
-          <button className="btn btn-primary">Explore Our Services</button>
-          <button className="btn btn-secondary">Get Your Growth Plan</button>
+        <div className="hero-button-group hero-anim-item delay-4">
+          <button
+            type="button"
+            className="hero-btn hero-btn-primary"
+            onClick={() => {
+              if (onNavigate) onNavigate("growth-plans");
+            }}
+          >
+            <span>Explore Our Services</span>
+          </button>
+
+          <button
+            type="button"
+            className="hero-btn hero-btn-secondary"
+            onClick={() => {
+              if (onNavigate) onNavigate("growth-plans");
+            }}
+          >
+            <span>Get Your Growth Plan</span>
+          </button>
         </div>
       </div>
-
-      
     </section>
   );
 };

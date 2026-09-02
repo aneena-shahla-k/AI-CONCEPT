@@ -33,6 +33,15 @@ export default function App() {
     AOS.refresh();
   }, [currentPage]);
 
+  // Automatic scroll to top whenever page or solution changes
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "instant",
+    });
+  }, [currentPage, activeSolutionKey]);
+
   const handleOpenBooking = () => {
     window.open("mailto:info@aiconcept.in?subject=Book%201:1%20Strategy%20Call", "_blank");
   };
@@ -50,7 +59,7 @@ export default function App() {
     if (param) {
       setActiveSolutionKey(param);
     }
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
   };
 
   return (
@@ -68,7 +77,7 @@ export default function App() {
       />
 
       {currentPage === "solution-detail" ? (
-        <main key="solution-detail" style={{ minHeight: "80vh" }}>
+        <main key={`solution-${activeSolutionKey}`} style={{ minHeight: "80vh" }}>
           <SolutionsDetailPage
             solutionKey={activeSolutionKey}
             onBack={() => handleNavigate("home")}

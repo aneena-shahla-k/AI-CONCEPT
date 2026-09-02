@@ -155,7 +155,7 @@ export default function AIPage({ onOpenBooking, onOpenProject }) {
       </section>
 
       {/* 2. Technical Philosophy Banner */}
-      <section className="ai-tech-definition">
+      {/* <section className="ai-tech-definition">
         <div className="ai-container">
           <div className="ai-definition-box">
             <span className="ai-def-label">ENGINEERING PHILOSOPHY</span>
@@ -165,7 +165,7 @@ export default function AIPage({ onOpenBooking, onOpenProject }) {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* 3. Services Grid */}
       <section className="ai-services-section">
@@ -199,7 +199,7 @@ export default function AIPage({ onOpenBooking, onOpenProject }) {
         <div className="ai-container">
           <div className="ai-section-header">
             <span className="ai-section-tag">THE IMPLEMENTATION STACK</span>
-            <h2 className="ai-section-title">How We Engineer Custom AI</h2>
+            <h2 className="ai-section-title">How We Build Custom AI</h2>
             <p className="ai-section-desc">
               A robust four-stage architecture ensuring high precision and minimal hallucination.
             </p>
