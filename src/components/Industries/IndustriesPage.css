@@ -1,0 +1,291 @@
+/* src/components/Industries/IndustriesPage.css */
+
+.ind-clean-page {
+  background-color: #030712;
+  color: #f8fafc;
+  font-family: system-ui, -apple-system, sans-serif;
+  padding: 80px 24px 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.ind-clean-glow {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 650px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.12), transparent 70%);
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.ind-clean-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* 1. Hero */
+.ind-clean-hero {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 50px;
+}
+
+.ind-clean-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+
+.ind-clean-title {
+  font-size: clamp(32px, 4.5vw, 54px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 16px;
+}
+
+.ind-gradient-text {
+  background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ind-clean-lead {
+  font-size: 16px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 2. Bento Grid */
+.ind-clean-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 60px;
+}
+
+.ind-clean-card {
+  background: rgba(11, 15, 25, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 190px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ind-clean-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Accent Glows */
+.glow-purple:hover {
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 10px 30px rgba(168, 85, 247, 0.1);
+}
+.glow-blue:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.1);
+}
+.glow-emerald:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+}
+.glow-pink:hover {
+  border-color: rgba(236, 72, 153, 0.4);
+  box-shadow: 0 10px 30px rgba(236, 72, 153, 0.1);
+}
+
+.ind-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.ind-icon-box {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+}
+
+.icon-purple {
+  background: rgba(168, 85, 247, 0.12);
+  color: #c084fc;
+}
+.icon-blue {
+  background: rgba(56, 189, 248, 0.12);
+  color: #38bdf8;
+}
+.icon-emerald {
+  background: rgba(16, 185, 129, 0.12);
+  color: #34d399;
+}
+.icon-pink {
+  background: rgba(236, 72, 153, 0.12);
+  color: #f472b6;
+}
+
+.ind-card-highlight {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ind-card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 16px;
+}
+
+.ind-pills-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ind-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.ind-check {
+  color: #38bdf8;
+}
+
+/* 3. Steps Strip */
+.ind-steps-strip {
+  background: rgba(11, 15, 25, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 50px;
+}
+
+.ind-step-col {
+  flex: 1;
+}
+
+.ind-step-num {
+  font-size: 11px;
+  font-weight: 800;
+  color: #c084fc;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.ind-step-col h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.ind-step-col p {
+  font-size: 13px;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.ind-step-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0 28px;
+}
+
+/* 4. Bottom CTA */
+.ind-cta-box {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  padding: 24px 32px;
+}
+
+.ind-cta-box h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+}
+
+.ind-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.ind-btn-primary:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+}
+
+/* Responsiveness */
+@media (max-width: 1024px) {
+  .ind-clean-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ind-steps-strip {
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .ind-step-divider {
+    display: none;
+  }
+  .ind-cta-box {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 600px) {
+  .ind-clean-grid {
+    grid-template-columns: 1fr;
+  }
+}

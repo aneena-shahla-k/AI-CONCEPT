@@ -1,0 +1,239 @@
+/* src/components/Home/TimeSprintSelector.css */
+.sprint-section {
+  background-color: #030712;
+  color: #f8fafc;
+  padding: 80px 24px;
+  position: relative;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.sprint-container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.sprint-header {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 36px;
+}
+
+.sprint-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #38bdf8;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.sprint-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 800;
+  margin: 0 0 12px;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.sprint-sub {
+  font-size: 15px;
+  color: #94a3b8;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Tabs */
+.sprint-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.sprint-tab-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.sprint-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.sprint-tab-btn.is-active {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
+  border-color: #6366f1;
+  color: #ffffff;
+  box-shadow: 0 4px 18px rgba(99, 102, 241, 0.2);
+}
+
+/* Master Display Card */
+.sprint-card {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 36px;
+  background: rgba(11, 15, 25, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 34px 36px;
+  backdrop-filter: blur(14px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.sprint-badge {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.sprint-card-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 10px;
+}
+
+.sprint-card-desc {
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0 0 24px;
+}
+
+.sprint-scope-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #64748b;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.sprint-scope-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.sprint-scope-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.sprint-check {
+  color: #38bdf8;
+  flex-shrink: 0;
+}
+
+/* Right Metric Box */
+.sprint-card-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sprint-metric-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 22px;
+  text-align: center;
+}
+
+.sprint-metric-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #64748b;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.sprint-metric-hrs {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  display: block;
+}
+
+.sprint-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 16px 0;
+}
+
+.sprint-metric-val {
+  font-size: 24px;
+  font-weight: 800;
+  color: #10b981;
+  font-family: monospace;
+  display: block;
+}
+
+.sprint-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.sprint-cta-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-2px);
+}
+
+.sprint-disclaimer {
+  font-size: 11.5px;
+  color: #64748b;
+  text-align: center;
+  margin-top: 20px;
+}
+
+@media (max-width: 900px) {
+  .sprint-card {
+    grid-template-columns: 1fr;
+  }
+  .sprint-scope-grid {
+    grid-template-columns: 1fr;
+  }
+}

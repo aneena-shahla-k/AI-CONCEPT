@@ -1,62 +1,51 @@
 import React, { useState } from "react";
-import CompanyNavbar from "../components/CompanyHome/CompanyNavbar";
 // import CompanyHero from "../components/CompanyHome/CompanyHero";
-import ServicesSection from "../components/CompanyHome/ServicesSection";
 import SpeedSection from "../components/CompanyHome/SpeedSection";
-import PortfolioSection from "../components/CompanyHome/PortfolioSection";
 import ReviewSection from "../components/CompanyHome/ReviewSection";
-import FinalCTA from "../components/CompanyHome/FinalCTA";
 import AIChatDrawer from "../components/CompanyHome/AIChatDrawer";
 import BookingModal from "../components/CompanyHome/BookingModal";
 import "./CompanyHome.css";
-import HeroScroll from "../components/CompanyHome/HeroScroll";
-import AboutAIConcept from "../components/CompanyHome/AboutAIConcept";
-import { ServiceSection, CtaBanner, ProcessSection, SpeedTiersSection } from "../components/CompanyHome/AgencySections";
+// import HeroScroll from "../components/CompanyHome/HeroScroll";
 import MarqueeSection from "../components/CompanyHome/MarqueeSection";
+import HeroSection from "../components/CompanyHome/HeroSection";
+import CoreConcept from "../components/CompanyHome/CoreConcept";
+import WhatWeBuild from "../components/CompanyHome/WhatWeBuild";
+import AISolutions from "../components/CompanyHome/AISolutions";
+import ConnectedEcosystem from "../components/CompanyHome/ConnectedEcosystem";
+import GrowthPlan from "../components/CompanyHome/GrowthPlan";
+import GpsPhilosophy from "../components/CompanyHome/GpsPhilosophy";
+import HowWeWork from "../components/CompanyHome/HowWeWork";
+import IndustriesWeServe from "../components/CompanyHome/IndustriesWeServe";
+import CtaBanner from "../components/CompanyHome/CtaBanner";
+import TimeSprintSelector from "../components/CompanyHome/TimeSprintSelector";
 
-export default function CompanyHome() {
+export default function CompanyHome({ onNavigate, onOpenProject }) {
   const [isAiDrawerOpen, setIsAiDrawerOpen] = useState(false);
   const [heroSearchQuery, setHeroSearchQuery] = useState("");
   const [isBookingOpen, setIsBookingOpen] = useState(false);
-  const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
 
   return (
     <main className="company-home-main">
-      <CompanyNavbar 
-        onOpenBooking={() => setIsBookingOpen(true)} 
-        isOpenProjectDirectly={isProjectModalOpen}
-        onCloseProjectModal={() => setIsProjectModalOpen(false)}
-      />
-      <HeroScroll />
-      {/* <CompanyHero
-        onSearchTrigger={(q) => {
-          setHeroSearchQuery(q);
-          setIsAiDrawerOpen(true);
-        }}
-      /> */}
-      <AboutAIConcept />
+      <HeroSection onNavigate={onNavigate} onOpenProject={onOpenProject} />
+      <CoreConcept />
+      <WhatWeBuild onNavigate={onNavigate} />
+      <AISolutions onNavigate={onNavigate} />
+      <TimeSprintSelector onOpenProject={onOpenProject} />
       <MarqueeSection />
-      <ServiceSection />
-      
-      {/* Connected 1:1 Booking modal trigger */}
-      <SpeedTiersSection onOpenBooking={() => setIsBookingOpen(true)} />
-      
-      <ProcessSection />
+      <ConnectedEcosystem />
+      <GrowthPlan onNavigate={onNavigate} onOpenProject={onOpenProject} />
+      <GpsPhilosophy />
+      <HowWeWork />
+      <IndustriesWeServe onNavigate={onNavigate} />
       
       {/* Connected 1:1 Booking modal & Start A Project triggers */}
       <CtaBanner 
         onOpenBooking={() => setIsBookingOpen(true)} 
-        onOpenProject={() => setIsProjectModalOpen(true)}
+        onOpenProject={onOpenProject}
       />
 
-      <ServicesSection />
       <SpeedSection />
-      <PortfolioSection />
       <ReviewSection />
-      <FinalCTA 
-          onOpenBooking={() => setIsBookingOpen(true)} 
-          onOpenProject={() => setIsProjectModalOpen(true)}
-      />
 
       {/* Global Persistent Floating AI Trigger */}
       <button

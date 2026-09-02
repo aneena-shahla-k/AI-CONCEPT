@@ -1,0 +1,249 @@
+/* GpsPhilosophy.css */
+.gps-phil-section {
+  background-color: #030712;
+  padding: 100px 24px;
+  position: relative;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: #ffffff;
+  overflow: hidden;
+}
+
+.gps-ambient-glow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 700px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.12), transparent 70%);
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.gps-phil-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Header */
+.gps-phil-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 56px auto;
+}
+
+.gps-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #c084fc;
+  margin-bottom: 20px;
+}
+
+.gps-pulse-beacon {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+.gps-phil-title {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.8px;
+  margin: 0 0 18px 0;
+}
+
+.gps-gradient-title {
+  background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gps-phil-lead {
+  font-size: 16px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Comparison Grid */
+.gps-comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.comparison-card {
+  border-radius: 20px;
+  padding: 36px 30px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* Traditional Agency Card */
+.traditional-card {
+  background: rgba(11, 15, 25, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Our Signature Model Card */
+.signature-card {
+  background: linear-gradient(135deg, rgba(20, 24, 40, 0.95), rgba(11, 15, 25, 0.95));
+  border: 1.5px solid rgba(168, 85, 247, 0.4);
+  box-shadow: 0 10px 40px rgba(168, 85, 247, 0.12);
+}
+
+.comp-tag-badge {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+}
+
+.comp-tag-badge.dim {
+  color: #64748b;
+}
+
+.comp-tag-badge.active {
+  color: #38bdf8;
+}
+
+.comp-headline {
+  font-size: 20px;
+  font-weight: 700;
+  color: #cbd5e1;
+  margin: 0 0 24px 0;
+  line-height: 1.35;
+}
+
+.active-headline {
+  color: #f8fafc;
+}
+
+.comp-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.comp-list li {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.comp-cross {
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.comp-check {
+  color: #34d399;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* Route Strip */
+.route-strip {
+  background: rgba(11, 15, 25, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 28px;
+}
+
+.route-strip-header {
+  margin-bottom: 20px;
+}
+
+.strip-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #6366f1;
+  text-transform: uppercase;
+}
+
+.route-step-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.route-step-card {
+  border-left: 2px solid rgba(99, 102, 241, 0.3);
+  padding-left: 14px;
+}
+
+.route-step-num {
+  font-size: 12px;
+  font-weight: 800;
+  color: #38bdf8;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.route-step-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f8fafc;
+  margin: 0 0 4px 0;
+}
+
+.route-step-desc {
+  font-size: 12px;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Responsiveness */
+@media (max-width: 900px) {
+  .gps-comparison-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .route-step-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .gps-phil-section {
+    padding: 60px 16px;
+  }
+
+  .gps-phil-title {
+    font-size: 30px;
+  }
+
+  .comparison-card {
+    padding: 24px 20px;
+  }
+
+  .route-step-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,14 +1,15 @@
+// MarqueeSection.jsx
 import React from "react";
 import { Zap, Sparkles, Code2, Globe, ShieldCheck, Cpu } from "lucide-react";
 import "./MarqueeSection.css";
 
 const primaryStatements = [
-  { text: "24–48 HOUR SPRINT LAUNCH", icon: <Zap size={14} className="mq-accent-icon" /> },
+  { text: "24–48 HOUR SPRINT LAUNCH", icon: <Zap size={14} className="mq-purple-icon" /> },
   { text: "100% CUSTOM TAILORED ARCHITECTURE", icon: <Code2 size={14} className="mq-cyan-icon" /> },
-  { text: "HIGH-CONVERSION SHOPIFY & E-COMMERCE", icon: <Globe size={14} className="mq-accent-icon" /> },
-  { text: "99+ LIGHTHOUSE CORE WEB VITALS", icon: <ShieldCheck size={14} className="mq-cyan-icon" /> },
-  { text: "FULL-STACK MERN & NEXT.JS PLATFORMS", icon: <Cpu size={14} className="mq-accent-icon" /> },
-  { text: "ZERO TEMPLATES • PURE PERFORMANCE", icon: <Sparkles size={14} className="mq-cyan-icon" /> },
+  { text: "HIGH-CONVERSION SHOPIFY & E-COMMERCE", icon: <Globe size={14} className="mq-pink-icon" /> },
+  { text: "99+ LIGHTHOUSE CORE WEB VITALS", icon: <ShieldCheck size={14} className="mq-emerald-icon" /> },
+  { text: "FULL-STACK MERN & NEXT.JS PLATFORMS", icon: <Cpu size={14} className="mq-cyan-icon" /> },
+  { text: "ZERO TEMPLATES • PURE PERFORMANCE", icon: <Sparkles size={14} className="mq-purple-icon" /> },
 ];
 
 const techStack = [

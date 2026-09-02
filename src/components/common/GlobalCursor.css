@@ -1,0 +1,36 @@
+/* Custom Cursor Elements */
+.global-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 6px;
+  height: 6px;
+  background: #38bdf8;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+.global-cursor-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid rgba(56, 189, 248, 0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+
+/* Mobile & Touch Screens: Hide Custom Cursor */
+@media (pointer: coarse) {
+  .global-cursor-dot,
+  .global-cursor-glow {
+    display: none !important;
+  }
+}

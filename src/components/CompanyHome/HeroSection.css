@@ -1,0 +1,172 @@
+.hero-container {
+  position: relative;
+  min-height: 100vh;
+  background-color: #020617;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 24px 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Background Animated Line */
+.gps-line-bg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #06b6d4, transparent);
+  opacity: 0.2;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.4; }
+}
+
+/* Timer Badge */
+.timer-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: rgba(15, 23, 42, 0.8);
+  border: 1px solid #1e293b;
+  padding: 8px 16px;
+  border-radius: 50px;
+  margin-bottom: 24px;
+  backdrop-filter: blur(8px);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10b981;
+  border-radius: 50%;
+}
+
+.timer-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.timer-clock {
+  font-family: monospace;
+  color: #06b6d4;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+/* Main Content Styling */
+.hero-content {
+  max-width: 850px;
+  text-align: center;
+  z-index: 10;
+}
+
+.sub-heading {
+  color: #06b6d4;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.main-heading {
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 24px;
+  color: #f8fafc;
+}
+
+.description {
+  font-size: 18px;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.description strong {
+  color: #ffffff;
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 12px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #06b6d4;
+  color: #020617;
+}
+
+.btn-primary:hover {
+  background-color: #22d3ee;
+}
+
+.btn-secondary {
+  background-color: #0f172a;
+  color: #ffffff;
+  border: 1px solid #334155;
+}
+
+.btn-secondary:hover {
+  background-color: #1e293b;
+}
+
+/* Concept Grid */
+.concept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  width: 100%;
+  margin-top: 60px;
+  padding-top: 30px;
+  border-top: 1px solid #1e293b;
+}
+
+.concept-card {
+  background-color: rgba(15, 23, 42, 0.5);
+  border: 1px solid #1e293b;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.concept-card h3 {
+  color: #06b6d4;
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.concept-card p {
+  color: #94a3b8;
+  font-size: 13px;
+  margin: 0;
+}

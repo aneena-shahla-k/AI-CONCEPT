@@ -1,3 +1,4 @@
+// ReviewSection.jsx
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Star, Check, ArrowUpRight, MessageSquareCheck, ShieldCheck } from "lucide-react";
@@ -44,6 +45,7 @@ export default function ReviewSection() {
           transition={{ duration: 0.5 }}
         >
           <div className="rev-eyebrow">
+            <span className="rev-beacon-dot" />
             <span>CLIENT FEEDBACK</span>
           </div>
 
@@ -59,11 +61,11 @@ export default function ReviewSection() {
 
           <div className="rev-meta-box">
             <div className="rev-meta-item">
-              <ShieldCheck size={14} className="rev-cyan-icon" />
+              <ShieldCheck size={16} className="rev-accent-icon" />
               <span>Verified feedback helps refine our sprint pipelines.</span>
             </div>
             <div className="rev-meta-item">
-              <MessageSquareCheck size={14} className="rev-amber-icon" />
+              <MessageSquareCheck size={16} className="rev-accent-icon" />
               <span>Direct review submission without third-party friction.</span>
             </div>
           </div>
@@ -159,7 +161,7 @@ export default function ReviewSection() {
                         onMouseLeave={() => setHoverRating(0)}
                         aria-label={`Rate ${star} star`}
                       >
-                        <Star size={16} fill={isFilled ? "#f59e0b" : "transparent"} stroke={isFilled ? "#f59e0b" : "#737373"} />
+                        <Star size={16} fill={isFilled ? "#f59e0b" : "transparent"} stroke={isFilled ? "#f59e0b" : "#64748b"} />
                       </button>
                     );
                   })}
@@ -183,7 +185,7 @@ export default function ReviewSection() {
               {/* Submit Button */}
               <button type="submit" className="rev-submit-btn">
                 <span>SUBMIT REVIEW</span>
-                <ArrowUpRight size={15} />
+                <ArrowUpRight size={16} />
               </button>
             </form>
           )}

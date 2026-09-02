@@ -1,36 +1,40 @@
-/* Container & Theme Styling */
+/* SpeedSection.css */
+
+/* Container & Palette */
 .sp-section {
   position: relative;
-  background-color: #0a0a0a;
-  color: #f5f5f5;
-  padding: 100px 0 120px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: #030712;
+  color: #f8fafc;
+  padding: 100px 24px 120px;
+  font-family: system-ui, -apple-system, sans-serif;
   overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sp-glow-top {
   position: absolute;
   top: -80px;
-  left: 30%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.08) 0%, transparent 70%);
+  left: 25%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+  filter: blur(90px);
   pointer-events: none;
 }
 
 .sp-glow-bottom {
   position: absolute;
   bottom: -80px;
-  right: 10%;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+  right: 15%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+  filter: blur(90px);
   pointer-events: none;
 }
 
 .sp-container {
-  width: min(1240px, calc(100% - 48px));
+  max-width: 1240px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
@@ -45,22 +49,27 @@
   align-items: center;
   gap: 8px;
   font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: #22d3ee;
-  background: rgba(34, 211, 238, 0.08);
-  border: 1px solid rgba(34, 211, 238, 0.2);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #c084fc;
+  background: rgba(168, 85, 247, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.25);
   padding: 6px 14px;
-  border-radius: 50px;
+  border-radius: 999px;
   margin-bottom: 20px;
 }
 
-.sp-cyan-icon {
-  color: #22d3ee;
+.sp-beacon-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
 }
 
-.sp-amber-icon {
-  color: #f59e0b;
+.sp-accent-zap {
+  color: #c084fc;
 }
 
 .sp-header__row {
@@ -81,7 +90,7 @@
 }
 
 .sp-title-gradient {
-  background: linear-gradient(90deg, #22d3ee, #818cf8);
+  background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -93,11 +102,11 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: #d4d4d4;
-  background: rgba(23, 23, 23, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #cbd5e1;
+  background: rgba(11, 15, 25, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 8px 16px;
-  border-radius: 100px;
+  border-radius: 999px;
   backdrop-filter: blur(8px);
 }
 
@@ -111,7 +120,7 @@
 
 .sp-narrative-card,
 .sp-time-card {
-  background: rgba(23, 23, 23, 0.7);
+  background: rgba(11, 15, 25, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   padding: 32px;
@@ -121,7 +130,7 @@
   min-height: 320px;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .sp-narrative-top,
@@ -135,13 +144,18 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: #737373;
+  color: #64748b;
+  text-transform: uppercase;
 }
 
 .sp-timer-title-group {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.sp-clock-icon {
+  color: #38bdf8;
 }
 
 .sp-security-tag {
@@ -151,7 +165,7 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.08em;
-  color: #34d399;
+  color: #10b981;
 }
 
 .sp-pulse-chip {
@@ -161,19 +175,19 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: #34d399;
-  background: rgba(52, 211, 153, 0.1);
-  border: 1px solid rgba(52, 211, 153, 0.25);
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
   padding: 4px 10px;
-  border-radius: 100px;
+  border-radius: 999px;
 }
 
 .sp-green-dot {
   width: 6px;
   height: 6px;
-  background: #34d399;
+  background: #10b981;
   border-radius: 50%;
-  box-shadow: 0 0 6px #34d399;
+  box-shadow: 0 0 6px #10b981;
 }
 
 .sp-narrative-body h3 {
@@ -187,7 +201,7 @@
 
 .sp-narrative-body p {
   font-size: 14px;
-  color: #a3a3a3;
+  color: #94a3b8;
   line-height: 1.6;
   margin: 0;
 }
@@ -207,7 +221,7 @@
   align-items: center;
   gap: 8px;
   font-size: 12px;
-  color: #a3a3a3;
+  color: #94a3b8;
   max-width: 320px;
 }
 
@@ -215,22 +229,23 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 18px;
-  border-radius: 8px;
-  background: #22d3ee;
-  color: #0a0a0a;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  color: #ffffff;
   font-family: inherit;
   font-size: 12px;
   font-weight: 700;
   border: none;
   cursor: pointer;
-  transition: all 0.2s;
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.25);
+  transition: all 0.2s ease;
 }
 
 .sp-btn-cta:hover {
-  background: #67e8f9;
+  opacity: 0.95;
   transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(34, 211, 238, 0.3);
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.35);
 }
 
 /* Digital Clock & Micro-Timer Matrix */
@@ -249,11 +264,11 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.12em;
-  color: #22d3ee;
-  background: rgba(34, 211, 238, 0.08);
-  border: 1px solid rgba(34, 211, 238, 0.2);
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
   padding: 4px 12px;
-  border-radius: 100px;
+  border-radius: 999px;
   margin-bottom: 14px;
 }
 
@@ -272,7 +287,7 @@
   justify-content: center;
   gap: 8px;
   font-family: monospace;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(3, 7, 18, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   padding: 14px 20px;
@@ -296,26 +311,26 @@
 }
 
 .sp-ms-val {
-  color: #22d3ee;
+  color: #38bdf8;
 }
 
 .sp-time-label {
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: #737373;
+  color: #64748b;
   margin-top: 4px;
 }
 
 .sp-time-colon {
   font-size: 24px;
   font-weight: 800;
-  color: #525252;
+  color: #475569;
   margin-bottom: 12px;
 }
 
 .sp-colon-ms {
-  color: rgba(34, 211, 238, 0.5);
+  color: rgba(56, 189, 248, 0.5);
 }
 
 /* Progress Wrap */
@@ -335,7 +350,7 @@
 .sp-timer-fill {
   width: 82%;
   height: 100%;
-  background: linear-gradient(90deg, #22d3ee, #34d399);
+  background: linear-gradient(90deg, #38bdf8, #a855f7, #10b981);
   border-radius: 10px;
 }
 
@@ -347,11 +362,11 @@
   font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: #737373;
+  color: #64748b;
 }
 
 .sp-green-text {
-  color: #34d399;
+  color: #10b981;
 }
 
 .sp-micro-strip {
@@ -368,22 +383,22 @@
   gap: 6px;
   font-size: 11px;
   font-weight: 500;
-  color: #a3a3a3;
+  color: #94a3b8;
 }
 
 .sp-micro-item svg {
-  color: #34d399;
+  color: #10b981;
 }
 
 /* Execution Pipeline Wrap */
 .sp-pipeline-wrap {
-  background: rgba(23, 23, 23, 0.7);
+  background: rgba(11, 15, 25, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   padding: 32px;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 .sp-pipeline-header {
@@ -399,7 +414,8 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.2em;
-  color: #737373;
+  color: #64748b;
+  text-transform: uppercase;
 }
 
 .sp-live-status-pill {
@@ -409,20 +425,31 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: #34d399;
-  background: rgba(52, 211, 153, 0.08);
-  border: 1px solid rgba(52, 211, 153, 0.2);
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
   padding: 5px 14px;
-  border-radius: 100px;
+  border-radius: 999px;
+}
+
+.sp-live-status-pill.completed {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  border-color: rgba(16, 185, 129, 0.25);
 }
 
 .sp-live-blink {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: #34d399;
-  box-shadow: 0 0 8px #34d399;
+  background-color: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
   animation: pulseBeat 1.2s infinite;
+}
+
+.sp-live-status-pill.completed .sp-live-blink {
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
 }
 
 .sp-pipeline {
@@ -448,42 +475,42 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid rgba(255, 255, 255, 0.12);
   display: grid;
   place-items: center;
   font-size: 11px;
   font-weight: 700;
-  color: #737373;
+  color: #64748b;
   flex-shrink: 0;
   transition: all 0.3s ease;
 }
 
 .sp-step.is-completed .sp-step-circle {
-  background: #34d399;
-  border-color: #34d399;
-  color: #0a0a0a;
-  box-shadow: 0 0 10px rgba(52, 211, 153, 0.4);
+  background: #10b981;
+  border-color: #10b981;
+  color: #030712;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
 }
 
 .sp-step.is-current .sp-step-circle {
-  border-color: #22d3ee;
-  color: #22d3ee;
-  background: rgba(34, 211, 238, 0.1);
-  box-shadow: 0 0 12px rgba(34, 211, 238, 0.3);
+  border-color: #6366f1;
+  color: #38bdf8;
+  background: rgba(99, 102, 241, 0.12);
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.4);
 }
 
 .sp-step-line {
   flex: 1;
   height: 2px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 2px;
   overflow: hidden;
 }
 
 .sp-step-line-fill {
   height: 100%;
-  background: #34d399;
+  background: linear-gradient(90deg, #6366f1, #10b981);
 }
 
 .sp-step:last-child .sp-step-line {
@@ -500,7 +527,7 @@
 
 .sp-step p {
   font-size: 12px;
-  color: #a3a3a3;
+  color: #94a3b8;
   line-height: 1.45;
   margin: 0;
 }
@@ -513,6 +540,14 @@
 }
 
 @media (max-width: 768px) {
+  .sp-section {
+    padding: 70px 16px;
+  }
+
+  .sp-title {
+    font-size: 28px;
+  }
+
   .sp-digital-clock {
     padding: 10px 12px;
     gap: 4px;

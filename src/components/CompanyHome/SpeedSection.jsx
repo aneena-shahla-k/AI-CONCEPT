@@ -1,13 +1,12 @@
+// SpeedSection.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { 
   ArrowUpRight, 
-  Zap, 
   ShieldCheck, 
   CheckCircle2, 
   Check, 
   Clock, 
   Activity,
-  Sparkles
 } from "lucide-react";
 import "./SpeedSection.css";
 
@@ -36,6 +35,7 @@ export default function SpeedSection() {
 
   // Intersection Observer for Pipeline Animation
   useEffect(() => {
+    const currentRef = sectionRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsIntersecting(entry.isIntersecting);
@@ -43,8 +43,10 @@ export default function SpeedSection() {
       { threshold: 0.25 }
     );
 
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
+    if (currentRef) observer.observe(currentRef);
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
   }, []);
 
   // Pipeline Step Progression
@@ -105,7 +107,7 @@ export default function SpeedSection() {
         {/* Top Header */}
         <div className="sp-header">
           <div className="sp-eyebrow">
-            <Sparkles size={12} className="sp-cyan-icon" />
+            <span className="sp-beacon-dot" />
             <span>RAPID DELIVERY SYSTEM</span>
           </div>
 
@@ -114,7 +116,6 @@ export default function SpeedSection() {
               24–42 <span className="sp-title-gradient">HOURS SPRINT</span>
             </h2>
             <div className="sp-header-chip">
-              <Zap size={13} className="sp-amber-icon" />
               <span>GUARANTEED WINDOW</span>
             </div>
           </div>
@@ -126,7 +127,7 @@ export default function SpeedSection() {
           {/* Left Narrative Card */}
           <div className="sp-narrative-card">
             <div className="sp-narrative-top">
-              <span className="sp-card-index"> VELOCITY FIRST</span>
+              <span className="sp-card-index">VELOCITY FIRST</span>
               <div className="sp-pulse-chip">
                 <span className="sp-green-dot" />
                 ACTIVE ENGINE
@@ -143,7 +144,6 @@ export default function SpeedSection() {
 
             <div className="sp-narrative-footer">
               <div className="sp-note">
-                <Zap size={14} className="sp-amber-icon" />
                 <span>Rapid delivery applies to defined, pre-approved project modules.</span>
               </div>
               <button className="sp-btn-cta" onClick={() => go("#sprint-tiers")}>
@@ -157,7 +157,7 @@ export default function SpeedSection() {
           <div className="sp-time-card sp-timer-card">
             <div className="sp-time-header">
               <div className="sp-timer-title-group">
-                <Clock size={14} className="sp-cyan-icon" />
+                <Clock size={14} className="sp-clock-icon" />
                 <span className="sp-card-index">LIVE SPRINT CLOCK</span>
               </div>
               <span className="sp-security-tag">
@@ -208,15 +208,15 @@ export default function SpeedSection() {
 
             <div className="sp-micro-strip">
               <div className="sp-micro-item">
-                <CheckCircle2 size={12} />
+                <CheckCircle2 size={13} />
                 <span>Single-Scope Releases</span>
               </div>
               <div className="sp-micro-item">
-                <CheckCircle2 size={12} />
+                <CheckCircle2 size={13} />
                 <span>Clean Architecture</span>
               </div>
               <div className="sp-micro-item">
-                <CheckCircle2 size={12} />
+                <CheckCircle2 size={13} />
                 <span>Instant DNS Launch</span>
               </div>
             </div>
@@ -265,7 +265,7 @@ export default function SpeedSection() {
                         <div 
                           className="sp-step-line-fill" 
                           style={{ 
-                            width: activeStep > stepNum ? "100%" : isCurrent ? "40%" : "0%",
+                            width: activeStep > stepNum ? "100%" : isCurrent ? "50%" : "0%",
                             transition: isCurrent ? "width 0.8s cubic-bezier(0.4, 0, 0.2, 1)" : "width 0.35s ease"
                           }} 
                         />
