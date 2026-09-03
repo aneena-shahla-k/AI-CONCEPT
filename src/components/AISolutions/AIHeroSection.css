@@ -1,0 +1,113 @@
+
+/* src/components/AISolutions/components/AIHeroSection.css */
+.ai-hero {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 80px auto;
+  padding-top: 20px;
+}
+
+.ai-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  margin-bottom: 18px;
+}
+
+.ai-hero-title {
+  font-size: clamp(34px, 4.8vw, 62px);
+  font-weight: 750;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin: 0 0 14px;
+  color: #0f172a;
+}
+
+.ai-gradient-text {
+  background: linear-gradient(135deg, #0f172a 20%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ai-hero-sub {
+  font-size: 15.5px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 0 auto 30px auto;
+  max-width: 620px;
+}
+
+.ai-hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ai-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 11px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  transition: all 0.2s ease;
+}
+
+.ai-btn-primary:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+}
+
+.ai-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 11px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s ease;
+}
+
+.ai-btn-secondary:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #2563eb;
+}
+
+@media (max-width: 640px) {
+  .ai-hero-title {
+    font-size: 28px;
+  }
+  .ai-hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .ai-btn-primary,
+  .ai-btn-secondary {
+    width: 100%;
+    justify-content: center;
+  }
+}

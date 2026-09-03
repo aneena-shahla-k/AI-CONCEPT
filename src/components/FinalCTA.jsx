@@ -34,8 +34,8 @@ export default function FinalCTA({ onOpenBooking, onOpenProject }) {
           </div>
 
           <h2 className="fn-cta__title">
-            HAVE AN IDEA? <br />
-            <span className="fn-cta__title-gradient">LET'S MAKE IT REAL.</span>
+            Have An Idea? <br />
+            <span className="fn-cta__title-gradient">Let's Make It Real.</span>
           </h2>
 
           <p className="fn-cta__lead">

@@ -1,115 +1,97 @@
-// HowWeWork.jsx
 import React from 'react';
+import { ArrowRight } from 'lucide-react';
 import './HowWeWork.css';
 
 const steps = [
   {
     number: "01",
-    phase: "Discover",
-    title: "Understanding the Terrain",
-    desc: "We analyze your business idea, market landscape, target customers, and core objectives to establish a solid baseline.",
-    tags: ["Market Viability", "User Personas", "Core Objectives"]
+    color: "#9ae1d7", // Teal
+    title: "Discover",
+    desc: "Analyze business landscape, user personas, and target viability to establish baseline metrics.",
   },
   {
     number: "02",
-    phase: "Design the Route",
-    title: "The Growth Blueprint",
-    desc: "We craft your strategic Growth Plan, revenue model, technical architecture, and go-to-market execution roadmap.",
-    tags: ["Monetization Model", "System Architecture", "Route Planning"]
+    color: "#cbc1eb", // Soft Purple
+    title: "Design Route",
+    desc: "Architecting revenue models, system blueprints, and conversion-focused customer journeys.",
   },
   {
     number: "03",
-    phase: "Build",
-    title: "Full-Stack Development",
-    desc: "We build your website, mobile applications, booking engines, ERP, and bespoke AI automations with clean, scalable code.",
-    tags: ["Web & App", "Custom ERP", "AI Automations"]
+    color: "#b1d8e9", // Sky Blue
+    title: "Build Systems",
+    desc: "Engineering scalable web platforms, native mobile applications, custom ERP, and autonomous AI.",
   },
   {
     number: "04",
-    phase: "Connect",
-    title: "Ecosystem Integration",
-    desc: "We integrate every component into a unified operational pipeline where all data, funnels, and workflows sync in real time.",
-    tags: ["API Pipelines", "Unified Data", "Single Ecosystem"]
+    color: "#b2e6c5", // Leaf Green
+    title: "Connect",
+    desc: "Unifying funnels, payments, inventory, and back-office databases into a single pipeline.",
   },
   {
     number: "05",
-    phase: "Hand Over",
-    title: "You Take the Wheel",
-    desc: "We deliver full system ownership, comprehensive operational documentation, and the complete growth roadmap. You drive.",
-    tags: ["System Transfer", "SOP Delivery", "Full Ownership"]
+    color: "#e9c6a9", // Warm Coral
+    title: "Hand Over",
+    desc: "Delivering complete code ownership, operational documentation, and turnkey architecture.",
   }
 ];
 
-const HowWeWork = () => {
+export default function HowWeWork({ onOpenProject }) {
   return (
-    <section className="hww-section">
-      <div className="hww-glow" />
-
-      <div className="hww-container">
+    <section className="hww-clean-section">
+      <div className="hww-clean-container">
         
         {/* Header Block */}
-        <div className="hww-header">
-          <div className="hww-badge">
-            <span className="hww-beacon" />
-            <span>EXECUTION FRAMEWORK</span>
-          </div>
-
-          <h2 className="hww-title">
+        <div className="hww-clean-header" data-aos="fade-up">
+          <h2 className="hww-clean-title">
             How We Work.<br />
-            <span className="hww-gradient-text">From Discovery to Full Control.</span>
+            <span className="hww-title-gradient">From Discovery to Full Control.</span>
           </h2>
-
-          <p className="hww-subtitle">
-            A battle-tested 5-step lifecycle designed to turn complex business ideas 
-            into fully integrated, autonomous digital operations.
-          </p>
+          
         </div>
 
-        {/* 5-Step Process Track */}
-        <div className="hww-timeline">
-          <div className="hww-line-track" />
-
-          {steps.map((item, index) => (
-            <div key={item.number} className={`hww-step-card ${index === steps.length - 1 ? 'final-step' : ''}`}>
+        {/* Seamless 5-Step Track (No White Card Box) */}
+        <div className="hww-pure-track">
+          {steps.map((item) => (
+            <div key={item.number} className="hww-pure-col">
               
-              <div className="hww-step-indicator">
-                <span className="hww-number">{item.number}</span>
-                <span className="hww-dot" />
+              {/* Reference 3D Paper-Cut Pocket Slot */}
+              <div className="hww-slot-wrapper">
+                <span className="hww-slot-number" style={{ color: item.color }}>
+                  {item.number}
+                </span>
+                {/* Visual slit with realistic shadow underneath */}
+                <div className="hww-slit-shelf" />
               </div>
 
-              <div className="hww-step-body">
-                <span className="hww-phase-tag">{item.phase}</span>
-                <h3 className="hww-step-heading">{item.title}</h3>
-                <p className="hww-step-desc">{item.desc}</p>
-                
-                <div className="hww-tag-group">
-                  {item.tags.map((tag, i) => (
-                    <span key={i} className="hww-pill">{tag}</span>
-                  ))}
-                </div>
+              {/* Title & Description */}
+              <div className="hww-pure-content" data-aos="fade-up">
+                <h3 className="hww-pure-title">{item.title}</h3>
+                <p className="hww-pure-desc">{item.desc}</p>
               </div>
+
+              
 
             </div>
           ))}
         </div>
 
-        {/* Bottom Callout Banner */}
-        <div className="hww-handoff-banner">
-          <div className="hww-handoff-meta">
-            <span className="hww-handoff-status">DESTINATION REACHED</span>
-            <p className="hww-handoff-text">
-              Zero vendor lock-in. Full code access, standard operating procedures, and technical autonomy handed to your team.
-            </p>
+        {/* Minimal Action Row */}
+        <div className="hww-clean-footer">
+          <div className="hww-footer-note">
+            <span className="hww-green-dot" />
+            <span>Turnkey Hand-off • Zero Vendor Dependency</span>
           </div>
-          <a href="#contact" className="hww-cta-btn">
-            Initiate Step 01
-            <span>→</span>
-          </a>
+          <button 
+            type="button" 
+            className="hww-action-btn"
+            onClick={onOpenProject}
+          >
+            <span>Initiate Step 01</span>
+            <ArrowRight size={15} />
+          </button>
         </div>
 
       </div>
     </section>
   );
-};
-
-export default HowWeWork;
+}

@@ -1,0 +1,327 @@
+
+.rotate-section {
+  background-color: #f8fafc;
+  padding: 90px 24px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+  overflow: hidden;
+}
+
+.rotate-container {
+  max-width: 1140px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Header */
+.rotate-header {
+  max-width: 600px;
+  margin: 0 auto 44px;
+}
+
+.rotate-pill {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+
+.rotate-title {
+  font-size: 62px;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  margin: 0 0 10px;
+}
+
+.rotate-sub {
+  font-size: 15.5px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* 3D Stage & Card Stack Wrapper */
+.rotate-stage-wrapper {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.rotate-cards-stack {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  transform-style: preserve-3d;
+}
+
+/* Vibrant Colorful Card Base */
+.card-3d {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 24px;
+  padding: 28px 24px;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  box-sizing: border-box;
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+              opacity 0.6s ease,
+              filter 0.6s ease,
+              box-shadow 0.6s ease;
+}
+
+/* Soft Gloss Overlay */
+.card-sheen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+/* 3D Positions Relative to Center */
+
+/* Center Active Card */
+.card-3d.card-center {
+  transform: translate3d(0, 0, 0) scale(1) rotateY(0deg);
+  z-index: 10;
+  opacity: 1;
+  filter: blur(0px);
+}
+
+/* Right 1 */
+.card-3d.card-right-1 {
+  transform: translate3d(210px, 0, -80px) scale(0.85) rotateY(-15deg);
+  z-index: 5;
+  opacity: 0.75;
+  filter: blur(0.5px);
+}
+
+/* Right 2 */
+.card-3d.card-right-2 {
+  transform: translate3d(350px, 0, -160px) scale(0.7) rotateY(-25deg);
+  z-index: 2;
+  opacity: 0.35;
+  filter: blur(2px);
+}
+
+/* Left 1 */
+.card-3d.card-left-1 {
+  transform: translate3d(-210px, 0, -80px) scale(0.85) rotateY(15deg);
+  z-index: 5;
+  opacity: 0.75;
+  filter: blur(0.5px);
+}
+
+/* Left 2 */
+.card-3d.card-left-2 {
+  transform: translate3d(-350px, 0, -160px) scale(0.7) rotateY(25deg);
+  z-index: 2;
+  opacity: 0.35;
+  filter: blur(2px);
+}
+
+/* Hidden Cards */
+.card-3d.card-hidden {
+  transform: translate3d(0, 0, -250px) scale(0.5);
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Card Content Structure */
+.card-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+.card-icon-bubble {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+}
+
+.card-category-lbl {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 4px 10px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+}
+
+.card-body-content {
+  margin: 16px 0;
+  z-index: 2;
+}
+
+.card-main-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.card-description {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+}
+
+.card-footer-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: rgba(255, 255, 255, 0.95);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 14px;
+  z-index: 2;
+}
+
+.card-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px #ffffff;
+}
+
+/* Navigation Buttons */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+  transition: all 0.2s ease;
+}
+
+.nav-btn:hover {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  transform: translateY(-50%) scale(1.06);
+}
+
+.nav-prev { left: 40px; }
+.nav-next { right: 40px; }
+
+/* Indicator Dots */
+.rotate-dots-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.dot-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dot-indicator.active {
+  width: 24px;
+  border-radius: 9999px;
+  background: #2563eb;
+}
+
+/* Responsive Styles */
+@media (max-width: 860px) {
+  .rotate-stage-wrapper {
+    height: 350px;
+  }
+
+  .rotate-cards-stack {
+    width: 270px;
+    height: 300px;
+  }
+
+  .card-3d.card-right-1 {
+    transform: translate3d(120px, 0, -60px) scale(0.85) rotateY(-12deg);
+  }
+
+  .card-3d.card-left-1 {
+    transform: translate3d(-120px, 0, -60px) scale(0.85) rotateY(12deg);
+  }
+
+  .card-3d.card-right-2,
+  .card-3d.card-left-2 {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .nav-prev { left: 10px; }
+  .nav-next { right: 10px; }
+}
+
+@media (max-width: 480px) {
+  .rotate-title {
+    font-size: 28px;
+  }
+
+  .rotate-cards-stack {
+    width: 250px;
+    height: 290px;
+  }
+
+  .card-3d.card-right-1,
+  .card-3d.card-left-1 {
+    opacity: 0.15;
+  }
+}

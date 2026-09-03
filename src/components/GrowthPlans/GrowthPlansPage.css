@@ -1,12 +1,13 @@
-/* Base Page & Container */
+/* =========================================================
+   Ultra-Minimal Swiss Style - Growth Plans Page
+   Palette: #F8FAFC (Base Slate), #FFFFFF, #2563EB (Royal Blue)
+========================================================= */
+
 .gp-page {
-  background-color: #030712;
-  color: #f8fafc;
+  background-color: #f8fafc;
+  color: #0f172a;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  overflow: hidden;
-  padding-top: 100px;
   min-height: 100vh;
-  box-sizing: border-box;
 }
 
 .gp-container {
@@ -15,243 +16,335 @@
   padding: 0 24px;
 }
 
-/* 1. Hero Section */
-.gp-hero {
-  position: relative;
-  padding: 80px 0 70px;
-  text-align: center;
-}
+/* =========================================================
+   Common Section Headers
+========================================================= */
 
-.gp-hero-glow {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 700px;
-  height: 380px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.16) 0%, rgba(168, 85, 247, 0.1) 40%, transparent 70%);
-  filter: blur(90px);
-  pointer-events: none;
-}
-
-.gp-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #c084fc;
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  padding: 6px 14px;
-  border-radius: 999px;
-  margin-bottom: 24px;
-}
-
-.gp-accent-icon {
-  color: #38bdf8;
-}
-
-.gp-hero-title {
-  font-size: clamp(36px, 5vw, 64px);
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.03em;
-  margin: 0 0 20px;
-  color: #ffffff;
-}
-
-.gp-gradient-text {
-  background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.gp-hero-sub {
-  font-size: 16px;
-  color: #94a3b8;
-  line-height: 1.6;
-  max-width: 680px;
-  margin: 0 auto 34px;
-}
-
-.gp-hero-actions {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.gp-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 26px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
-  color: #ffffff;
-  font-size: 13px;
-  font-weight: 700;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-}
-
-.gp-btn-primary:hover {
-  opacity: 0.95;
-  transform: translateY(-2px);
-}
-
-.gp-btn-secondary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 22px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #f8fafc;
-  font-size: 13px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.gp-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: #38bdf8;
-  transform: translateY(-2px);
-}
-
-/* Common Section Headers */
 .gp-section-header {
   text-align: center;
-  max-width: 720px;
-  margin: 0 auto 50px;
+  max-width: 680px;
+  margin: 0 auto 48px auto;
 }
 
 .gp-section-tag {
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.5px;
-  color: #38bdf8;
+  letter-spacing: 1.4px;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  display: inline-block;
+  margin-bottom: 14px;
   text-transform: uppercase;
-  display: block;
-  margin-bottom: 10px;
 }
 
 .gp-section-title {
-  font-size: clamp(28px, 3.8vw, 42px);
+  font-size: clamp(34px, 4.2vw, 48px);
   font-weight: 800;
-  letter-spacing: -0.02em;
-  margin: 0 0 12px;
-  color: #ffffff;
+  letter-spacing: -0.025em;
+  line-height: 1.14;
+  margin: 0 0 14px 0;
+  color: #0f172a;
+}
+
+.gp-gradient-text {
+  background: linear-gradient(135deg, #0f172a 20%, #2563eb 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .gp-section-desc {
-  font-size: 15px;
-  color: #94a3b8;
+  font-size: 15.5px;
+  color: #64748b;
   line-height: 1.6;
   margin: 0;
 }
 
-/* 2. 8 Pillars Grid */
+/* =========================================================
+   1. Single Image Spotlight with Liquid Glassmorphism Hover
+========================================================= */
+
 .gp-pillars-section {
-  padding: 70px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 90px 0 70px;
 }
 
-.gp-pillars-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-}
-
-.gp-pillar-card {
-  background: rgba(11, 15, 25, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 22px 18px;
-  display: flex;
-  flex-direction: column;
+.gp-master-spotlight {
   position: relative;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  width: 100%;
+  height: 520px;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+  border: 1px solid #e2e8f0;
+  cursor: pointer;
+  background-color: #0f172a;
 }
 
-.gp-pillar-card:hover,
-.gp-pillar-card.is-active {
-  transform: translateY(-4px);
-  border-color: rgba(168, 85, 247, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(99, 102, 241, 0.08);
+/* Background Visual Photo */
+.gp-spotlight-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+  filter: brightness(0.88);
 }
 
-.gp-pillar-top {
-  display: flex;
-  justify-content: space-between;
+/* Default Resting View */
+.gp-spotlight-resting {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px;
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.82) 100%);
+  color: #ffffff;
+  z-index: 2;
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.gp-resting-pill {
+  display: inline-flex;
   align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(8px);
+  padding: 5px 14px;
+  border-radius: 9999px;
   margin-bottom: 12px;
 }
 
-.gp-pillar-num {
+.gp-resting-title {
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+  letter-spacing: -0.01em;
+}
+
+.gp-resting-sub {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+}
+
+/* =========================================================
+   Glassmorphism Frosted Blur Reveal on Hover
+========================================================= */
+
+.gp-spotlight-glass-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  opacity: 0;
+  visibility: hidden;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 40px;
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              visibility 0.4s ease;
+}
+
+.gp-master-spotlight:hover .gp-spotlight-bg {
+  transform: scale(1.05);
+  filter: brightness(0.6);
+}
+
+.gp-master-spotlight:hover .gp-spotlight-resting {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+}
+
+.gp-master-spotlight:hover .gp-spotlight-glass-overlay {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Internal Layout Inside Frosted Glass */
+.gp-glass-inner {
+  width: 100%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 36px;
+  align-items: stretch;
+}
+
+/* Left Nav Pills */
+.gp-glass-nav {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 18px;
+  padding: 20px 16px;
+}
+
+.gp-glass-label {
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  color: #93c5fd;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-left: 6px;
+}
+
+.gp-nav-pills {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+  max-height: 380px;
+  padding-right: 4px;
+}
+
+.gp-nav-pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gp-nav-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.gp-nav-pill.is-active {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+
+.pill-num {
   font-size: 11px;
   font-weight: 800;
-  color: #c084fc;
-  background: rgba(168, 85, 247, 0.12);
-  padding: 3px 8px;
-  border-radius: 6px;
+  opacity: 0.8;
 }
 
-.gp-pillar-cat {
-  font-size: 10px;
-  font-weight: 700;
-  color: #64748b;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.gp-pillar-title {
-  font-size: 16px;
-  font-weight: 700;
-  color: #f8fafc;
-  margin: 0 0 6px;
-}
-
-.gp-pillar-q {
-  font-size: 12px;
-  font-weight: 600;
-  color: #38bdf8;
-  margin: 0 0 10px;
-}
-
-.gp-pillar-desc {
-  font-size: 13px;
-  color: #94a3b8;
-  line-height: 1.5;
-  margin: 0 0 16px;
+.pill-name {
   flex: 1;
 }
 
-.gp-pillar-bar {
-  height: 2px;
-  width: 0%;
-  background: linear-gradient(90deg, #38bdf8, #a855f7);
-  transition: width 0.3s ease;
+/* Right Detail Card Inside Glass */
+.gp-glass-detail-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  color: #0f172a;
 }
 
-.gp-pillar-card:hover .gp-pillar-bar,
-.gp-pillar-card.is-active .gp-pillar-bar {
-  width: 100%;
+.gp-detail-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
 }
 
-/* 3. Deliverables Section */
+.gp-detail-category {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #2563eb;
+}
+
+.gp-detail-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+.gp-detail-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.015em;
+}
+
+.gp-detail-question {
+  font-size: 15px;
+  font-weight: 600;
+  color: #2563eb;
+  margin: 0 0 14px 0;
+  font-style: italic;
+}
+
+.gp-detail-desc {
+  font-size: 14.5px;
+  color: #475569;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+}
+
+.gp-detail-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 20px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.gp-detail-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.22);
+  transition: all 0.2s ease;
+}
+
+.gp-detail-cta:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   2. Deliverables Section
+========================================================= */
+
 .gp-deliverables-section {
-  padding: 70px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(11, 15, 25, 0.4);
+  padding: 80px 0;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
 }
 
 .gp-deliverables-grid {
@@ -261,57 +354,63 @@
 }
 
 .gp-deliverable-card {
-  background: rgba(11, 15, 25, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 18px;
-  padding: 24px 20px;
+  padding: 26px 22px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.gp-deliverable-card:hover {
+  transform: translateY(-3px);
+  border-color: #cbd5e1;
 }
 
 .gp-deliverable-icon {
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: rgba(56, 189, 248, 0.1);
-  border: 1px solid rgba(56, 189, 248, 0.25);
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
   display: grid;
   place-items: center;
-  color: #38bdf8;
+  color: #2563eb;
   margin-bottom: 16px;
 }
 
 .gp-deliverable-title {
-  font-size: 16px;
+  font-size: 16.5px;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
   margin: 0 0 8px;
 }
 
 .gp-deliverable-desc {
-  font-size: 13px;
-  color: #94a3b8;
+  font-size: 13.5px;
+  color: #475569;
   line-height: 1.55;
   margin: 0;
 }
 
-/* =========================================
-   4. INTERACTIVE SERVICE CALCULATOR SECTION
-   ========================================= */
+/* =========================================================
+   3. Calculator Section
+========================================================= */
+
 .gp-calculator-section {
-  padding: 80px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(11, 15, 25, 0.4);
+  padding: 85px 0;
+  border-top: 1px solid #e2e8f0;
+  background: #f8fafc;
 }
 
 .gp-calc-card {
-  background: rgba(11, 15, 25, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 24px;
   padding: 36px;
   max-width: 1040px;
   margin: 0 auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(14px);
-  box-sizing: border-box;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.04);
 }
 
 .gp-calc-step {
@@ -319,16 +418,15 @@
 }
 
 .gp-calc-step-label {
-  font-size: 10.5px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.2px;
+  letter-spacing: 1px;
   color: #64748b;
   text-transform: uppercase;
   display: block;
   margin-bottom: 12px;
 }
 
-/* Service Chips */
 .gp-calc-chips {
   display: flex;
   flex-wrap: wrap;
@@ -339,36 +437,40 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 9px 14px;
-  color: #94a3b8;
-  font-size: 12.5px;
+  color: #475569;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .gp-calc-chip:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
 }
 
 .gp-calc-chip.is-selected {
-  background: rgba(99, 102, 241, 0.15);
-  border-color: #6366f1;
-  color: #ffffff;
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #2563eb;
 }
 
 .gp-calc-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #38bdf8;
+  background: #94a3b8;
 }
 
-/* Hours Strip */
+.gp-calc-chip.is-selected .gp-calc-dot {
+  background: #2563eb;
+}
+
 .gp-calc-hours-strip {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -380,11 +482,11 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
   padding: 12px;
-  color: #94a3b8;
+  color: #475569;
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
@@ -392,18 +494,18 @@
 }
 
 .gp-calc-hour-btn:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
 }
 
 .gp-calc-hour-btn.is-active {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.25), rgba(168, 85, 247, 0.25));
-  border-color: #6366f1;
+  background: #2563eb;
+  border-color: #2563eb;
   color: #ffffff;
-  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
 }
 
-/* Urgency Grid */
 .gp-calc-urgency-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -411,8 +513,8 @@
 }
 
 .gp-calc-urgency-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 12px;
   padding: 14px 16px;
   cursor: pointer;
@@ -421,34 +523,33 @@
 }
 
 .gp-calc-urgency-btn:hover {
-  border-color: rgba(56, 189, 248, 0.4);
+  border-color: #cbd5e1;
 }
 
 .gp-calc-urgency-btn.is-active {
-  background: rgba(56, 189, 248, 0.1);
-  border-color: #38bdf8;
+  background: #eff6ff;
+  border-color: #2563eb;
 }
 
 .gp-calc-urgency-title {
   display: block;
   font-size: 12px;
   font-weight: 800;
-  color: #ffffff;
+  color: #0f172a;
   margin-bottom: 2px;
 }
 
 .gp-calc-urgency-sub {
-  font-size: 11px;
-  color: #94a3b8;
+  font-size: 11.5px;
+  color: #475569;
 }
 
-/* Summary / Action Panel */
 .gp-calc-summary {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 16px;
   padding: 22px 26px;
   margin-top: 32px;
@@ -456,7 +557,7 @@
 }
 
 .gp-calc-summary-tag {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 1px;
   color: #64748b;
@@ -468,8 +569,8 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
-  color: #cbd5e1;
+  font-size: 13.5px;
+  color: #334155;
   font-weight: 600;
 }
 
@@ -482,57 +583,62 @@
 .gp-calc-total-val {
   font-size: 32px;
   font-weight: 800;
-  color: #10b981;
-  font-family: monospace;
+  color: #0f172a;
 }
 
 .gp-calc-submit-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 12px 22px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  padding: 13px 22px;
+  border-radius: 11px;
+  background: #2563eb;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   border: none;
   cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.2);
+  transition: all 0.2s ease;
 }
 
 .gp-calc-submit-btn:hover {
-  opacity: 0.95;
+  background: #1d4ed8;
   transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.3);
 }
 
-/* 5. Packages Section */
+/* =========================================================
+   4. Tiered Packages Section
+========================================================= */
+
 .gp-packages-section {
-  padding: 80px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 85px 0;
+  border-top: 1px solid #e2e8f0;
+  background: #ffffff;
 }
 
 .gp-packages-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  gap: 24px;
   align-items: stretch;
 }
 
 .gp-package-card {
   position: relative;
-  background: rgba(11, 15, 25, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 22px;
   padding: 32px 24px;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
 }
 
 .gp-package-card.is-popular {
-  border-color: rgba(168, 85, 247, 0.5);
-  background: rgba(15, 23, 42, 0.9);
-  box-shadow: 0 0 40px rgba(99, 102, 241, 0.15);
+  border-color: #2563eb;
+  box-shadow: 0 8px 30px rgba(37, 99, 235, 0.12);
 }
 
 .gp-popular-badge {
@@ -540,20 +646,20 @@
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  background: #2563eb;
   color: #ffffff;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 800;
   letter-spacing: 1px;
   padding: 4px 14px;
-  border-radius: 999px;
+  border-radius: 9999px;
 }
 
 .gp-package-badge {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #38bdf8;
+  color: #2563eb;
   text-transform: uppercase;
   margin-bottom: 8px;
   display: block;
@@ -562,30 +668,31 @@
 .gp-package-name {
   font-size: 21px;
   font-weight: 800;
-  color: #f8fafc;
+  color: #0f172a;
   margin: 0 0 8px;
 }
 
 .gp-package-desc {
-  font-size: 13px;
-  color: #94a3b8;
-  line-height: 1.5;
+  font-size: 13.5px;
+  color: #475569;
+  line-height: 1.55;
   margin: 0 0 16px;
 }
 
 .gp-package-time {
   display: inline-block;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
-  color: #c084fc;
-  background: rgba(168, 85, 247, 0.1);
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
   padding: 4px 10px;
   border-radius: 6px;
 }
 
 .gp-package-divider {
   border: 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid #e2e8f0;
   margin: 18px 0;
 }
 
@@ -595,7 +702,7 @@
   margin: 0 0 28px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   flex: 1;
 }
 
@@ -603,13 +710,13 @@
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  font-size: 13px;
-  color: #cbd5e1;
+  font-size: 13.5px;
+  color: #334155;
   line-height: 1.45;
 }
 
 .gp-check-icon {
-  color: #10b981;
+  color: #16a34a;
   flex-shrink: 0;
   margin-top: 2px;
 }
@@ -620,9 +727,9 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 12.5px;
+  padding: 13px;
+  border-radius: 11px;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
   border: none;
@@ -630,70 +737,80 @@
 }
 
 .btn-highlight {
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  background: #2563eb;
   color: #ffffff;
-  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
 }
 
 .btn-highlight:hover {
-  opacity: 0.95;
+  background: #1d4ed8;
   transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
 }
 
 .btn-subtle {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #f8fafc;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
 }
 
 .btn-subtle:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #2563eb;
 }
 
-/* 6. Philosophy Banner */
+/* =========================================================
+   5. Philosophy Banner
+========================================================= */
+
 .gp-phil-banner {
   padding: 70px 0;
+  background: #f8fafc;
 }
 
 .gp-phil-box {
-  background: linear-gradient(135deg, rgba(30, 27, 75, 0.7), rgba(11, 15, 25, 0.95));
-  border: 1px solid rgba(168, 85, 247, 0.3);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 24px;
   padding: 48px 36px;
   text-align: center;
   max-width: 900px;
   margin: 0 auto;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.04);
 }
 
 .gp-phil-tag {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 1.5px;
-  color: #38bdf8;
+  color: #2563eb;
   margin-bottom: 10px;
 }
 
 .gp-phil-title {
-  font-size: clamp(26px, 3.8vw, 38px);
+  font-size: clamp(26px, 3.8vw, 36px);
   font-weight: 800;
-  color: #ffffff;
+  color: #0f172a;
   margin: 0 0 14px;
 }
 
 .gp-phil-desc {
-  font-size: 14.5px;
-  color: #94a3b8;
+  font-size: 15px;
+  color: #475569;
   line-height: 1.65;
   max-width: 680px;
   margin: 0 auto;
 }
 
-/* 7. FAQs */
+/* =========================================================
+   6. FAQs
+========================================================= */
+
 .gp-faq-section {
   padding: 70px 0 100px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid #e2e8f0;
+  background: #ffffff;
 }
 
 .gp-faq-list {
@@ -705,43 +822,61 @@
 }
 
 .gp-faq-item {
-  background: rgba(11, 15, 25, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 14px;
-  padding: 18px 22px;
+  padding: 20px 22px;
   cursor: pointer;
-  transition: border-color 0.2s ease;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+  transition: all 0.2s ease;
 }
 
 .gp-faq-item:hover,
 .gp-faq-item.is-open {
-  border-color: rgba(99, 102, 241, 0.4);
+  border-color: #2563eb;
 }
 
 .gp-faq-q {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 14.5px;
+  font-size: 15px;
   font-weight: 700;
-  color: #f8fafc;
+  color: #0f172a;
 }
 
 .gp-faq-toggle {
   font-size: 18px;
-  color: #c084fc;
+  font-weight: 700;
+  color: #2563eb;
 }
 
 .gp-faq-a {
-  font-size: 13.5px;
-  color: #94a3b8;
+  font-size: 14px;
+  color: #475569;
   line-height: 1.6;
   margin: 12px 0 0;
 }
 
-/* Responsive */
+/* =========================================================
+   Responsive Breakpoints
+========================================================= */
+
 @media (max-width: 1080px) {
-  .gp-pillars-grid,
+  .gp-glass-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .gp-master-spotlight {
+    height: auto;
+    min-height: 540px;
+  }
+
+  .gp-glass-nav {
+    display: none;
+  }
+
   .gp-deliverables-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -753,40 +888,37 @@
   }
 }
 
-@media (max-width: 860px) {
+@media (max-width: 768px) {
+  .gp-section-title {
+    font-size: 30px;
+  }
+
   .gp-calc-hours-strip {
     grid-template-columns: repeat(3, 1fr);
   }
+
   .gp-calc-urgency-grid {
     grid-template-columns: 1fr;
   }
+
   .gp-calc-summary {
     flex-direction: column;
     align-items: flex-start;
   }
-}
 
-@media (max-width: 640px) {
-  .gp-hero {
-    padding: 60px 0 40px;
-  }
-
-  .gp-hero-actions {
-    flex-direction: column;
-  }
-
-  .gp-btn-primary,
-  .gp-btn-secondary {
-    width: 100%;
-    justify-content: center;
-  }
-
-  .gp-pillars-grid,
   .gp-deliverables-grid {
     grid-template-columns: 1fr;
   }
 
-  .gp-calc-card {
+  .gp-spotlight-resting {
+    padding: 24px;
+  }
+
+  .gp-spotlight-glass-overlay {
+    padding: 20px;
+  }
+
+  .gp-glass-detail-card {
     padding: 24px 18px;
   }
 }

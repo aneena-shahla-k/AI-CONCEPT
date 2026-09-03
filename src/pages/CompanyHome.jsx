@@ -11,13 +11,13 @@ import HeroSection from "../components/CompanyHome/HeroSection";
 import CoreConcept from "../components/CompanyHome/CoreConcept";
 import WhatWeBuild from "../components/CompanyHome/WhatWeBuild";
 import AISolutions from "../components/CompanyHome/AISolutions";
-import ConnectedEcosystem from "../components/CompanyHome/ConnectedEcosystem";
 import GrowthPlan from "../components/CompanyHome/GrowthPlan";
 import GpsPhilosophy from "../components/CompanyHome/GpsPhilosophy";
 import HowWeWork from "../components/CompanyHome/HowWeWork";
 import IndustriesWeServe from "../components/CompanyHome/IndustriesWeServe";
-import CtaBanner from "../components/CompanyHome/CtaBanner";
+// import CtaBanner from "../components/CompanyHome/CtaBanner";
 import TimeSprintSelector from "../components/CompanyHome/TimeSprintSelector";
+import EcosystemCarousel from "../components/CompanyHome/EcosystemCarousel";
 
 export default function CompanyHome({ onNavigate, onOpenProject }) {
   const [isAiDrawerOpen, setIsAiDrawerOpen] = useState(false);
@@ -32,17 +32,17 @@ export default function CompanyHome({ onNavigate, onOpenProject }) {
       <AISolutions onNavigate={onNavigate} />
       <TimeSprintSelector onOpenProject={onOpenProject} />
       <MarqueeSection />
-      <ConnectedEcosystem />
+      <EcosystemCarousel/>
       <GrowthPlan onNavigate={onNavigate} onOpenProject={onOpenProject} />
       <GpsPhilosophy />
       <HowWeWork />
       <IndustriesWeServe onNavigate={onNavigate} />
       
       {/* Connected 1:1 Booking modal & Start A Project triggers */}
-      <CtaBanner 
+      {/* <CtaBanner 
         onOpenBooking={() => setIsBookingOpen(true)} 
         onOpenProject={onOpenProject}
-      />
+      /> */}
 
       <SpeedSection />
       <ReviewSection />

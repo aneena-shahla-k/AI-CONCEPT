@@ -1,187 +1,259 @@
-import React from "react";
-import { ArrowUpRight, CheckCircle2,Clock, ShieldCheck, ArrowLeft } from "lucide-react";
+import React, { useState } from "react";
+import { 
+  ArrowLeft, 
+  ArrowUpRight, 
+  Layers, 
+  Cpu, 
+  Zap, 
+  Check, 
+  Clock, 
+  ShieldCheck 
+} from "lucide-react";
 import "./SolutionsDetailPage.css";
 
 export const solutionsData = {
   "website-development": {
     title: "Websites & Digital Platforms",
     badge: "FRONTEND & WEB SYSTEMS",
-    tagline: "Ultra-Fast, Canvas-Driven Web Experiences for High Conversion",
-    lead: "We build decoupled, headless web applications and corporate hubs with modern frameworks, sub-second load times, and custom back-office CMS architectures.",
-    timeline: "24h - 48h Sprint Available",
-    deliverables: [
-      "Custom React / Next.js Headless Architecture",
-      "Interactive 3D / GSAP Canvas Micro-Interactions",
-      "Dynamic Headless CMS & Self-Serve Admin Portal",
-      "Complete Mobile PWA & Lighthouse 95+ Performance",
-      "SEO Structured Schemas & Edge CDN Deployment"
+    tagline: "Sub-second canvas-driven web experiences.",
+    image: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=1000&q=80",
+    specs: [
+      { label: "Architecture", value: "Headless Decoupled Next.js" },
+      { label: "Performance", value: "Lighthouse 98+ PWA" },
+      { label: "Animation", value: "Scroll-driven GSAP / Canvas" },
+      { label: "Deployment", value: "Vercel Edge Network" }
     ],
-    stack: ["React.js", "Next.js", "Tailwind CSS", "GSAP", "Node.js", "Vercel Edge"],
+    stack: ["React.js", "Next.js", "Tailwind CSS", "GSAP", "Vercel Edge"],
+    turnaround: "24h - 48h Sprint",
+    ownership: "100% Code & Repo Transfer"
   },
   "e-commerce": {
     title: "E-Commerce Solutions",
     badge: "COMMERCE & D2C ENGINE",
-    tagline: "Headless Storefronts Synced Directly with Inventory & Multi-Gateway Rails",
-    lead: "Moving away from slow, bloated templates to lightning-fast custom storefronts equipped with 1-click checkouts, personalized bundle engines, and live stock webhooks.",
-    timeline: "48h - 72h Sprint Available",
-    deliverables: [
-      "Custom High-Speed Storefront (PWA Ready)",
-      "Multi-Currency Payment Rails (Razorpay, Stripe, Apple Pay)",
-      "Real-Time Warehouse & POS Stock Synchronization",
-      "Automated Order Tracking via WhatsApp / SMS Rails",
-      "Cart Abandonment Re-engagement Sequences"
+    tagline: "Headless storefronts with direct inventory webhooks.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1000&q=80",
+    specs: [
+      { label: "Architecture", value: "Shopify / Medusa Headless" },
+      { label: "Payment Rails", value: "Razorpay, Stripe & Apple Pay" },
+      { label: "Sync Latency", value: "Instant POS Webhooks" },
+      { label: "Checkout", value: "1-Click Accelerated Flow" }
     ],
-    stack: ["Shopify Headless", "Next.js Commerce", "Node.js", "Redis", "Razorpay Rails"],
+    stack: ["Next.js Commerce", "Node.js", "Redis", "Razorpay Rails"],
+    turnaround: "48h - 72h Sprint",
+    ownership: "100% Store & Database Access"
   },
   "app-development": {
     title: "Mobile App Development",
     badge: "IOS & ANDROID ECOSYSTEM",
-    tagline: "Native-Speed Cross-Platform Mobile Applications Built for Continuous Scale",
-    lead: "We develop responsive, cross-platform apps with offline database sync, push notification triggers, and encrypted client data storage.",
-    timeline: "72h+ Modular Sprint",
-    deliverables: [
-      "Unified iOS and Android Codebase",
-      "Offline-First Local Storage & Database Sync",
-      "Custom Push Notification & Retargeting Engine",
-      "Biometric Authentication & Tokenized User Sessions",
-      "Full App Store & Google Play Console Live Deployment"
+    tagline: "Native-speed cross-platform mobile pipelines.",
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1000&q=80",
+    specs: [
+      { label: "Codebase", value: "Single Unified React Native" },
+      { label: "Offline Storage", value: "Local SQLite / WatermelonDB" },
+      { label: "Security", value: "Biometric Session Tokens" },
+      { label: "Distribution", value: "Direct App Store / Play Store" }
     ],
-    stack: ["React Native", "Flutter", "Firebase", "PostgreSQL", "Expo EAS"],
+    stack: ["React Native", "Expo EAS", "Firebase", "PostgreSQL"],
+    turnaround: "72h+ Modular Sprint",
+    ownership: "Full Source & Console Ownership"
   },
   "booking-platforms": {
-    title: "Booking & Reservation Systems",
-    badge: "REAL-TIME SCHEDULING",
-    tagline: "Zero-Friction Reservation Portals for Appointments, Hotels, and Events",
-    lead: "Automate appointment booking, staff slot allocation, automated calendar syncing, and instant upfront deposit processing.",
-    timeline: "30h - 48h Sprint",
-    deliverables: [
-      "Interactive Dynamic Slot Calendar Matrix",
-      "Multi-Staff & Resource Allocation Engine",
-      "Automated WhatsApp & Google Calendar Two-Way Sync",
-      "Upfront Split-Payment & Deposit Gateways",
-      "Client Self-Cancellation & Reschedule Desk"
+    title: "Booking & Scheduling",
+    badge: "REAL-TIME RESERVATION",
+    tagline: "Zero-friction appointment and staff slot allocation.",
+    image: "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1000&q=80",
+    specs: [
+      { label: "Calendar Sync", value: "Two-way Google & Apple Sync" },
+      { label: "Payment Gate", value: "Upfront Split-Deposit" },
+      { label: "Channels", value: "WhatsApp Automated Alerts" },
+      { label: "Self-Serve", value: "Client Reschedule Desk" }
     ],
-    stack: ["React", "Express.js", "PostgreSQL", "Twilio WhatsApp API", "Stripe Connect"],
+    stack: ["React", "Express.js", "PostgreSQL", "Twilio WhatsApp"],
+    turnaround: "30h - 48h Sprint",
+    ownership: "Direct API & Booking Ownership"
   },
   "erp-solutions": {
-    title: "ERP & Business Operations",
+    title: "ERP & Operations",
     badge: "OPERATIONAL NERVOUS SYSTEM",
-    tagline: "Custom Internal Back-Offices Replacing Messy WhatsApp Threads & Sheets",
-    lead: "Centralize your company's CRM, invoice generation, staff payroll, and warehouse dispatches into a unified web console.",
-    timeline: "48h - 72h Core Sprint",
-    deliverables: [
-      "Role-Based Access Control (Admin, Staff, Client, Auditor)",
-      "Real-Time Inventory & Multi-Warehouse Tracking",
-      "Automated PDF Invoicing & Accounting Journal Ledger",
-      "Staff Attendance, Commission & Payroll Modules",
-      "Exportable Financial & Operational BI Analytics"
+    tagline: "Custom web console replacing spreadsheets & chats.",
+    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1000&q=80",
+    specs: [
+      { label: "Access Control", value: "Multi-Role RBAC (4 Levels)" },
+      { label: "Ledger", value: "Auto Invoicing & Journal Export" },
+      { label: "Inventory", value: "Multi-Warehouse Real-Time Sync" },
+      { label: "Staff Desk", value: "Attendance, Commission & Pay" }
     ],
-    stack: ["Node.js / Express", "React Dashboard", "MongoDB / PostgreSQL", "AWS S3"],
+    stack: ["React Dashboard", "Node.js", "MongoDB", "AWS S3"],
+    turnaround: "48h - 72h Sprint",
+    ownership: "100% Internal System Ownership"
   },
   "custom-software": {
-    title: "Custom Software & Cloud Systems",
+    title: "Custom Cloud Software",
     badge: "PROPRIETARY ARCHITECTURE",
-    tagline: "Bespoke SaaS Platforms and High-Throughput API Infrastructure",
-    lead: "Engineered specifically around your non-standard business logic, proprietary data pipelines, and third-party enterprise integrations.",
-    timeline: "Custom Milestone Allocation",
-    deliverables: [
-      "Custom REST / GraphQL API Infrastructure",
-      "Multi-Tenant SaaS Licensing & Subscription Billing",
-      "Encrypted Microservices & Cloud Containerization",
-      "Legacy Database Migration & Data Cleansing",
-      "100% Full Code Repository & Server Ownership Handoff"
+    tagline: "Bespoke SaaS platforms and high-throughput pipelines.",
+    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1000&q=80",
+    specs: [
+      { label: "API Framework", value: "REST / GraphQL Microservices" },
+      { label: "Container", value: "Dockerized Cloud Instances" },
+      { label: "Tenancy", value: "Multi-Tenant SaaS Licensing" },
+      { label: "Migration", value: "Zero-Loss Database Port" }
     ],
-    stack: ["TypeScript", "Node.js", "Docker", "PostgreSQL", "AWS / DigitalOcean"],
+    stack: ["TypeScript", "Docker", "PostgreSQL", "DigitalOcean"],
+    turnaround: "Custom Sprint Allocation",
+    ownership: "Complete IP & Repository Transfer"
   },
   "ai-solutions": {
-    title: "AI Solutions & Neural Automation",
-    badge: "AUTONOMOUS OPERATIONS",
-    tagline: "Custom AI Agents, Document OCR, and RAG Pipelines Trained on Business Data",
-    lead: "Embed private conversational assistants and automated operational bots directly into your customer desk and company database.",
-    timeline: "24h - 48h Sprint",
-    deliverables: [
-      "Domain-Trained Autonomous Customer Triage Bot",
-      "Internal Document / Invoice OCR Parsing Pipeline",
-      "RAG Vector Database Connected to Company Knowledge",
-      "Automated Lead Scoring & CRM Enrichment Agents",
-      "Zero Data Leakage Local LLM / Cloud Privacy Gateways"
+    title: "AI Solutions & Neural Bots",
+    badge: "AUTONOMOUS AGENTS",
+    tagline: "Domain-trained AI bots and private OCR pipelines.",
+    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1000&q=80",
+    specs: [
+      { label: "LLM Pipeline", value: "RAG Vector Store (Pinecone)" },
+      { label: "Data Parsing", value: "Automated Invoice / Doc OCR" },
+      { label: "Privacy Gate", value: "Zero Data Leakage Local API" },
+      { label: "Trigger Agent", value: "Autonomous Event-Driven CRM" }
     ],
-    stack: ["Python", "FastAPI", "OpenAI / Claude API", "LangChain", "Pinecone / pgvector"],
+    stack: ["Python", "FastAPI", "OpenAI / Claude API", "LangChain"],
+    turnaround: "24h - 48h Sprint",
+    ownership: "Model Embeddings & Data Ownership"
   }
 };
 
 export default function SolutionsDetailPage({ solutionKey = "website-development", onBack, onOpenProject }) {
-  const data = solutionsData[solutionKey] || solutionsData["website-development"];
+  const [activeKey, setActiveKey] = useState(solutionKey);
+  const [activeTab, setActiveTab] = useState("specs");
+
+  const current = solutionsData[activeKey] || solutionsData["website-development"];
 
   return (
-    <div className="sol-detail-page">
-      <div className="sol-detail-glow" />
+    <div className="sol-studio-page">
+      <div className="sol-studio-container">
+        
+        {/* Top Control Bar */}
+        <div className="sol-control-bar">
+          <button type="button" className="sol-back-pill" onClick={onBack}>
+            <ArrowLeft size={13} />
+            <span>Overview</span>
+          </button>
 
-      <div className="sol-detail-container">
-        {/* Back Button */}
-        <button type="button" className="sol-back-btn" onClick={onBack}>
-          <ArrowLeft size={14} />
-          <span>Back to Solutions Overview</span>
-        </button>
-
-        {/* Hero */}
-        <div className="sol-hero">
-          <span className="sol-badge">{data.badge}</span>
-          <h1 className="sol-title">{data.title}</h1>
-          <p className="sol-tagline">{data.tagline}</p>
-          <p className="sol-lead">{data.lead}</p>
-
-          <div className="sol-meta-strip">
-            <div className="sol-meta-item">
-              <Clock size={15} className="sol-meta-icon" />
-              <span>{data.timeline}</span>
-            </div>
-            <div className="sol-meta-item">
-              <ShieldCheck size={15} className="sol-meta-icon" />
-              <span>100% Code & Database Ownership</span>
-            </div>
+          {/* Quick Filter Pills */}
+          <div className="sol-pills-scroller">
+            {Object.keys(solutionsData).map((key) => (
+              <button
+                key={key}
+                type="button"
+                className={`sol-filter-pill ${activeKey === key ? "is-selected" : ""}`}
+                onClick={() => setActiveKey(key)}
+              >
+                {solutionsData[key].title.split(" ")[0]}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Deliverables Grid */}
-        <div className="sol-content-grid">
-          <div className="sol-left-box">
-            <h3>PRODUCTION DELIVERABLES IN THIS ROUTE</h3>
-            <ul className="sol-deliv-list">
-              {data.deliverables.map((item, idx) => (
-                <li key={idx}>
-                  <CheckCircle2 size={16} className="sol-check" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+        {/* Master Console Grid */}
+        <div className="sol-studio-console">
+          
+          {/* Left Hero Text Block */}
+          <div className="sol-hero-panel" data-aos="flip-up">
+            <span className="sol-tag-badge">{current.badge}</span>
+            <h1 className="sol-studio-title">{current.title}</h1>
+            <p className="sol-studio-tagline">{current.tagline}</p>
 
-          <div className="sol-right-box">
-            <h3>DEPLOYED TECH STACK</h3>
-            <div className="sol-tech-chips">
-              {data.stack.map((tech, idx) => (
-                <span key={idx} className="sol-tech-chip">
-                  <span className="sol-chip-dot" />
-                  {tech}
-                </span>
-              ))}
+            <div className="sol-guarantees">
+              <div className="sol-guarantee-row">
+                <Clock size={15} className="sol-icon-blue" />
+                <span>{current.turnaround}</span>
+              </div>
+              <div className="sol-guarantee-row">
+                <ShieldCheck size={15} className="sol-icon-green" />
+                <span>{current.ownership}</span>
+              </div>
             </div>
 
-            <div className="sol-cta-card">
-              <h4>Ready to build this system?</h4>
-              <p>Lock your dedicated sprint window and get a fixed-turnaround production deployment.</p>
+            <button 
+              type="button" 
+              className="sol-deploy-btn"
+              onClick={onOpenProject}
+            >
+              <span>Lock Sprint Window</span>
+              <ArrowUpRight size={14} />
+            </button>
+          </div>
+
+          {/* Right Visual Frame & Spec Console */}
+          <div className="sol-spec-panel">
+            
+            {/* Dynamic Visual Banner */}
+            <div className="sol-visual-frame">
+              <img 
+                src={current.image} 
+                alt={current.title} 
+                className="sol-frame-img" 
+                key={activeKey} 
+              />
+              <div className="sol-frame-scrim" />
+              <span className="sol-frame-badge">
+                <Zap size={11} />
+                <span>LIVE ARCHITECTURE PREVIEW</span>
+              </span>
+            </div>
+
+            {/* Interactive Tab Switcher */}
+            <div className="sol-tab-header">
               <button
                 type="button"
-                className="sol-action-btn"
-                onClick={onOpenProject}
+                className={`sol-tab-btn ${activeTab === "specs" ? "is-active" : ""}`}
+                onClick={() => setActiveTab("specs")}
               >
-                <span>Start This Project</span>
-                <ArrowUpRight size={14} />
+                <Layers size={13} />
+                <span>Core Specs</span>
+              </button>
+
+              <button
+                type="button"
+                className={`sol-tab-btn ${activeTab === "stack" ? "is-active" : ""}`}
+                onClick={() => setActiveTab("stack")}
+              >
+                <Cpu size={13} />
+                <span>Tech Stack</span>
               </button>
             </div>
+
+            {/* Tab 1: Specs View */}
+            {activeTab === "specs" && (
+              <div className="sol-specs-grid" >
+                {current.specs.map((item, idx) => (
+                  <div key={idx} className="sol-spec-item" data-aos="flip-up">
+                    <span className="sol-spec-label">{item.label}</span>
+                    <strong className="sol-spec-value">
+                      <Check size={13} className="sol-check" />
+                      {item.value}
+                    </strong>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Tab 2: Tech Stack View */}
+            {activeTab === "stack" && (
+              <div className="sol-stack-view" >
+                <span className="sol-stack-hint">Engineered with modern frameworks:</span>
+                <div className="sol-stack-pills" data-aos="flip-up"> 
+                  {current.stack.map((tool, idx) => (
+                    <div key={idx} className="sol-tech-pill">
+                      <Zap size={12} />
+                      <span>{tool}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
           </div>
+
         </div>
+
       </div>
     </div>
   );

@@ -11,20 +11,10 @@ export default function CtaBanner({ onOpenBooking, onOpenProject }) {
           <div className="cta-glow-effect" />
           
           <div className="cta-card-content">
-            <div className="cta-badge">
-              <span className="cta-beacon-dot" />
-              <span>RAPID SPRINT WINDOW</span>
-            </div>
-
             <h2 className="cta-title">
               Ready to Launch Your Project in <br />
               <span className="cta-gradient-text">24 to 48 Hours?</span>
             </h2>
-
-            <p className="cta-description">
-              Skip the agency back-and-forth. Talk directly with our lead developer 
-              and lock in your sprint window today.
-            </p>
 
             <div className="cta-action-group">
               <button

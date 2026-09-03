@@ -3,167 +3,134 @@ import {
   ShoppingBag,
   HeartPulse,
   Hotel,
-  GraduationCap,
   Briefcase,
   Truck,
+  GraduationCap,
   Building2,
   Rocket,
-  ArrowUpRight,
-  Zap,
-  Check
+  
 } from "lucide-react";
 import "./IndustriesPage.css";
 
 const industries = [
   {
     id: "retail",
-    icon: <ShoppingBag size={22} />,
+    icon: <ShoppingBag size={14} />,
     title: "Retail & E-Commerce",
-    highlight: "POS + Live Stock Sync",
-    chips: ["Headless Storefront", "Smart POS", "WhatsApp CRM"],
-    accent: "purple"
+    desc: "Real-time omnichannel sync with zero inventory delay.",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "healthcare",
-    icon: <HeartPulse size={22} />,
+    icon: <HeartPulse size={14} />,
     title: "Healthcare & Clinics",
-    highlight: "Zero-Queue Patient Desk",
-    chips: ["Direct Triage", "EHR Portals", "Doctor Schedule"],
-    accent: "blue"
+    desc: "Direct patient triage, EHR syncing, and schedule routing.",
+    image: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "hospitality",
-    icon: <Hotel size={22} />,
+    icon: <Hotel size={14} />,
     title: "Hospitality & Stays",
-    highlight: "0% Commission Bookings",
-    chips: ["Direct Booking Engine", "Guest App", "Dynamic Pricing"],
-    accent: "emerald"
+    desc: "Direct booking engine with instant guest web app checkout.",
+    image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "services",
-    icon: <Briefcase size={22} />,
+    icon: <Briefcase size={14} />,
     title: "Professional Services",
-    highlight: "Automated Intake & Invoicing",
-    chips: ["Client Portal", "Auto-Billing", "Document Vault"],
-    accent: "pink"
+    desc: "Automated onboarding, secure vault, and recurring billing.",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "logistics",
-    icon: <Truck size={22} />,
+    icon: <Truck size={14} />,
     title: "Logistics & Fleet",
-    highlight: "Live Dispatch & Telematics",
-    chips: ["Driver Apps", "Route Dispatch", "Digital Proof"],
-    accent: "blue"
+    desc: "Turn-by-turn driver app integration and electronic POD.",
+    image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "education",
-    icon: <GraduationCap size={22} />,
+    icon: <GraduationCap size={14} />,
     title: "Education & EdTech",
-    highlight: "Digital Campus & LMS",
-    chips: ["Interactive LMS", "Fee ERP", "Auto-Grading"],
-    accent: "purple"
+    desc: "Interactive curriculum, fee automation, and grading portal.",
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "realestate",
-    icon: <Building2 size={22} />,
+    icon: <Building2 size={14} />,
     title: "Real Estate & PropTech",
-    highlight: "Direct Lead Qualification",
-    chips: ["Listing Portals", "Broker CRM", "Virtual Tour Tech"],
-    accent: "emerald"
+    desc: "Broker pipelines, automated tour leads, and listing index.",
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
   },
   {
     id: "startups",
-    icon: <Rocket size={22} />,
+    icon: <Rocket size={14} />,
     title: "Startups & Scaleups",
-    highlight: "Production-Ready MVPs",
-    chips: ["SaaS Architecture", "Stripe Billing", "AI Agents"],
-    accent: "pink"
+    desc: "Turnkey microservices, Stripe pipelines, and autonomous AI.",
+    image: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
-export default function IndustriesPage({ onOpenProject, onOpenBooking }) {
+export default function IndustriesPage({ onOpenProject }) {
   return (
     <div className="ind-clean-page">
-      <div className="ind-clean-glow" />
-
       <div className="ind-clean-container">
-        {/* 1. Direct Hero */}
+        
+        {/* Header */}
         <section className="ind-clean-hero">
           <span className="ind-clean-badge">
-            <Zap size={12} />
             <span>INDUSTRY APPLICATIONS</span>
           </span>
-
           <h1 className="ind-clean-title">
             Where We Apply The Route. <br />
             <span className="ind-gradient-text">Built for Specific Workflows.</span>
           </h1>
-
-          <p className="ind-clean-lead">
-            We adapt connected web platforms, operational ERPs, and automated AI around your business model.
-          </p>
+          
         </section>
 
-        {/* 2. Visual Bento Cards Grid */}
-        <div className="ind-clean-grid">
+        {/* Minimal Pinterest-Style Card Grid */}
+        <div className="ind-cards-grid">
           {industries.map((item) => (
-            <div key={item.id} className={`ind-clean-card glow-${item.accent}`}>
-              <div className="ind-card-head">
-                <div className={`ind-icon-box icon-${item.accent}`}>
+            <div 
+              key={item.id} 
+              className="ind-mini-card"
+              onClick={() => onOpenProject && onOpenProject()} data-aos="zoom-in"
+            >
+              {/* Clean Media Image with Single Top Badge */}
+              <div className="ind-mini-media">
+                <img src={item.image} alt={item.title} loading="lazy" />
+                <span className="ind-mini-tag">
                   {item.icon}
-                </div>
-                <span className="ind-card-highlight">{item.highlight}</span>
+                  <span>{item.highlight}</span>
+                </span>
               </div>
 
-              <h3 className="ind-card-title">{item.title}</h3>
-
-              <div className="ind-pills-row">
-                {item.chips.map((chip, idx) => (
-                  <span key={idx} className="ind-pill">
-                    <Check size={11} className="ind-check" />
-                    <span>{chip}</span>
-                  </span>
-                ))}
+              {/* Minimal Text Body */}
+              <div className="ind-mini-body">
+                <div className="ind-mini-head">
+                  <h3 className="ind-mini-title">{item.title}</h3>
+                </div>
+                <p className="ind-mini-desc">{item.desc}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* 3. Simple 3-Step Execution Strip */}
-        <section className="ind-steps-strip">
-          <div className="ind-step-col">
-            <span className="ind-step-num">01</span>
-            <h4>Audit Workflow</h4>
-            <p>We map your current tools and bottlenecks.</p>
-          </div>
-          <div className="ind-step-divider" />
-          <div className="ind-step-col">
-            <span className="ind-step-num">02</span>
-            <h4>Sprint Build</h4>
-            <p>Rapid deployment of custom portals and integrations.</p>
-          </div>
-          <div className="ind-step-divider" />
-          <div className="ind-step-col">
-            <span className="ind-step-num">03</span>
-            <h4>Autonomous Launch</h4>
-            <p>Live DNS cutover with staff operating SOPs.</p>
-          </div>
-        </section>
-
-        {/* 4. Single Bottom CTA */}
+        {/* Bottom CTA */}
         <div className="ind-cta-box">
-          <h3>Need a custom system built for your business?</h3>
+          <div>
+            <h3>Need a custom system built for your business?</h3>
+            <p>From initial design blueprint to live production deployment in dedicated sprint windows.</p>
+          </div>
           <button
             type="button"
             className="ind-btn-primary"
-            onClick={() => {
-              if (onOpenProject) onOpenProject();
-            }}
+            onClick={() => onOpenProject && onOpenProject()}
           >
             <span>Start A Project</span>
-            <ArrowUpRight size={15} />
           </button>
         </div>
+
       </div>
     </div>
   );

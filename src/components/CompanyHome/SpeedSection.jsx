@@ -1,45 +1,33 @@
-// SpeedSection.jsx
 import React, { useState, useEffect, useRef } from "react";
-import { 
-  ArrowUpRight, 
-  ShieldCheck, 
-  CheckCircle2, 
-  Check, 
-  Clock, 
-  Activity,
-} from "lucide-react";
+import { Check, Clock } from "lucide-react";
 import "./SpeedSection.css";
 
 const sprintSteps = [
   { step: "01", title: "BRIEF & SCOPE", desc: "Requirements locked & approved" },
-  { step: "02", title: "UI DESIGN", desc: "High-fidelity mockups & system tokens" },
+  { step: "02", title: "UI DESIGN", desc: "High-fidelity mockups & design tokens" },
   { step: "03", title: "RAPID BUILD", desc: "Component assembly & logic wiring" },
-  { step: "04", title: "QA & TEST", desc: "Cross-browser audit & speed optimization" },
+  { step: "04", title: "QA & TEST", desc: "Cross-browser audit & speed check" },
   { step: "05", title: "PRODUCTION", desc: "Domain routing & live deployment" },
 ];
 
 export default function SpeedSection() {
-  const go = (selector) => document.querySelector(selector)?.scrollIntoView({ behavior: "smooth" });
-
   const sectionRef = useRef(null);
   const [activeStep, setActiveStep] = useState(0);
   const [isIntersecting, setIsIntersecting] = useState(false);
 
-  // Live Sprint Timer State (Counting down a 24-hour sprint window)
+  // Live Micro-Countdown Timer
   const [timeLeft, setTimeLeft] = useState({
     hours: 23,
-    minutes: 42,
-    seconds: 18,
-    ms: 60,
+    minutes: 36,
+    seconds: 15,
+    ms: 54,
   });
 
-  // Intersection Observer for Pipeline Animation
+  // Intersection Observer
   useEffect(() => {
     const currentRef = sectionRef.current;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsIntersecting(entry.isIntersecting);
-      },
+      ([entry]) => setIsIntersecting(entry.isIntersecting),
       { threshold: 0.25 }
     );
 
@@ -49,7 +37,7 @@ export default function SpeedSection() {
     };
   }, []);
 
-  // Pipeline Step Progression
+  // Sequential Step Animation
   useEffect(() => {
     if (!isIntersecting) {
       setActiveStep(0);
@@ -71,22 +59,14 @@ export default function SpeedSection() {
     return () => clearInterval(interval);
   }, [isIntersecting]);
 
-  // Live Micro-Countdown Loop
+  // Clock Countdown Loop
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
-        if (prev.ms > 0) {
-          return { ...prev, ms: prev.ms - 1 };
-        }
-        if (prev.seconds > 0) {
-          return { ...prev, seconds: prev.seconds - 1, ms: 99 };
-        }
-        if (prev.minutes > 0) {
-          return { ...prev, minutes: prev.minutes - 1, seconds: 59, ms: 99 };
-        }
-        if (prev.hours > 0) {
-          return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59, ms: 99 };
-        }
+        if (prev.ms > 0) return { ...prev, ms: prev.ms - 1 };
+        if (prev.seconds > 0) return { ...prev, seconds: prev.seconds - 1, ms: 99 };
+        if (prev.minutes > 0) return { ...prev, minutes: prev.minutes - 1, seconds: 59, ms: 99 };
+        if (prev.hours > 0) return { ...prev, hours: prev.hours - 1, minutes: 59, seconds: 59, ms: 99 };
         return { hours: 24, minutes: 0, seconds: 0, ms: 0 };
       });
     }, 10);
@@ -98,138 +78,55 @@ export default function SpeedSection() {
 
   return (
     <section ref={sectionRef} className="sp-section" id="speed">
-      {/* Background Ambient Glows */}
-      <div className="sp-glow-top" />
-      <div className="sp-glow-bottom" />
-
       <div className="sp-container">
         
-        {/* Top Header */}
-        <div className="sp-header">
-          <div className="sp-eyebrow">
-            <span className="sp-beacon-dot" />
-            <span>RAPID DELIVERY SYSTEM</span>
-          </div>
-
-          <div className="sp-header__row">
-            <h2 className="sp-title">
-              24–42 <span className="sp-title-gradient">HOURS SPRINT</span>
-            </h2>
-            <div className="sp-header-chip">
-              <span>GUARANTEED WINDOW</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Central Workspace Cards */}
-        <div className="sp-workspace">
+        {/* 1. Minimal Header */}
+        <div className="sp-header" data-aos="fade-down-left">
+          <h2 className="sp-title">
+            24–42 <span className="sp-title-gradient">Hours Sprint</span>
+          </h2>
           
-          {/* Left Narrative Card */}
-          <div className="sp-narrative-card">
-            <div className="sp-narrative-top">
-              <span className="sp-card-index">VELOCITY FIRST</span>
-              <div className="sp-pulse-chip">
-                <span className="sp-green-dot" />
-                ACTIVE ENGINE
-              </div>
-            </div>
-
-            <div className="sp-narrative-body">
-              <h3>How fast can an idea become a reality?</h3>
-              <p>
-                For clearly scoped deliverables, our sprint pipeline transforms an approved brief 
-                into a live, production-grade digital experience in a focused 24 to 42-hour delivery window.
-              </p>
-            </div>
-
-            <div className="sp-narrative-footer">
-              <div className="sp-note">
-                <span>Rapid delivery applies to defined, pre-approved project modules.</span>
-              </div>
-              <button className="sp-btn-cta" onClick={() => go("#sprint-tiers")}>
-                <span>Check Project Fit</span>
-                <ArrowUpRight size={15} />
-              </button>
-            </div>
-          </div>
-
-          {/* Right Live Sprint Clock & Timer Matrix */}
-          <div className="sp-time-card sp-timer-card">
-            <div className="sp-time-header">
-              <div className="sp-timer-title-group">
-                <Clock size={14} className="sp-clock-icon" />
-                <span className="sp-card-index">LIVE SPRINT CLOCK</span>
-              </div>
-              <span className="sp-security-tag">
-                <ShieldCheck size={13} /> QA VERIFIED
-              </span>
-            </div>
-
-            <div className="sp-timer-center">
-              <div className="sp-timer-status-badge">
-                <Activity size={12} className="sp-pulse-icon" />
-                <span>ACTIVE SPRINT WINDOW</span>
-              </div>
-
-              {/* Digital Countdown Matrix */}
-              <div className="sp-digital-clock">
-                <div className="sp-time-unit">
-                  <span className="sp-time-val">{format2(timeLeft.hours)}</span>
-                  <span className="sp-time-label">HRS</span>
-                </div>
-                <span className="sp-time-colon">:</span>
-                <div className="sp-time-unit">
-                  <span className="sp-time-val">{format2(timeLeft.minutes)}</span>
-                  <span className="sp-time-label">MIN</span>
-                </div>
-                <span className="sp-time-colon">:</span>
-                <div className="sp-time-unit">
-                  <span className="sp-time-val">{format2(timeLeft.seconds)}</span>
-                  <span className="sp-time-label">SEC</span>
-                </div>
-                <span className="sp-time-colon sp-colon-ms">:</span>
-                <div className="sp-time-unit sp-unit-ms">
-                  <span className="sp-time-val sp-ms-val">{format2(timeLeft.ms)}</span>
-                  <span className="sp-time-label">MS</span>
-                </div>
-              </div>
-
-              {/* Progress Line */}
-              <div className="sp-timer-progress-wrap">
-                <div className="sp-timer-bar">
-                  <div className="sp-timer-fill" />
-                </div>
-                <div className="sp-timer-meta">
-                  <span>TARGET: 24H LIVE DNS</span>
-                  <span className="sp-green-text">ON SCHEDULE</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="sp-micro-strip">
-              <div className="sp-micro-item">
-                <CheckCircle2 size={13} />
-                <span>Single-Scope Releases</span>
-              </div>
-              <div className="sp-micro-item">
-                <CheckCircle2 size={13} />
-                <span>Clean Architecture</span>
-              </div>
-              <div className="sp-micro-item">
-                <CheckCircle2 size={13} />
-                <span>Instant DNS Launch</span>
-              </div>
-            </div>
-          </div>
-
         </div>
 
-        {/* Execution Pipeline */}
+        {/* 2. Standalone Minimal Timer */}
+        <div className="sp-timer-card">
+          <div className="sp-timer-top">
+            <div className="sp-timer-tag">
+              <Clock size={13} />
+              <span>LIVE SPRINT CLOCK</span>
+            </div>
+            <span className="sp-timer-status">TARGET: 24H LIVE DNS</span>
+          </div>
+
+          <div className="sp-digital-clock">
+            <div className="sp-unit">
+              <span className="sp-val">{format2(timeLeft.hours)}</span>
+              <span className="sp-lbl">HRS</span>
+            </div>
+            <span className="sp-colon">:</span>
+            <div className="sp-unit">
+              <span className="sp-val">{format2(timeLeft.minutes)}</span>
+              <span className="sp-lbl">MIN</span>
+            </div>
+            <span className="sp-colon">:</span>
+            <div className="sp-unit">
+              <span className="sp-val">{format2(timeLeft.seconds)}</span>
+              <span className="sp-lbl">SEC</span>
+            </div>
+            <span className="sp-colon sp-colon-ms">:</span>
+            <div className="sp-unit">
+              <span className="sp-val sp-ms">{format2(timeLeft.ms)}</span>
+              <span className="sp-lbl">MS</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. Execution Pipeline */}
         <div className="sp-pipeline-wrap">
           <div className="sp-pipeline-header">
             <span className="sp-pipeline-label">EXECUTION PHASES</span>
-            <div className={`sp-live-status-pill ${activeStep === 5 ? "completed" : ""}`}>
-              <span className="sp-live-blink" />
+            <div className={`sp-status-pill ${activeStep === 5 ? "completed" : ""}`}>
+              <span className="sp-live-dot" />
               <span>
                 {activeStep === 5
                   ? "SYSTEM DEPLOYED // READY FOR PRODUCTION"
@@ -240,7 +137,7 @@ export default function SpeedSection() {
             </div>
           </div>
 
-          <div className="sp-pipeline">
+          <div className="sp-pipeline" data-aos="fade-down-left"> 
             {sprintSteps.map((item, idx) => {
               const stepNum = idx + 1;
               const isCompleted = activeStep >= stepNum;
@@ -254,9 +151,9 @@ export default function SpeedSection() {
                   <div className="sp-step-top">
                     <div className="sp-step-circle">
                       {isCompleted ? (
-                        <Check size={14} strokeWidth={3} className="sp-check-pop" />
+                        <Check size={14} strokeWidth={3} />
                       ) : (
-                        <span className="sp-step-index-text">{item.step}</span>
+                        <span>{item.step}</span>
                       )}
                     </div>
 

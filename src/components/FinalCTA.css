@@ -1,12 +1,22 @@
 /* FinalCTA.css */
+/* =========================================================
+   High-Contrast Modern Tech Slate (Light Palette)
+   Base: #F8FAFC (Slate 50)
+   Card / Panel: #FFFFFF
+   Primary Text: #0F172A (Slate 900)
+   Body / Sub Text: #475569 (Slate 600)
+   Accent / Brand: #2563EB (Royal Blue)
+   Success / Status: #16A34A (Emerald Green)
+   Border: #E2E8F0 (Slate 200)
+========================================================= */
 
 /* Container & Base Palette */
 .fn-footer {
-  background-color: #030712;
-  color: #f8fafc;
-  font-family: system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid #e2e8f0;
 }
 
 /* Upper CTA Section */
@@ -16,8 +26,9 @@
   display: grid;
   place-items: center;
   padding: 100px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #e2e8f0;
   overflow: hidden;
+  background: #ffffff;
 }
 
 .fn-cta__glow {
@@ -27,7 +38,7 @@
   transform: translate(-50%, -50%);
   width: 650px;
   height: 400px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, rgba(168, 85, 247, 0.1) 40%, transparent 70%);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
   filter: blur(80px);
   pointer-events: none;
 }
@@ -44,46 +55,46 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #c084fc;
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.25);
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
   padding: 6px 14px;
-  border-radius: 999px;
+  border-radius: 9999px;
   margin-bottom: 20px;
 }
 
 .fn-eyebrow-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background-color: #38bdf8;
-  box-shadow: 0 0 8px #38bdf8;
+  background-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
 }
 
 .fn-cta__title {
-  font-size: clamp(38px, 5.5vw, 76px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-size: clamp(38px, 5.5vw, 72px);
+  font-weight: 750;
+  letter-spacing: -0.02em;
   line-height: 1.05;
   margin: 0 0 20px;
   text-transform: uppercase;
-  color: #ffffff;
+  color: #0f172a;
 }
 
 .fn-cta__title-gradient {
-  background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+  background: linear-gradient(135deg, #1e293b 0%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .fn-cta__lead {
-  color: #94a3b8;
-  font-size: 16px;
-  line-height: 1.6;
+  color: #475569;
+  font-size: 16.5px;
+  line-height: 1.65;
   max-width: 540px;
   margin: 0 auto 32px;
 }
@@ -95,22 +106,22 @@
   gap: 8px;
   padding: 14px 28px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  background: #2563eb;
   color: #ffffff;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.05em;
   border: none;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fn-btn-primary:hover {
-  opacity: 0.95;
+  background: #1d4ed8;
   transform: translateY(-2px);
-  box-shadow: 0 15px 30px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 8px 22px rgba(37, 99, 235, 0.35);
 }
 
 .fn-btn-primary svg {
@@ -139,7 +150,7 @@
   gap: 8px;
   background: transparent;
   border: none;
-  color: #ffffff;
+  color: #0f172a;
   font-family: inherit;
   font-size: 18px;
   font-weight: 800;
@@ -152,16 +163,16 @@
 .fn-logo-sub {
   font-size: 10px;
   font-weight: 700;
-  color: #38bdf8;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  background: rgba(56, 189, 248, 0.1);
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+  background: #eff6ff;
   padding: 2px 6px;
   border-radius: 4px;
 }
 
 .fn-brand-desc {
-  font-size: 13px;
-  color: #94a3b8;
+  font-size: 13.5px;
+  color: #475569;
   line-height: 1.6;
   margin: 0 0 16px;
   max-width: 320px;
@@ -171,9 +182,9 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 12px;
-  color: #c084fc;
-  font-weight: 500;
+  font-size: 12.5px;
+  color: #2563eb;
+  font-weight: 600;
 }
 
 /* Footer Columns */
@@ -206,9 +217,9 @@
   gap: 8px;
   background: transparent;
   border: none;
-  color: #94a3b8;
+  color: #475569;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 500;
   text-decoration: none;
   cursor: pointer;
@@ -219,35 +230,37 @@
 
 .fn-col button:hover,
 .fn-col a:hover {
-  color: #38bdf8;
+  color: #2563eb;
 }
 
 .fn-base-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 5px 10px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 6px 12px;
   border-radius: 6px;
-  font-size: 11px !important;
-  color: #cbd5e1 !important;
+  font-size: 11.5px !important;
+  color: #334155 !important;
+  font-weight: 600 !important;
   margin-top: 4px;
   width: fit-content;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
 .fn-green-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #10b981;
-  box-shadow: 0 0 6px #10b981;
+  background: #16a34a;
+  box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.2);
 }
 
 /* Bottom Bar */
 .fn-footer__bottom {
   padding: 24px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid #e2e8f0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -258,7 +271,7 @@
 }
 
 .fn-bottom-tag {
-  color: #475569;
+  color: #64748b;
 }
 
 .fn-top-btn {
@@ -267,7 +280,7 @@
   gap: 6px;
   background: transparent;
   border: none;
-  color: #94a3b8;
+  color: #475569;
   font-family: inherit;
   font-size: 11px;
   font-weight: 600;
@@ -276,7 +289,7 @@
 }
 
 .fn-top-btn:hover {
-  color: #38bdf8;
+  color: #2563eb;
 }
 
 /* Modal / Drawer */
@@ -284,9 +297,9 @@
   position: fixed;
   inset: 0;
   z-index: 2000;
-  background: rgba(3, 7, 18, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -295,14 +308,14 @@
 
 .fn-modal-panel {
   width: min(560px, 100%);
-  background: rgba(11, 15, 25, 0.95);
+  background: #ffffff;
   border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(99, 102, 241, 0.1);
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
   padding: 32px;
   max-height: 90vh;
   overflow-y: auto;
-  color: #f8fafc;
+  color: #0f172a;
 }
 
 .fn-modal-header {
@@ -311,41 +324,41 @@
   align-items: flex-start;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .fn-modal-eyebrow {
   display: block;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.15em;
-  color: #38bdf8;
+  color: #2563eb;
   margin-bottom: 4px;
 }
 
 .fn-modal-title {
   margin: 0;
   font-size: 20px;
-  font-weight: 700;
-  color: #ffffff;
+  font-weight: 800;
+  color: #0f172a;
 }
 
 .fn-modal-close {
   width: 34px;
   height: 34px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
   display: grid;
   place-items: center;
   cursor: pointer;
-  color: #94a3b8;
+  color: #475569;
   transition: all 0.2s ease;
 }
 
 .fn-modal-close:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: #ffffff;
+  background: #f1f5f9;
+  color: #0f172a;
 }
 
 .fn-modal-form {
@@ -362,7 +375,7 @@
 
 .fn-modal-field label {
   display: block;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
   letter-spacing: 0.12em;
   color: #64748b;
@@ -376,26 +389,27 @@
   width: 100%;
   padding: 11px 13px;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 13px;
+  border: 1px solid #cbd5e1;
+  font-size: 13.5px;
   font-family: inherit;
-  color: #ffffff;
+  color: #0f172a;
   outline: none;
-  background: rgba(255, 255, 255, 0.04);
+  background: #f8fafc;
   box-sizing: border-box;
-  transition: border-color 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .fn-modal-field select option {
-  background: #0b0f19;
-  color: #ffffff;
+  background: #ffffff;
+  color: #0f172a;
 }
 
 .fn-modal-field input:focus,
 .fn-modal-field select:focus,
 .fn-modal-field textarea:focus {
-  border-color: #6366f1;
-  background: rgba(255, 255, 255, 0.06);
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .fn-modal-submit-btn {
@@ -406,20 +420,21 @@
   margin-top: 8px;
   padding: 13px 20px;
   border-radius: 10px;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  background: #2563eb;
   color: #ffffff;
-  font-size: 12px;
+  font-size: 12.5px;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   border: none;
   cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
   transition: all 0.2s ease;
 }
 
 .fn-modal-submit-btn:hover {
-  opacity: 0.95;
-  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+  background: #1d4ed8;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
 }
 
 .fn-modal-success {
@@ -428,20 +443,20 @@
 }
 
 .fn-modal-success-icon {
-  color: #10b981;
+  color: #16a34a;
   margin-bottom: 14px;
 }
 
 .fn-modal-success h4 {
   margin: 0 0 8px;
-  font-size: 19px;
-  font-weight: 700;
-  color: #ffffff;
+  font-size: 20px;
+  font-weight: 800;
+  color: #0f172a;
 }
 
 .fn-modal-success p {
-  color: #94a3b8;
-  font-size: 13px;
+  color: #475569;
+  font-size: 13.5px;
   margin-bottom: 22px;
   line-height: 1.6;
 }

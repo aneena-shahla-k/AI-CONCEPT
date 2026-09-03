@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { 
-  Compass, 
   ArrowUpRight, 
   Check, 
   FileText, 
@@ -197,84 +196,99 @@ export default function GrowthPlansPage({ onOpenBooking, onOpenProject }) {
 
   return (
     <div className="gp-page">
-      {/* 1. Hero Section */}
-      <section className="gp-hero">
-        <div className="gp-hero-glow" />
-        <div className="gp-container">
-          <div className="gp-eyebrow">
-            <Compass size={13} className="gp-accent-icon" />
-            <span>THE STRATEGIC BLUEPRINT</span>
-          </div>
 
-          <h1 className="gp-hero-title">
-            Don’t start with software. <br />
-            <span className="gp-gradient-text">Start with the route.</span>
-          </h1>
-
-          <p className="gp-hero-sub">
-            We don’t just write code—we architect complete business ecosystems. 
-            From market positioning and revenue mechanics to full-stack technology and succession planning.
-          </p>
-
-          <div className="gp-hero-actions">
-            <button
-              type="button"
-              className="gp-btn-primary"
-              onClick={() => {
-                document.querySelector("#packages")?.scrollIntoView({ behavior: "smooth" });
-              }}
-            >
-              <span>Explore Blueprints</span>
-              <ArrowUpRight size={15} />
-            </button>
-
-            <button
-              type="button"
-              className="gp-btn-secondary"
-              onClick={() => {
-                if (onOpenBooking) onOpenBooking();
-              }}
-            >
-              <Calendar size={14} />
-              <span>Book Strategy Session</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. The 8-Pillar Framework */}
+      {/* 1. Hero / 8 Pillars Showcase (Single Image with Glassmorphism Hover Reveal) */}
       <section className="gp-pillars-section" id="pillars">
         <div className="gp-container">
+          
+          {/* Header Block on Top */}
           <div className="gp-section-header">
-            <span className="gp-section-tag">COMPREHENSIVE ARCHITECTURE</span>
-            <h2 className="gp-section-title">The 8 Pillars of Every Growth Plan</h2>
+            <span className="gp-section-tag">STRATEGIC ARCHITECTURE</span>
+            <h1 className="gp-section-title">
+              The 8 Pillars of Every <br />
+              <span className="gp-gradient-text">Growth Plan</span>
+            </h1>
             <p className="gp-section-desc">
-              Every blueprint is built on a battle-tested framework covering commercial, operational, and technical dimensions.
+              A single unified master roadmap. Hover across the blueprint to inspect the operational layers.
             </p>
           </div>
 
-          <div className="gp-pillars-grid">
-            {pillars.map((item, idx) => (
-              <div 
-                key={item.num}
-                className={`gp-pillar-card ${activePillar === idx ? "is-active" : ""}`}
-                onMouseEnter={() => setActivePillar(idx)}
-              >
-                <div className="gp-pillar-top">
-                  <span className="gp-pillar-num">{item.num}</span>
-                  <span className="gp-pillar-cat">{item.category}</span>
+          {/* Master Visual Spotlight Card */}
+          <div className="gp-master-spotlight">
+            <img 
+              src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80" 
+              alt="The 8 Pillars Blueprint Architecture" 
+              className="gp-spotlight-bg"
+            />
+            
+            {/* Default Resting Banner View */}
+            <div className="gp-spotlight-resting">
+              <span className="gp-resting-pill">
+               HOVER TO EXPLORE THE BLUEPRINT
+              </span>
+              <h3 className="gp-resting-title">End-to-End Operational Clarity</h3>
+              <p className="gp-resting-sub">From Market Validation to Full System Autonomy</p>
+            </div>
+
+            {/* Hover Glassmorphism Frosted Overlay */}
+            <div className="gp-spotlight-glass-overlay">
+              <div className="gp-glass-inner">
+                
+                {/* Left Side: 8 Pillars Quick Selector */}
+                <div className="gp-glass-nav">
+                  <span className="gp-glass-label">PILLAR LAYERS</span>
+                  <div className="gp-nav-pills">
+                    {pillars.map((item, idx) => (
+                      <button
+                        key={item.num}
+                        type="button"
+                        className={`gp-nav-pill ${activePillar === idx ? "is-active" : ""}`}
+                        onMouseEnter={() => setActivePillar(idx)}
+                        onClick={() => setActivePillar(idx)}
+                      >
+                        <span className="pill-num">{item.num}</span>
+                        <span className="pill-name">{item.title}</span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="gp-pillar-title">{item.title}</h3>
-                <p className="gp-pillar-q">{item.question}</p>
-                <p className="gp-pillar-desc">{item.desc}</p>
-                <div className="gp-pillar-bar" />
+
+                {/* Right Side: Active Pillar Deep Dive Card */}
+                <div className="gp-glass-detail-card">
+                  <div className="gp-detail-top">
+                    <span className="gp-detail-category">{pillars[activePillar].category}</span>
+                    <span className="gp-detail-badge">PILLAR {pillars[activePillar].num}</span>
+                  </div>
+
+                  <h3 className="gp-detail-title">{pillars[activePillar].title}</h3>
+                  <p className="gp-detail-question">“{pillars[activePillar].question}”</p>
+                  <p className="gp-detail-desc">{pillars[activePillar].desc}</p>
+
+                  <div className="gp-detail-footer">
+                    <span>Turnkey system architecture deliverable</span>
+                    <button 
+                      type="button" 
+                      className="gp-detail-cta"
+                      onClick={() => {
+                        const el = document.getElementById("packages");
+                        if (el) el.scrollIntoView({ behavior: "smooth" });
+                      }}
+                    >
+                      <span>Explore Tiers</span>
+                      <ArrowUpRight size={14} />
+                    </button>
+                  </div>
+                </div>
+
               </div>
-            ))}
+            </div>
+
           </div>
+
         </div>
       </section>
 
-      {/* 3. Deliverables Section */}
+      {/* 2. Tangible Assets Deliverables Section */}
       <section className="gp-deliverables-section">
         <div className="gp-container">
           <div className="gp-section-header">
@@ -297,7 +311,7 @@ export default function GrowthPlansPage({ onOpenBooking, onOpenProject }) {
         </div>
       </section>
 
-      {/* 4. Interactive Service Calculator Section */}
+      {/* 3. Interactive Service Calculator Section */}
       <section className="gp-calculator-section" id="calculator">
         <div className="gp-container">
           <div className="gp-section-header">
@@ -401,7 +415,7 @@ export default function GrowthPlansPage({ onOpenBooking, onOpenProject }) {
         </div>
       </section>
 
-      {/* 5. Tiered Packages Section */}
+      {/* 4. Tiered Packages Section */}
       <section className="gp-packages-section" id="packages">
         <div className="gp-container">
           <div className="gp-section-header">
@@ -450,7 +464,7 @@ export default function GrowthPlansPage({ onOpenBooking, onOpenProject }) {
         </div>
       </section>
 
-      {/* 6. Philosophy Comparison Bar */}
+      {/* 5. Philosophy Banner */}
       <section className="gp-phil-banner">
         <div className="gp-container">
           <div className="gp-phil-box">
@@ -464,7 +478,7 @@ export default function GrowthPlansPage({ onOpenBooking, onOpenProject }) {
         </div>
       </section>
 
-      {/* 7. FAQ Accordion */}
+      {/* 6. FAQ Accordion */}
       <section className="gp-faq-section">
         <div className="gp-container">
           <div className="gp-section-header">
@@ -489,6 +503,7 @@ export default function GrowthPlansPage({ onOpenBooking, onOpenProject }) {
           </div>
         </div>
       </section>
+
     </div>
   );
 }

@@ -1,0 +1,56 @@
+/* =========================================================
+   6. FAQ Accordion Section
+========================================================= */
+
+.gp-faq-section {
+  padding: 70px 0 100px;
+  border-top: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+}
+
+.gp-faq-list {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gp-faq-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px 22px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+  transition: all 0.2s ease;
+}
+
+.gp-faq-item:hover,
+.gp-faq-item.is-open {
+  border-color: #2563eb;
+}
+
+.gp-faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.gp-faq-toggle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #2563eb;
+}
+
+.gp-faq-a {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.6;
+  margin: 12px 0 0;
+}

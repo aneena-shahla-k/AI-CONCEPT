@@ -1,5 +1,5 @@
 import React from "react";
-import { ArrowUpRight, Check, Zap } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import GsapSpotlightCard from "../common/GsapSpotlightCard";
 import "./OurWorkPage.css";
 import img1 from "../../images/honey.png";
@@ -14,7 +14,6 @@ const projects = [
     category: "Organic D2C & E-Commerce",
     image: img1,
     liveUrl: "https://wayanad-honey.netlify.app",
-    metric: "60 FPS",
     metricLabel: "Smooth Canvas Scroll",
     problem: "Generic storefront templates failed to convey the premium, raw purity of wild forest honey.",
     solution: "Engineered a frame-by-frame scroll-driven canvas animation with interactive quiz & frictionless 1-click checkout.",
@@ -25,7 +24,7 @@ const projects = [
     title: "Kitchen Crafts",
     category: "Interior & Architecture",
     image: img2,
-    metric: "+78%",
+    liveUrl: "https://kitchen-kohl-eight.vercel.app",
     metricLabel: "Design Consultation Leads",
     problem: "High-end clients needed to visualize modular layouts before booking costly physical site visits.",
     solution: "Crafted a minimalist portfolio portal with 3D modular layout previews, material estimators, and instant site-visit scheduling.",
@@ -36,7 +35,7 @@ const projects = [
     title: "Lumiere Skin Care",
     category: "Luxury Beauty & Cosmetics",
     image: img3,
-    metric: "+125%",
+    liveUrl: "https://lumiere-mocha-nine.vercel.app",
     metricLabel: "Mobile Conversion Rate",
     problem: "High bounce rates on mobile due to slow page loads and complex routine-selection steps.",
     solution: "Designed a luxury glassmorphism storefront with personalized skin-routine builders and fast checkout.",
@@ -47,7 +46,7 @@ const projects = [
     title: "Nexora",
     category: "Retail Tech & Home Essentials",
     image: img4,
-    metric: "0 Min",
+    liveUrl: "https://nexora-store.vercel.app",
     metricLabel: "Inventory Sync Latency",
     problem: "Stock desyncs between physical retail registers and online flash sales led to frequent inventory errors.",
     solution: "Integrated a high-throughput electronics catalogue synced directly with multi-warehouse inventory and real-time order dispatch.",
@@ -56,6 +55,12 @@ const projects = [
 ];
 
 export default function OurWorkPage({ onOpenProject }) {
+  const handleCardClick = (url) => {
+    if (url) {
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+  };
+
   return (
     <div className="work-clean-page">
       <div className="work-clean-glow" />
@@ -64,7 +69,6 @@ export default function OurWorkPage({ onOpenProject }) {
         {/* Simple Header */}
         <section className="work-clean-header">
           <span className="work-clean-tag">
-            <Zap size={12} />
             <span>SELECTED WORK</span>
           </span>
           <h1 className="work-clean-title">
@@ -79,63 +83,68 @@ export default function OurWorkPage({ onOpenProject }) {
         {/* GSAP Spotlight & Tilt Cards Grid */}
         <div className="work-cards-grid">
           {projects.map((item) => (
-            <GsapSpotlightCard
+            <div
               key={item.id}
-              href={item.liveUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={`Visit ${item.title}`}
-              className={item.liveUrl ? "work-card-interactive" : ""}
+              onClick={() => handleCardClick(item.liveUrl)}
+              style={{ cursor: item.liveUrl ? "pointer" : "default" }}
             >
-              <div className="work-card-inner-grid">
-                {/* Image Preview */}
-                <div className="work-card-media">
-                  <img src={item.image} alt={item.title} />
-                  <div className="work-metric-chip">
-                    <strong>{item.metric}</strong>
-                    <span>{item.metricLabel}</span>
-                  </div>
-                </div>
-
-                {/* Content Body */}
-                <div className="work-card-body">
-                  <div className="work-card-header-row">
-                    <div>
-                      <span className="work-category">{item.category}</span>
-                      <h3 className="work-card-name">{item.title}</h3>
+              <GsapSpotlightCard className={item.liveUrl ? "work-card-interactive" : ""}>
+                <div className="work-card-inner-grid">
+                  {/* Image Preview */}
+                  <div className="work-card-media">
+                    <img src={item.image} alt={item.title} />
+                    <div className="work-metric-chip">
+                      <strong>{item.metric}</strong>
+                      <span>{item.metricLabel}</span>
                     </div>
+                  </div>
 
-                    {item.liveUrl && (
-                      <div className="work-link-icon-badge">
-                        <span>Visit Live</span>
-                        <ArrowUpRight size={14} />
+                  {/* Content Body */}
+                  <div className="work-card-body">
+                    <div className="work-card-header-row">
+                      <div>
+                        <span className="work-category">{item.category}</span>
+                        <h3 className="work-card-name">{item.title}</h3>
                       </div>
-                    )}
-                  </div>
 
-                  <div className="work-summary-row">
-                    <div className="work-summary-box">
-                      <span className="work-label">THE PROBLEM</span>
-                      <p>{item.problem}</p>
+                      {item.liveUrl && (
+                        <a
+                          href={item.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="work-link-icon-badge"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <span>Visit Live</span>
+                          <ArrowUpRight size={14} />
+                        </a>
+                      )}
                     </div>
-                    <div className="work-summary-box">
-                      <span className="work-label">WHAT WE BUILT</span>
-                      <p>{item.solution}</p>
-                    </div>
-                  </div>
 
-                  {/* Ecosystem Tags */}
-                  <div className="work-ecosystem-strip">
-                    {item.ecosystem.map((tag, i) => (
-                      <span key={i} className="work-eco-tag">
-                        <Check size={11} className="work-eco-check" />
-                        <span>{tag}</span>
-                      </span>
-                    ))}
+                    <div className="work-summary-row">
+                      <div className="work-summary-box">
+                        <span className="work-label">THE PROBLEM</span>
+                        <p>{item.problem}</p>
+                      </div>
+                      <div className="work-summary-box">
+                        <span className="work-label">WHAT WE BUILT</span>
+                        <p>{item.solution}</p>
+                      </div>
+                    </div>
+
+                    {/* Ecosystem Tags */}
+                    <div className="work-ecosystem-strip">
+                      {item.ecosystem.map((tag, i) => (
+                        <span key={i} className="work-eco-tag">
+                          <Check size={11} className="work-eco-check" />
+                          <span>{tag}</span>
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </GsapSpotlightCard>
+              </GsapSpotlightCard>
+            </div>
           ))}
         </div>
 

@@ -1,162 +1,103 @@
-/* ReviewSection.css */
+/* =========================================================
+   Review Section (Top Header + Centered Bottom Form)
+========================================================= */
 
-/* Container & Base Palette */
 .rev-section {
-  position: relative;
-  background-color: #030712;
-  color: #f8fafc;
-  padding: 100px 24px 120px;
-  font-family: system-ui, -apple-system, sans-serif;
-  overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.rev-glow-top-left {
-  position: absolute;
-  top: -100px;
-  left: -100px;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
-  filter: blur(80px);
-  pointer-events: none;
-}
-
-.rev-glow-bottom-right {
-  position: absolute;
-  bottom: -100px;
-  right: -100px;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, transparent 70%);
-  filter: blur(80px);
-  pointer-events: none;
+  background-color: #f8fafc;
+  color: #0f172a;
+  padding: 95px 24px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .rev-container {
-  position: relative;
-  z-index: 2;
-  max-width: 1240px;
+  max-width: 680px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: 60px;
-  align-items: start;
 }
 
-/* Left Narrative Column */
+/* 1. Header Block on Top */
+.rev-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
 .rev-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+  display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
-  color: #c084fc;
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  padding: 6px 14px;
-  border-radius: 999px;
-  margin-bottom: 20px;
-}
-
-.rev-beacon-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: #38bdf8;
-  box-shadow: 0 0 8px #38bdf8;
-}
-
-.rev-accent-icon {
-  color: #c084fc;
-  flex-shrink: 0;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  margin-bottom: 14px;
 }
 
 .rev-title {
-  font-size: clamp(34px, 4.5vw, 56px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  margin: 0 0 20px;
-  text-transform: uppercase;
-  color: #ffffff;
+  font-size: 62px;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 0 0 10px;
+  color: #0f172a;
 }
 
 .rev-title-gradient {
-  background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+  background: linear-gradient(135deg, #0f172a 20%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .rev-lead {
-  color: #94a3b8;
-  font-size: 16px;
-  line-height: 1.65;
-  max-width: 480px;
-  margin: 0 0 32px;
+  color: #64748b;
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0 auto;
+  max-width: 580px;
 }
 
-/* Meta Box */
-.rev-meta-box {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.rev-meta-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  color: #94a3b8;
-}
-
-/* Right Form Card */
+/* 2. Form Panel Below */
 .rev-panel {
-  background: rgba(11, 15, 25, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
   border-radius: 20px;
-  padding: 36px;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 35px rgba(99, 102, 241, 0.08);
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
 }
 
-.rev-form-header {
+.rev-form-top {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f1f5f9;
 }
 
 .rev-form-label {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   color: #64748b;
+  text-transform: uppercase;
 }
 
 .rev-status-pill {
   font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.1em;
-  color: #10b981;
-  background: rgba(16, 185, 129, 0.1);
-  border: 1px solid rgba(16, 185, 129, 0.25);
-  padding: 4px 10px;
-  border-radius: 999px;
+  letter-spacing: 0.06em;
+  color: #16a34a;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 3px 9px;
+  border-radius: 9999px;
 }
 
 .rev-form {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 16px;
 }
 
 .rev-row {
@@ -167,64 +108,65 @@
 
 .rev-field label {
   display: block;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: #64748b;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   text-transform: uppercase;
 }
 
 .rev-field input,
 .rev-field textarea {
   width: 100%;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   border-radius: 10px;
-  padding: 12px 14px;
-  color: #ffffff;
+  padding: 11px 13px;
+  color: #0f172a;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 13.5px;
   outline: none;
   box-sizing: border-box;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .rev-field input:focus,
 .rev-field textarea:focus {
-  border-color: #6366f1;
-  background: rgba(255, 255, 255, 0.06);
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .rev-field input::placeholder,
 .rev-field textarea::placeholder {
-  color: #475569;
-  font-size: 12px;
+  color: #94a3b8;
+  font-size: 12.5px;
 }
 
 /* Rating Stars */
 .rev-rating-field label {
   display: block;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   color: #64748b;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   text-transform: uppercase;
 }
 
 .rev-stars {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
 }
 
 .rev-star-btn {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
   display: grid;
   place-items: center;
   cursor: pointer;
@@ -233,130 +175,112 @@
 
 .rev-star-btn:hover,
 .rev-star-btn.is-filled {
-  background: rgba(245, 158, 11, 0.12);
-  border-color: rgba(245, 158, 11, 0.4);
+  background: #fef3c7;
+  border-color: #f59e0b;
 }
 
 .rev-rating-value {
   font-size: 12px;
   font-weight: 700;
-  font-family: monospace;
-  color: #f59e0b;
-  margin-left: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  color: #d97706;
+  margin-left: 6px;
 }
 
-/* Submit */
+/* Submit Button */
 .rev-submit-btn {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  padding: 14px 22px;
-  border-radius: 12px;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  gap: 8px;
+  padding: 13px 20px;
+  border-radius: 10px;
+  background: #2563eb;
   color: #ffffff;
   font-family: inherit;
   font-size: 13px;
   font-weight: 700;
-  letter-spacing: 0.05em;
   border: none;
   cursor: pointer;
-  margin-top: 6px;
-  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-}
-
-.rev-submit-btn:hover {
-  opacity: 0.95;
-  transform: translateY(-2px);
-  box-shadow: 0 15px 30px rgba(168, 85, 247, 0.4);
-}
-
-/* Success View */
-.rev-success {
-  min-height: 380px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.rev-success-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(16, 185, 129, 0.15);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #10b981;
-  display: grid;
-  place-items: center;
-}
-
-.rev-success-tag {
-  display: block;
-  margin-top: 20px;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  color: #10b981;
-}
-
-.rev-success h3 {
-  font-size: 26px;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin: 8px 0;
-  color: #ffffff;
-}
-
-.rev-success p {
-  font-size: 14px;
-  color: #94a3b8;
-  line-height: 1.6;
-  margin: 0 0 24px;
-}
-
-.rev-reset-btn {
-  padding: 10px 22px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #ffffff;
-  font-family: inherit;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  cursor: pointer;
+  margin-top: 4px;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
   transition: all 0.2s ease;
 }
 
-.rev-reset-btn:hover {
+.rev-submit-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.28);
+}
+
+/* Success Card */
+.rev-success {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 12px;
+}
+
+.rev-success-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #16a34a;
+  display: grid;
+  place-items: center;
+  margin-bottom: 14px;
+}
+
+.rev-success-tag {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  color: #16a34a;
+  margin-bottom: 6px;
+}
+
+.rev-success h3 {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 6px;
+}
+
+.rev-success p {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0 0 20px;
+  max-width: 420px;
+}
+
+.rev-reset-btn {
+  padding: 9px 18px;
+  border-radius: 8px;
   background: #ffffff;
-  color: #030712;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
-  .rev-container {
-    grid-template-columns: 1fr;
-    gap: 40px;
-  }
-}
-
-@media (max-width: 600px) {
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
   .rev-section {
-    padding: 80px 16px;
+    padding: 60px 16px;
   }
 
-  .rev-title {
-    font-size: 28px;
+  .rev-panel {
+    padding: 20px 16px;
   }
 
   .rev-row {
     grid-template-columns: 1fr;
-  }
-
-  .rev-panel {
-    padding: 24px 18px;
   }
 }

@@ -1,5 +1,5 @@
-// GrowthPlan.jsx
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { ArrowUpRight, Navigation } from 'lucide-react';
 import './GrowthPlan.css';
 
 const planPhases = [
@@ -9,7 +9,8 @@ const planPhases = [
     title: "Business Idea",
     question: "What should the business sell?",
     desc: "Market viability analysis, value proposition refinement, and defining your high-margin offerings.",
-    category: "Foundation"
+    category: "Foundation",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=800&q=80"
   },
   {
     step: "02",
@@ -17,7 +18,8 @@ const planPhases = [
     title: "Business Model",
     question: "How will it make money?",
     desc: "Revenue streams, pricing mechanics, unit economics, and recurring cash-flow architecture.",
-    category: "Foundation"
+    category: "Foundation",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80"
   },
   {
     step: "03",
@@ -25,7 +27,8 @@ const planPhases = [
     title: "Market Strategy",
     question: "Who are the customers?",
     desc: "Ideal Customer Profile (ICP), competitive positioning, and market penetration routes.",
-    category: "Go-to-Market"
+    category: "Go-to-Market",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80"
   },
   {
     step: "04",
@@ -33,7 +36,8 @@ const planPhases = [
     title: "Product / Service Structure",
     question: "What exactly should be offered?",
     desc: "Tiered service packages, deliverable scopes, catalog structuring, and SLA framework.",
-    category: "Go-to-Market"
+    category: "Go-to-Market",
+    image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80"
   },
   {
     step: "05",
@@ -41,7 +45,8 @@ const planPhases = [
     title: "Exhibition Strategy",
     question: "How should the business present itself?",
     desc: "Digital authority, brand narrative, showcase funnels, and enterprise pitch positioning.",
-    category: "Brand & Sales"
+    category: "Brand & Sales",
+    image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80"
   },
   {
     step: "06",
@@ -49,7 +54,8 @@ const planPhases = [
     title: "Marketing Plan",
     question: "How will customers be acquired?",
     desc: "Multi-channel funnel, paid acquisition, organic reach, and automated conversion pipelines.",
-    category: "Brand & Sales"
+    category: "Brand & Sales",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=800&q=80"
   },
   {
     step: "07",
@@ -57,7 +63,8 @@ const planPhases = [
     title: "Technology Plan",
     question: "What systems are required?",
     desc: "Target architecture across Web, Mobile Apps, CRM, ERP, E-Commerce, and integrated AI automation.",
-    category: "Infrastructure"
+    category: "Infrastructure",
+    image: "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80"
   },
   {
     step: "08",
@@ -65,81 +72,160 @@ const planPhases = [
     title: "Succession & Scaling Plan",
     question: "How does the business run without you?",
     desc: "Standard operating procedures (SOPs), delegation frameworks, and autonomous operating models.",
-    category: "Infrastructure"
+    category: "Infrastructure",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
   }
 ];
 
-const GrowthPlan = () => {
-  const [activeStep, setActiveStep] = useState(0);
+export default function GrowthPlan({ onOpenProject }) {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const scrollRef = useRef(null);
+  const activeItem = planPhases[activeIdx];
+
+  // Handle scroll via navigation buttons
+  const handleScroll = (direction) => {
+    if (scrollRef.current) {
+      const cardWidth = 330; // card width + gap
+      const newIdx = direction === 'next' 
+        ? Math.min(activeIdx + 1, planPhases.length - 1) 
+        : Math.max(activeIdx - 1, 0);
+
+      setActiveIdx(newIdx);
+      scrollRef.current.scrollTo({
+        left: newIdx * cardWidth,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  // Sync index when user natively scrolls/swipes
+  const handleNativeScroll = () => {
+    if (scrollRef.current) {
+      const scrollLeft = scrollRef.current.scrollLeft;
+      const cardWidth = 320;
+      const index = Math.min(
+        Math.round(scrollLeft / cardWidth),
+        planPhases.length - 1
+      );
+      if (index !== activeIdx && index >= 0) {
+        setActiveIdx(index);
+      }
+    }
+  };
 
   return (
-    <section className="growth-plan-section">
-      <div className="growth-glow-accent" />
-      
-      <div className="growth-container">
+    <section className="growth-scale-section">
+      <div className="growth-scale-container">
         
-        {/* Header Block */}
-        <div className="growth-header">
-          <div className="growth-badge">
-            <span className="gps-indicator" />
-            <span>THE STRATEGIC BLUEPRINT</span>
+        {/* Left Column: Headings, Counter & Navigation */}
+        <div className="growth-left-col">
+          <div data-aos="fade-up"
+     data-aos-anchor-placement="center-center">
+            <h2 className="growth-left-title">
+              Don’t start with software. <br />
+              <span className="blue-highlight">Start with the route.</span>
+            </h2>
           </div>
 
-          <h1 className="growth-main-title">
-            Don’t start with software.<br />
-            <span className="growth-gradient-text">Start with the route.</span>
-          </h1>
+          {/* <div className="growth-counter-box">
+            <div className="counter-number">
+              <span className="current-num">{activeItem.step}</span>
+              <span className="total-num">/08</span>
+            </div>
+            {/* <span className="counter-category">{activeItem.category} • {activeItem.phase}</span> */}
+            {/* <h4 className="counter-heading">{activeItem.title}</h4> */}
+            {/* <p className="counter-summary">{activeItem.question}</p> */}
+          {/* </div> */} 
 
-          <p className="growth-lead-text">
-            A complete 8-stage strategic roadmap. We design every operational turn, 
-            monetization channel, and technical requirement.
-          </p>
-        </div>
-
-        {/* 8-Point Navigation / Blueprint Grid */}
-        <div className="blueprint-grid">
-          {planPhases.map((item, index) => (
-            <div 
-              key={item.step} 
-              className={`blueprint-card ${activeStep === index ? 'card-active' : ''}`}
-              onClick={() => setActiveStep(index)}
+          {/* Navigation Arrows */}
+          {/* <div className="growth-nav-controls">
+            <button 
+              type="button" 
+              className={`growth-arrow-btn ${activeIdx > 0 ? 'active' : ''}`}
+              onClick={() => handleScroll('prev')}
+              disabled={activeIdx === 0}
+              aria-label="Previous Stage"
             >
-              <div className="card-top-meta">
-                <span className="step-number">{item.step}</span>
-                <span className="step-category">{item.category}</span>
-              </div>
-              <h3 className="card-heading">{item.title}</h3>
-              <p className="card-question">{item.question}</p>
-              <p className="card-detail">{item.desc}</p>
-              <div className="card-route-indicator" />
-            </div>
-          ))}
+              <ArrowLeft size={18} />
+            </button>
+            <button 
+              type="button" 
+              className={`growth-arrow-btn ${activeIdx < planPhases.length - 1 ? 'active' : ''}`}
+              onClick={() => handleScroll('next')}
+              disabled={activeIdx === planPhases.length - 1}
+              aria-label="Next Stage"
+            >
+              <ArrowRight size={18} />
+            </button>
+          </div> */}
         </div>
 
-        {/* Final GPS Hand-off Hero Card */}
-        <div className="gps-handoff-banner">
-          <div className="gps-banner-content">
-            <div className="gps-icon-wrapper">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <polygon points="3 11 22 2 13 21 11 13 3 11" />
-              </svg>
-            </div>
-            <div>
-              <h3 className="gps-banner-title">We hand you the roadmap. You drive.</h3>
-              <p className="gps-banner-subtitle">
-                Clear turn-by-turn guidance for technology, business systems, and scalable operations.
-              </p>
-            </div>
+        {/* Right Column: Top Subtext & Horizontally Scrollable Cards */}
+        <div className="growth-right-col">
+          
+          {/* Scrollable Cards Container */}
+          <div 
+            className="growth-cards-carousel" 
+            ref={scrollRef}
+            onScroll={handleNativeScroll}
+          >
+            {planPhases.map((item, index) => (
+              <div
+                key={item.step}
+                className={`scale-img-card ${index === activeIdx ? 'is-active' : ''}`}
+                onClick={() => {
+                  setActiveIdx(index);
+                  if (scrollRef.current) {
+                    scrollRef.current.scrollTo({
+                      left: index * 320,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
+              >
+                <img src={item.image} alt={item.title} className="scale-card-bg" loading="lazy" />
+                <div className="scale-card-scrim" />
+
+                {/* Top Glass Category Badge */}
+                <div className="scale-card-badge">
+                  <span className="step-num-pill">{item.step}</span>
+                  <span>{item.category}</span>
+                </div>
+
+                {/* Bottom Text Content */}
+                <div className="scale-card-body">
+                  <span className="scale-card-question">{item.question}</span>
+                  <h3 className="scale-card-title">{item.title}</h3>
+                  <p className="scale-card-desc">{item.desc}</p>
+                </div>
+              </div>
+            ))}
           </div>
-          <button className="gps-cta-button">
-            Request Growth Blueprint
-            <span>→</span>
-          </button>
+
         </div>
 
       </div>
+
+      {/* GPS Hand-off Hero Card */}
+      <div className="gps-handoff-banner">
+        <div className="gps-banner-content">
+          <div className="gps-icon-wrapper">
+            <Navigation size={22} />
+          </div>
+          <div>
+            <h3 className="gps-banner-title">We hand you the roadmap. You drive.</h3>
+            
+          </div>
+        </div>
+        <button 
+          type="button"
+          className="gps-cta-button"
+          onClick={onOpenProject}
+        >
+          <span>Request Growth Blueprint</span>
+          <ArrowUpRight size={15} />
+        </button>
+      </div>
     </section>
   );
-};
-
-export default GrowthPlan;
+}

@@ -1,191 +1,160 @@
 import React from "react";
-import { 
-  Compass, 
-  ArrowUpRight, 
-} from "lucide-react";
+import { Compass, ArrowUpRight } from "lucide-react";
 import "./AboutPage.css";
 import img from "../../images/aiimg.jpg";
 
-const systemLayers = [
+const layers = [
   {
     num: "01",
-    label: "COMMERCIAL ROUTE",
+    tag: "ROUTE",
     title: "Unit Economics & Offer Strategy",
-    desc: "Before writing code, we map pricing tiers, recurring monetization loops, buyer personas, and operational margin thresholds."
+    desc: "Pricing logic, retention dynamics, and operational margins mapped prior to code deployment."
   },
   {
     num: "02",
-    label: "UNIFIED PLATFORMS",
-    title: "Web, Mobile & Real-Time POS",
-    desc: "Decoupled web platforms and native mobile apps that synchronize transactions, user logins, and catalog inventory with zero delay."
+    tag: "INTERFACE",
+    title: "Web Platforms & Mobile Apps",
+    desc: "Decoupled web frontends and native apps with real-time catalog and login sync."
   },
   {
     num: "03",
-    label: "OPERATIONAL CORE",
-    title: "Custom ERP & Internal Back-Office",
-    desc: "Replacing scattered WhatsApp threads and manual spreadsheets with central order dispatch, automated invoicing, and role-based staff permissions."
+    tag: "NERVOUS CORE",
+    title: "Internal ERP & Operations",
+    desc: "Order dispatch, automated PDF invoices, and role-based staff permissions."
   },
   {
     num: "04",
-    label: "NEURAL & AUTOMATION",
+    tag: "AUTONOMY",
     title: "Autonomous Agents & Private AI",
-    desc: "Custom AI triage assistants, document parsers, and recommendation algorithms trained directly on your business records."
+    desc: "Document OCR parsing and private conversational triage trained on internal records."
   }
 ];
 
-const studioHighlights = [
+const highlights = [
   {
-    title: "Strategy & Systems Discovery",
-    tag: "DISCOVERY & SPEC",
-    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=900&q=80",
-    desc: "Collaborative whiteboarding sessions defining technical data models and customer journeys."
+    title: "Strategy & Discovery",
+    badge: "SPECIFICATION",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
+    desc: "Collaborative scoping defining data models and core operational bottlenecks."
   },
   {
-    title: "High-Velocity Software",
-    tag: "24-48H SPRINTS",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=900&q=80",
-    desc: "Rapid production builds executing clean, reusable components with automated CI/CD staging."
+    title: "Production Sprints",
+    badge: "VELOCITY",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
+    desc: "Fixed-scope modular engineering with zero technical debt and live CI/CD staging."
   }
 ];
 
 export default function AboutPage({ onOpenProject, onOpenBooking }) {
   return (
-    <div className="about-editorial-page">
-      <div className="about-ambient-glow" />
+    <div className="abt-page">
+      <div className="abt-container">
 
-      <div className="about-editorial-container">
-        {/* 1. Header & Hero Narrative */}
-        <section className="about-story-hero">
-          <div className="about-badge">
-            <span>MORE THAN JUST DEVELOPERS</span>
-          </div>
-
-          <h1 className="about-editorial-title">
-            We don’t just write software. <br />
-            <span className="about-gradient-text">We build the connected engine.</span>
+        {/* 1. Hero Section */}
+        <section className="abt-hero">
+          <span className="abt-eyebrow">STUDIO MANIFESTO</span>
+          <h1 className="abt-hero-title">
+            We build the <span className="abt-gradient-text">connected engine.</span>
           </h1>
-
-          <p className="about-editorial-lead">
-            AI Concept bridges business strategy, software architecture, artificial intelligence, 
-            and operational planning. We believe founders shouldn't have to piece together disconnected agencies, 
-            freelance developers, and fragmented SaaS tools on their own.
+          <p className="abt-hero-lead">
+            Bridging strategy, web platforms, operational ERPs, and private AI into a single autonomous system.
           </p>
-
-          <div className="about-mantra-strip">
-            <Compass size={18} className="about-mantra-icon" />
-            <span className="about-mantra-text">"We create the route. You drive the business."</span>
+          <div className="abt-mantra-pill">
+            <Compass size={14} />
+            <span>"We sell the GPS. You drive the business."</span>
           </div>
         </section>
 
-        {/* 2. Visual Story Split (Removed boxes, added real metrics) */}
-        <section className="about-narrative-split">
-          <div className="about-narrative-media">
-            <img
-            src={img}
-              alt="System Architecture & Strategy"
-              className="about-split-img"
-            />
-            <div className="about-media-badge">
-              <span className="about-badge-dot" />
-              <span>PRODUCTION ECOSYSTEM v3.4</span>
+        {/* 2. Visual Story Narrative */}
+        <section className="abt-narrative">
+          <div className="abt-media-frame">
+            <img src={img} alt="Connected Systems Architecture" />
+            <div className="abt-media-pill">
+              <span className="abt-pulse-dot" />
+              <span>PRODUCTION STACK v3.4</span>
             </div>
           </div>
 
-          <div className="about-narrative-copy">
-            <span className="about-sub-label">THE CORE DISCONNECT</span>
+          <div className="abt-narrative-info">
+            <span className="abt-section-tag">THE SYSTEM PHILOSOPHY</span>
             <h2>Traditional agencies build pages. We engineer operations.</h2>
             <p>
-              Most businesses end up with an isolated website, an unconnected CRM, manual spreadsheets, 
-              and disjointed WhatsApp chats. When order volume spikes, the human operation breaks under the friction.
-            </p>
-            <p>
-              We view software as a single, unified nervous system. Your website feeds your CRM, your CRM syncs 
-              with inventory, your inventory triggers warehouse dispatches, and custom AI handles the repetitive customer triage.
+              Disconnected tools create human friction under load. We connect your storefront directly to inventory, back-office ERP, and autonomous triage bots.
             </p>
 
-            <div className="about-stats-row">
-              <div className="about-stat-item">
-                <span className="about-stat-val">100%</span>
-                <span className="about-stat-lbl">Code & System Ownership</span>
+            <div className="abt-metrics-strip">
+              <div className="abt-metric-box">
+                <strong>100%</strong>
+                <span>Code Ownership</span>
               </div>
-              <div className="about-stat-item">
-                <span className="about-stat-val">0</span>
-                <span className="about-stat-lbl">Retainer Locks</span>
+              <div className="abt-metric-box">
+                <strong>0</strong>
+                <span>Retainer Locks</span>
               </div>
-              <div className="about-stat-item">
-                <span className="about-stat-val">24-48H</span>
-                <span className="about-stat-lbl">Sprint Turnarounds</span>
+              <div className="abt-metric-box">
+                <strong>24-48H</strong>
+                <span>Sprint Velocity</span>
               </div>
             </div>
           </div>
         </section>
 
-        {/* 3. Open Architectural Layers (Clean List, No Boxed Borders) */}
-        <section className="about-layers-section">
-          <div className="about-layers-header">
-            <span className="about-sub-label">THE 4-LAYER BLUEPRINT</span>
-            <h2>What Goes Into An AI Concept Build</h2>
-            <p>Every client deployment touches four essential organizational layers.</p>
+        {/* 3. The 4-Layer Blueprint */}
+        <section className="abt-layers">
+          <div className="abt-layers-head">
+            <span className="abt-section-tag">ARCHITECTURE</span>
+            <h2>The 4-Layer Blueprint</h2>
           </div>
 
-          <div className="about-layers-list">
-            {systemLayers.map((layer) => (
-              <div key={layer.num} className="about-layer-row">
-                <div className="about-layer-meta">
-                  <span className="about-layer-num">{layer.num}</span>
-                  <span className="about-layer-pill">{layer.label}</span>
+          <div className="abt-layers-grid">
+            {layers.map((layer) => (
+              <div key={layer.num} className="abt-layer-card">
+                <div className="abt-layer-meta">
+                  <span className="abt-num">{layer.num}</span>
+                  <span className="abt-tag">{layer.tag}</span>
                 </div>
-                <div className="about-layer-body">
-                  <h3>{layer.title}</h3>
-                  <p>{layer.desc}</p>
-                </div>
+                <h3>{layer.title}</h3>
+                <p>{layer.desc}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* 4. Studio Highlights Visual Cards */}
-        <section className="about-studio-section">
-          <div className="about-studio-grid">
-            {studioHighlights.map((item, idx) => (
-              <div key={idx} className="about-studio-card">
-                <div className="about-studio-media">
-                  <img src={item.image} alt={item.title} />
-                  <span className="about-studio-tag">{item.tag}</span>
-                </div>
-                <div className="about-studio-content">
-                  <h3>{item.title}</h3>
-                  <p>{item.desc}</p>
-                </div>
+        {/* 4. Studio Highlights */}
+        <section className="abt-highlights">
+          {highlights.map((item, idx) => (
+            <div key={idx} className="abt-high-card">
+              <div className="abt-high-media">
+                <img src={item.image} alt={item.title} />
+                <span className="abt-high-badge">{item.badge}</span>
               </div>
-            ))}
-          </div>
+              <div className="abt-high-text">
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
+              </div>
+            </div>
+          ))}
         </section>
 
-        {/* 5. Minimalist Closing CTA Strip */}
-        <section className="about-minimal-cta">
-          <div className="about-cta-text">
+        {/* 5. Minimal CTA */}
+        <section className="abt-cta">
+          <div>
             <h3>Ready to map your business route?</h3>
-            <p>We scope, architect, and deploy production digital systems in dedicated sprint windows.</p>
+            <p>Fixed-turnaround production engineering in dedicated sprint windows.</p>
           </div>
-
-          <div className="about-cta-actions">
+          <div className="abt-cta-btns">
             <button
               type="button"
-              className="about-btn-action"
-              onClick={() => {
-                if (onOpenProject) onOpenProject();
-              }}
+              className="abt-btn-solid"
+              onClick={() => onOpenProject && onOpenProject()}
             >
               <span>Start A Project</span>
-              <ArrowUpRight size={14} />
+              <ArrowUpRight size={13} />
             </button>
             <button
               type="button"
-              className="about-btn-ghost"
-              onClick={() => {
-                if (onOpenBooking) onOpenBooking();
-              }}
+              className="abt-btn-outline"
+              onClick={() => onOpenBooking && onOpenBooking()}
             >
               <span>Book Strategy Call</span>
             </button>

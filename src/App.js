@@ -23,7 +23,7 @@ export default function App() {
   useEffect(() => {
     AOS.init({
       offset: 120,
-      duration: 400,
+      duration: 3000,
       easing: "ease",
       once: false,
     });
@@ -33,7 +33,6 @@ export default function App() {
     AOS.refresh();
   }, [currentPage]);
 
-  // Automatic scroll to top whenever page or solution changes
   useEffect(() => {
     window.scrollTo({
       top: 0,

@@ -1,18 +1,28 @@
 /* MarqueeSection.css */
+/* =========================================================
+   High-Contrast Modern Tech Slate (Light Palette)
+   Base: #F8FAFC (Slate 50)
+   Item Card: #FFFFFF
+   Primary Text: #0F172A (Slate 900)
+   Tech Text: #64748B (Slate 500)
+   Accent: #2563EB (Royal Blue)
+   Border: #E2E8F0 (Slate 200)
+========================================================= */
+
 .mq-section {
   position: relative;
-  background-color: #030712;
-  padding: 40px 0;
+  background-color: #f8fafc;
+  padding: 42px 0;
   overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  font-family: system-ui, -apple-system, sans-serif;
+  gap: 18px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-/* Side Fade Edge Masking */
+/* Side Fade Edge Masking (Smooth Fade to Light Background) */
 .mq-section::before,
 .mq-section::after {
   content: "";
@@ -26,23 +36,24 @@
 
 .mq-section::before {
   left: 0;
-  background: linear-gradient(to right, #030712 0%, transparent 100%);
+  background: linear-gradient(to right, #f8fafc 0%, rgba(248, 250, 252, 0) 100%);
 }
 
 .mq-section::after {
   right: 0;
-  background: linear-gradient(to left, #030712 0%, transparent 100%);
+  background: linear-gradient(to left, #f8fafc 0%, rgba(248, 250, 252, 0) 100%);
 }
 
+/* Subtle Blue Ambient Glow */
 .mq-glow-ambient {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 700px;
-  height: 90px;
-  background: radial-gradient(ellipse, rgba(99, 102, 241, 0.14) 0%, transparent 70%);
-  filter: blur(40px);
+  width: 650px;
+  height: 80px;
+  background: radial-gradient(ellipse, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+  filter: blur(35px);
   pointer-events: none;
 }
 
@@ -56,7 +67,7 @@
 .mq-track {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   flex-shrink: 0;
   will-change: transform;
 }
@@ -97,18 +108,17 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 8px 18px;
+  padding: 9px 18px;
   border-radius: 999px;
-  background: rgba(11, 15, 25, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-  transition: border-color 0.2s ease;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.03);
+  transition: all 0.2s ease;
 }
 
 .mq-item:hover {
-  border-color: rgba(168, 85, 247, 0.4);
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
 }
 
 .mq-icon-box {
@@ -117,39 +127,40 @@
   justify-content: center;
 }
 
+/* High-Contrast Crisp Icon Colors for Light Mode */
 .mq-purple-icon {
-  color: #c084fc;
+  color: #7c3aed;
 }
 
 .mq-cyan-icon {
-  color: #38bdf8;
+  color: #0284c7;
 }
 
 .mq-pink-icon {
-  color: #f472b6;
+  color: #db2777;
 }
 
 .mq-emerald-icon {
-  color: #34d399;
+  color: #059669;
 }
 
 .mq-text {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 1.2px;
-  color: #f8fafc;
+  color: #0f172a; /* Deep Slate Bold Text */
   white-space: nowrap;
 }
 
 .mq-divider {
-  color: rgba(168, 85, 247, 0.45);
-  font-size: 10px;
+  color: #cbd5e1;
+  font-size: 9px;
   margin-left: 4px;
 }
 
 /* Bottom Tech Stack Track */
 .mq-tech-wrap {
-  opacity: 0.8;
+  opacity: 0.9;
 }
 
 .mq-tech-item {
@@ -162,15 +173,15 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #38bdf8;
-  box-shadow: 0 0 6px #38bdf8;
+  background: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
 }
 
 .mq-tech-text {
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 600;
   letter-spacing: 1.5px;
-  color: #94a3b8;
+  color: #475569; /* Clear Medium Slate */
   font-family: monospace;
   white-space: nowrap;
 }
@@ -188,5 +199,9 @@
 
   .mq-text {
     font-size: 10px;
+  }
+
+  .mq-tech-text {
+    font-size: 10.5px;
   }
 }

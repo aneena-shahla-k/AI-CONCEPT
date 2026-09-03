@@ -1,72 +1,89 @@
+/* =========================================================
+   Core Concept Pipeline (Top Header + Bottom Step Flow)
+========================================================= */
+
 .core-concept-wrapper {
-  background-color: #030712;
-  padding: 100px 20px;
+  background-color: #f8fafc;
+  padding: 90px 24px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #0f172a;
+  overflow: hidden;
 }
 
-.concept-card-container {
-  padding: 58px;
-  max-width: 1500px;
+.concept-container {
+  max-width: 1140px;
   width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-  box-sizing: border-box;
 }
 
+/* 1. Header Centered on Top */
 .concept-header {
-  flex: 0 0 280px;
+  text-align: center;
+  max-width: 640px;
+  margin-bottom: 50px;
 }
 
 .concept-tag {
-  color: #6366f1;
+  display: inline-block;
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 1.5px;
+  letter-spacing: 1.4px;
   text-transform: uppercase;
-  display: block;
-  margin-bottom: 12px;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  padding: 5px 14px;
+  border-radius: 9999px;
+  margin-bottom: 14px;
 }
 
 .concept-title {
-  color: #ffffff;
-  font-size: 32px;
-  font-weight: 800;
+  font-size:  62px;
+  font-weight: 750;
+  letter-spacing: -0.025em;
   line-height: 1.2;
-  margin: 0;
+  margin: 0 0 10px;
+  color: #0f172a;
 }
 
 .highlight-text {
-  background: linear-gradient(135deg, #a855f7, #6366f1);
+  background: linear-gradient(135deg, #0f172a 20%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
+.concept-subtitle {
+  font-size: 15.5px;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* 2. Horizontal Flow Track Below */
 .concept-flow {
   position: relative;
-  flex: 1;
+  width: 100%;
+  padding: 20px 0 10px;
   display: flex;
   align-items: center;
-  min-height: 140px;
 }
 
 .connector-line {
   position: absolute;
-  top: 0;
+  top: 24px;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 60px;
   pointer-events: none;
   z-index: 1;
 }
 
 .animated .dash-path {
-  animation: dashAnimation 20s linear infinite;
+  animation: dashAnimation 22s linear infinite;
 }
 
 @keyframes dashAnimation {
@@ -81,7 +98,8 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 .node-item {
@@ -89,12 +107,13 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  max-width: 140px;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(16px);
 }
 
 .animated .node-item {
-  animation: fadeInUp 0.6s ease forwards;
+  animation: fadeInUp 0.5s ease forwards;
 }
 
 @keyframes fadeInUp {
@@ -104,189 +123,106 @@
   }
 }
 
-/* Icon Rings & Inner SVG Sizing Fix */
+/* Icon Rings */
 .icon-ring {
   width: 52px;
   height: 52px;
   border-radius: 50%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: #0b0f19;
-  border: 2px solid #334155;
-  transition: all 0.3s ease;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+  transition: all 0.25s ease;
   box-sizing: border-box;
 }
 
+.node-item:hover .icon-ring {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15);
+}
+
 .icon-inner {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-/* SVG Rendering Fix */
 .icon-inner svg {
-  width: 24px !important;
-  height: 24px !important;
-  min-width: 24px;
-  min-height: 24px;
-  display: block;
+  width: 20px;
+  height: 20px;
+  stroke: #2563eb;
 }
 
-/* Node Color Styling & Specific Glows */
+/* Node Variants */
 .node-item.start .icon-ring {
-  border-color: #c084fc;
-  box-shadow: 0 0 15px rgba(192, 132, 252, 0.5);
-}
-.node-item.start .icon-inner svg {
-  stroke: #c084fc;
+  border-color: #2563eb;
+  background-color: #eff6ff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
 .node-item.node .icon-ring {
-  border-color: #3b82f6;
-  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
-}
-.node-item.node .icon-inner svg {
-  stroke: #60a5fa;
+  border-color: #bfdbfe;
 }
 
 .node-item.end .icon-ring {
-  border-color: #10b981;
-  box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
-  width: 64px;
-  height: 64px;
+  border-color: #16a34a;
+  background-color: #f0fdf4;
+  box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.15);
 }
-.node-item.end .icon-inner {
-  width: 28px;
-  height: 28px;
-}
+
 .node-item.end .icon-inner svg {
-  width: 28px !important;
-  height: 28px !important;
-  stroke: #34d399;
+  stroke: #16a34a;
 }
 
-/* Moving Light Pulse along route */
-.moving-pulse-car {
-  position: absolute;
-  top: 50%;
-  left: 40px;
-  width: 12px;
-  height: 12px;
-  background-color: #10b981;
-  border-radius: 50%;
-  box-shadow: 0 0 15px #10b981, 0 0 30px #10b981;
-  z-index: 3;
-  pointer-events: none;
-  animation: moveRoute 3.5s ease-in-out infinite;
-}
-
-@keyframes moveRoute {
-  0% {
-    left: 40px;
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    left: calc(100% - 40px);
-    opacity: 0;
-  }
-}
-
+/* Labels */
 .node-label {
   margin-top: 14px;
-  color: #f8fafc;
+  color: #0f172a;
   font-size: 13px;
-  font-weight: 600;
-  line-height: 1.3;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
 }
 
-@media (max-width: 900px) {
+/* Mobile Responsiveness */
+@media (max-width: 860px) {
   .core-concept-wrapper {
-    padding: 30px 16px;
-  }
-
-  .concept-card-container {
-    flex-direction: column;
-    align-items: stretch;
-    padding: 32px 24px;
-    gap: 36px;
+    padding: 60px 16px;
   }
 
   .concept-header {
-    flex: none;
-    text-align: left;
+    margin-bottom: 36px;
   }
 
-  .concept-title {
-    font-size: 26px;
-  }
-
-  /* Container for vertical flow */
   .concept-flow {
-    min-height: auto;
-    width: 100%;
-    position: relative;
+    padding: 0;
   }
 
-  /* Vertical connecting line */
-  .concept-flow::before {
-    content: '';
-    position: absolute;
-    top: 26px;
-    bottom: 26px;
-    left: 26px; /* Centers with the 52px icon-ring */
-    width: 2px;
-    background: linear-gradient(180deg, #c084fc, #3b82f6, #10b981);
-    z-index: 1;
+  .connector-line {
+    display: none;
   }
 
-  /* Switch horizontal nodes to a clean vertical list */
   .nodes-wrapper {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 24px;
-    position: relative;
-    z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 16px;
   }
 
-  /* Align node icon and label side-by-side */
   .node-item {
-    flex-direction: row;
-    align-items: center;
-    text-align: left;
-    gap: 16px;
-    width: 100%;
-  }
-
-  /* Keep ring size fixed and centered */
-  .icon-ring {
-    flex-shrink: 0;
-    width: 52px;
-    height: 52px;
-  }
-
-  .node-item.end .icon-ring {
-    width: 52px;
-    height: 52px;
+    max-width: none;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px 12px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
   }
 
   .node-label {
-    margin-top: 0;
-    font-size: 15px;
-    line-height: 1.4;
-  }
-
-  /* Hide desktop horizontal elements */
-  .connector-line,
-  .moving-pulse-car {
-    display: none;
+    margin-top: 10px;
+    font-size: 12.5px;
   }
 }

@@ -1,0 +1,54 @@
+/* src/components/AISolutions/components/AIFaqSection.css */
+.ai-faq-section {
+  padding: 70px 0 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.ai-faq-list {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ai-faq-item {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px 22px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.02);
+  transition: all 0.2s ease;
+}
+
+.ai-faq-item:hover,
+.ai-faq-item.is-open {
+  border-color: #2563eb;
+}
+
+.ai-faq-q {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ai-faq-icon {
+  color: #64748b;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.ai-faq-icon.is-rotated {
+  transform: rotate(180deg);
+  color: #2563eb;
+}
+
+.ai-faq-a {
+  font-size: 13.5px;
+  color: #64748b;
+  line-height: 1.6;
+  margin: 12px 0 0;
+}

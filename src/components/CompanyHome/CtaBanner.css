@@ -1,11 +1,21 @@
 /* CtaBanner.css */
+/* =========================================================
+   High-Contrast Modern Tech Slate (Light Palette)
+   Base: #F8FAFC (Slate 50)
+   Card: #FFFFFF
+   Primary Text: #0F172A (Slate 900)
+   Body/Desc Text: #475569 (Slate 600)
+   Accent / Brand: #2563EB (Royal Blue)
+   Border: #E2E8F0 (Slate 200)
+========================================================= */
+
 .cta-banner-wrapper {
   position: relative;
-  background-color: #030712;
-  color: #f8fafc;
+  background-color: #f8fafc;
+  color: #0f172a;
   padding: 80px 24px;
   overflow: hidden;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .cta-banner-container {
@@ -15,15 +25,10 @@
 
 .cta-card {
   position: relative;
-  background: rgba(11, 15, 25, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 28px;
+  background: #f8fafc;
   padding: 72px 32px;
   text-align: center;
   overflow: hidden;
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 .cta-glow-effect {
@@ -33,8 +38,8 @@
   transform: translateX(-50%);
   width: 600px;
   height: 350px;
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.18) 0%, rgba(168, 85, 247, 0.1) 40%, transparent 70%);
-  filter: blur(80px);
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.08) 0%, transparent 70%);
+  filter: blur(70px);
   pointer-events: none;
 }
 
@@ -49,45 +54,45 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
-  color: #c084fc;
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.25);
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
   padding: 6px 14px;
-  border-radius: 999px;
+  border-radius: 9999px;
   margin-bottom: 20px;
 }
 
 .cta-beacon-dot {
-  width: 6px;
-  height: 6px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background-color: #38bdf8;
-  box-shadow: 0 0 8px #38bdf8;
+  background-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
 }
 
 .cta-title {
   font-size: clamp(28px, 4vw, 44px);
   font-weight: 800;
-  color: #ffffff;
+  color: #0f172a;
   line-height: 1.2;
   letter-spacing: -0.02em;
   margin: 0 0 16px 0;
 }
 
 .cta-gradient-text {
-  background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+  background: linear-gradient(135deg, #1e293b 0%, #2563eb 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .cta-description {
-  font-size: 16px;
-  color: #94a3b8;
-  line-height: 1.6;
+  font-size: 16.5px;
+  color: #475569;
+  line-height: 1.65;
   margin: 0 auto 36px auto;
   max-width: 580px;
 }
@@ -104,46 +109,47 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 13px 26px;
+  padding: 14px 26px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  background: #2563eb;
   color: #ffffff;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
   border: none;
   cursor: pointer;
-  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cta-btn-primary:hover {
-  opacity: 0.95;
+  background: #1d4ed8;
   transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.35);
 }
 
 .cta-btn-secondary {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 13px 24px;
+  padding: 14px 24px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #f8fafc;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .cta-btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.25);
-  color: #38bdf8;
+  background: #f1f5f9;
+  border-color: #94a3b8;
+  color: #2563eb;
   transform: translateY(-2px);
 }
 

@@ -1,7 +1,5 @@
-// ReviewSection.jsx
 import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Star, Check, ArrowUpRight, MessageSquareCheck, ShieldCheck } from "lucide-react";
+import { Star, Check, ArrowUpRight } from "lucide-react";
 import "./ReviewSection.css";
 
 export default function ReviewSection() {
@@ -30,64 +28,25 @@ export default function ReviewSection() {
 
   return (
     <section className="rev-section" id="reviews">
-      {/* Background Ambient Glows */}
-      <div className="rev-glow-top-left" />
-      <div className="rev-glow-bottom-right" />
-
       <div className="rev-container">
         
-        {/* Left Narrative Column */}
-        <motion.div
-          className="rev-intro"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="rev-eyebrow">
-            <span className="rev-beacon-dot" />
-            <span>CLIENT FEEDBACK</span>
-          </div>
-
+        {/* Top Header Block */}
+        <div className="rev-header">
           <h2 className="rev-title">
-            SHARE YOUR <br />
-            <span className="rev-title-gradient">EXPERIENCE</span>
+            Share Your <span className="rev-title-gradient">Experience</span>
           </h2>
+        </div>
 
-          <p className="rev-lead">
-            Your feedback directly guides how we engineer and deploy digital products. 
-            Tell us about your experience building and collaborating with AI Concept LLC.
-          </p>
-
-          <div className="rev-meta-box">
-            <div className="rev-meta-item">
-              <ShieldCheck size={16} className="rev-accent-icon" />
-              <span>Verified feedback helps refine our sprint pipelines.</span>
-            </div>
-            <div className="rev-meta-item">
-              <MessageSquareCheck size={16} className="rev-accent-icon" />
-              <span>Direct review submission without third-party friction.</span>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Right Form Card */}
-        <motion.div
-          className="rev-panel"
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
+        {/* Centered Form Card Below Header */}
+        <div className="rev-panel">
           {submitted ? (
-            /* Success State */
             <div className="rev-success">
               <div className="rev-success-icon">
-                <Check size={26} strokeWidth={3} />
+                <Check size={24} strokeWidth={3} />
               </div>
               <span className="rev-success-tag">FEEDBACK RECORDED</span>
               <h3>Thank you for your review.</h3>
-              <p>Your perspective helps us maintain exceptional engineering standards and refine rapid deployment sprints.</p>
+              <p>Your perspective helps us maintain exceptional engineering standards and refine deployment sprints.</p>
               <button
                 type="button"
                 className="rev-reset-btn"
@@ -101,14 +60,13 @@ export default function ReviewSection() {
               </button>
             </div>
           ) : (
-            /* Review Intake Form */
             <form onSubmit={handleSubmit} className="rev-form">
-              <div className="rev-form-header">
-                <span className="rev-form-label">PROJECT INTAKE // FEEDBACK</span>
+              <div className="rev-form-top">
+                <span className="rev-form-label">FEEDBACK FORM</span>
                 <span className="rev-status-pill">AUTHENTIC REVIEWS</span>
               </div>
 
-              {/* Name & Role */}
+              {/* Name & Role Row */}
               <div className="rev-row">
                 <div className="rev-field">
                   <label>YOUR NAME *</label>
@@ -145,7 +103,7 @@ export default function ReviewSection() {
                 />
               </div>
 
-              {/* Interactive Star Rating */}
+              {/* Rating */}
               <div className="rev-rating-field">
                 <label>RATING *</label>
                 <div className="rev-stars">
@@ -169,7 +127,7 @@ export default function ReviewSection() {
                 </div>
               </div>
 
-              {/* Review Text */}
+              {/* Review Message */}
               <div className="rev-field">
                 <label>YOUR REVIEW *</label>
                 <textarea
@@ -185,11 +143,11 @@ export default function ReviewSection() {
               {/* Submit Button */}
               <button type="submit" className="rev-submit-btn">
                 <span>SUBMIT REVIEW</span>
-                <ArrowUpRight size={16} />
+                <ArrowUpRight size={15} />
               </button>
             </form>
           )}
-        </motion.div>
+        </div>
 
       </div>
     </section>
