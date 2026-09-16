@@ -11,15 +11,58 @@ import realEstateImg from "../assets/images/about/real.jpg";
 import startupsImg from "../assets/images/about/start.jpg";
 
 const industries = [
-  { no: "01", title: "Retail", text: "E-commerce, inventory, POS, CRM, loyalty.", image: retailImg },
-  { no: "02", title: "Healthcare", text: "Booking, patient systems, portals, AI assistance.", image: healthcareImg },
-  { no: "03", title: "Hospitality", text: "Reservations, websites, apps, CRM, operations.", image: hospitalityImg },
-  { no: "04", title: "Education", text: "Learning platforms, student systems, ERP.", image: educationImg },
-  { no: "05", title: "Professional Services", text: "Booking, CRM, invoicing, dashboards.", image: professionalImg },
-  { no: "06", title: "Logistics", text: "Tracking, dispatch, delivery systems, mobile applications.", image: logisticsImg },
-  { no: "07", title: "Real Estate", text: "Property portals, CRM, booking, lead management.", image: realEstateImg },
-  { no: "08", title: "Startups", text: "MVPs, SaaS platforms, apps, AI products.", image: startupsImg },
+  {
+    no: "01",
+    title: "Retail",
+    text: "E-commerce, inventory, POS, CRM, loyalty.",
+    image: retailImg,
+  },
+  {
+    no: "02",
+    title: "Healthcare",
+    text: "Booking, patient systems, portals, AI assistance.",
+    image: healthcareImg,
+  },
+  {
+    no: "03",
+    title: "Hospitality",
+    text: "Reservations, websites, apps, CRM, operations.",
+    image: hospitalityImg,
+  },
+  {
+    no: "04",
+    title: "Education",
+    text: "Learning platforms, student systems, ERP.",
+    image: educationImg,
+  },
+  {
+    no: "05",
+    title: "Professional Services",
+    text: "Booking, CRM, invoicing, dashboards.",
+    image: professionalImg,
+  },
+  {
+    no: "06",
+    title: "Logistics",
+    text: "Tracking, dispatch, delivery systems, mobile applications.",
+    image: logisticsImg,
+  },
+  {
+    no: "07",
+    title: "Real Estate",
+    text: "Property portals, CRM, booking, lead management.",
+    image: realEstateImg,
+  },
+  {
+    no: "08",
+    title: "Startups",
+    text: "MVPs, SaaS platforms, apps, AI products.",
+    image: startupsImg,
+  },
 ];
+
+const ROUTE_PATH =
+  "M 90 680 C 130 280 390 70 700 70 C 1010 70 1270 280 1310 680";
 
 export default function Industries() {
   const sectionRef = useRef(null);
@@ -27,19 +70,22 @@ export default function Industries() {
   const pinRef = useRef(null);
 
   const pathLengthRef = useRef(0);
+
   const tickingRef = useRef(false);
-  const rafRef = useRef(0);
+  const rafRef = useRef(null);
+
+  const mountedRef = useRef(false);
+
   const lastIndexRef = useRef(0);
   const lastShowCardRef = useRef(true);
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [showCard, setShowCard] = useState(true);
 
-  /*
-   * --------------------------------------------------
-   * SAFE SVG INITIALIZATION
-   * --------------------------------------------------
-   */
+  /* =====================================================
+     INITIALIZE SVG PATH
+  ===================================================== */
+
   const initializePath = useCallback(() => {
     const path = pathRef.current;
 
@@ -57,19 +103,23 @@ export default function Industries() {
       }
 
       pathLengthRef.current = length;
+
       return true;
-    } catch (error) {
-      console.warn("Industries SVG disabled:", error);
+    } catch {
       pathLengthRef.current = 0;
       return false;
     }
   }, []);
 
-  /*
-   * --------------------------------------------------
-   * SAFE PIN MOVEMENT
-   * --------------------------------------------------
-   */
+  /* =====================================================
+     MOVE PIN DIRECTLY
+     
+     IMPORTANT:
+     This does NOT use React state.
+     Therefore the whole component doesn't re-render
+     every frame.
+  ===================================================== */
+
   const movePinToProgress = useCallback((progress) => {
     const path = pathRef.current;
     const pin = pinRef.current;
@@ -82,10 +132,6 @@ export default function Industries() {
         0,
         Math.min(1, Number(progress) || 0)
       );
-
-      if (typeof path.getPointAtLength !== "function") {
-        return;
-      }
 
       const point = path.getPointAtLength(
         safeProgress * length
@@ -101,139 +147,211 @@ export default function Industries() {
 
       pin.setAttribute(
         "transform",
-        `translate(${point.x}, ${point.y})`
+        `translate(${point.x} ${point.y})`
       );
-    } catch (error) {
-      console.warn("Industries pin animation disabled:", error);
+    } catch {
+      // Ignore SVG calculation errors.
     }
   }, []);
 
-  /*
-   * --------------------------------------------------
-   * SCROLL ENGINE
-   * --------------------------------------------------
-   */
+  /* =====================================================
+     CALCULATE CURRENT INDUSTRY
+  ===================================================== */
+
+  const getIndustryIndex = useCallback((progress) => {
+    const isMobile = window.innerWidth <= 768;
+
+    let index;
+
+    if (!isMobile) {
+      /*
+       * Small invisible beginning/end buffer.
+       * Card only appears while route is actively moving.
+       */
+      if (progress < 0.03 || progress > 0.98) {
+        return {
+          index: lastIndexRef.current,
+          show: false,
+        };
+      }
+
+      const cardProgress =
+        (progress - 0.03) / 0.95;
+
+      index = Math.floor(
+        cardProgress * industries.length
+      );
+    } else {
+      index = Math.floor(
+        progress * industries.length
+      );
+    }
+
+    index = Math.max(
+      0,
+      Math.min(
+        industries.length - 1,
+        index
+      )
+    );
+
+    return {
+      index,
+      show: true,
+    };
+  }, []);
+
+  /* =====================================================
+     SCROLL UPDATE
+  ===================================================== */
+
+  const updateScroll = useCallback(() => {
+    const section = sectionRef.current;
+
+    if (!section || !mountedRef.current) {
+      tickingRef.current = false;
+      rafRef.current = null;
+      return;
+    }
+
+    tickingRef.current = false;
+    rafRef.current = null;
+
+    const rect = section.getBoundingClientRect();
+
+    const viewportHeight =
+      window.innerHeight ||
+      document.documentElement.clientHeight ||
+      1;
+
+    const scrollDistance =
+      section.offsetHeight - viewportHeight;
+
+    if (scrollDistance <= 0) {
+      return;
+    }
+
+    let progress =
+      -rect.top / scrollDistance;
+
+    progress = Math.max(
+      0,
+      Math.min(1, progress)
+    );
+
+    /* -----------------------------------------------
+       MOVE SVG PIN
+    ------------------------------------------------ */
+
+    movePinToProgress(progress);
+
+    /* -----------------------------------------------
+       UPDATE CARD ONLY WHEN NECESSARY
+    ------------------------------------------------ */
+
+    const {
+      index,
+      show,
+    } = getIndustryIndex(progress);
+
+    if (index !== lastIndexRef.current) {
+      lastIndexRef.current = index;
+      setActiveIndex(index);
+    }
+
+    if (show !== lastShowCardRef.current) {
+      lastShowCardRef.current = show;
+      setShowCard(show);
+    }
+  }, [
+    getIndustryIndex,
+    movePinToProgress,
+  ]);
+
+  /* =====================================================
+     REQUEST SCROLL UPDATE
+  ===================================================== */
+
+  const requestScrollUpdate = useCallback(() => {
+    if (!mountedRef.current) return;
+
+    if (tickingRef.current) return;
+
+    tickingRef.current = true;
+
+    if (
+      typeof window.requestAnimationFrame ===
+      "function"
+    ) {
+      rafRef.current =
+        window.requestAnimationFrame(
+          updateScroll
+        );
+    } else {
+      updateScroll();
+    }
+  }, [updateScroll]);
+
+  /* =====================================================
+     SCROLL ENGINE
+  ===================================================== */
+
   useEffect(() => {
     const section = sectionRef.current;
 
     if (!section) return;
 
+    mountedRef.current = true;
+
     initializePath();
 
-    let mounted = true;
-
-    const update = () => {
-      if (!mounted) return;
-
-      tickingRef.current = false;
-      rafRef.current = 0;
-
-      const rect = section.getBoundingClientRect();
-
-      const viewportHeight =
-        window.innerHeight ||
-        document.documentElement.clientHeight ||
-        1;
-
-      const scrollDistance =
-        section.offsetHeight - viewportHeight;
-
-      if (scrollDistance <= 0) return;
-
-      let progress = -rect.top / scrollDistance;
-
-      progress = Math.max(
-        0,
-        Math.min(1, progress)
-      );
-
-      movePinToProgress(progress);
-
-      const isMobile = window.innerWidth <= 768;
-
-      let index;
-
-      if (!isMobile) {
-        if (progress < 0.03 || progress > 0.98) {
-          if (lastShowCardRef.current !== false) {
-            lastShowCardRef.current = false;
-            setShowCard(false);
-          }
-          return;
-        }
-
-        if (lastShowCardRef.current !== true) {
-          lastShowCardRef.current = true;
-          setShowCard(true);
-        }
-
-        const cardProgress =
-          (progress - 0.03) / 0.95;
-
-        index = Math.floor(
-          cardProgress * industries.length
-        );
-      } else {
-        index = Math.floor(
-          progress * industries.length
-        );
-      }
-
-      index = Math.max(
-        0,
-        Math.min(
-          industries.length - 1,
-          index
-        )
-      );
-
-      /*
-       * IMPORTANT:
-       * Don't update React state every frame.
-       */
-      if (index !== lastIndexRef.current) {
-        lastIndexRef.current = index;
-        setActiveIndex(index);
-      }
-    };
+    /*
+     * Initial position.
+     */
+    requestScrollUpdate();
 
     const handleScroll = () => {
-      if (tickingRef.current) return;
-
-      tickingRef.current = true;
-
-      if (typeof window.requestAnimationFrame === "function") {
-        rafRef.current = window.requestAnimationFrame(update);
-      } else {
-        update();
-      }
+      requestScrollUpdate();
     };
 
     const handleResize = () => {
       initializePath();
-      update();
-    };
 
-    update();
+      /*
+       * Let browser finish layout before
+       * recalculating section dimensions.
+       */
+      requestScrollUpdate();
+    };
 
     window.addEventListener(
       "scroll",
       handleScroll,
-      { passive: true }
+      {
+        passive: true,
+      }
     );
 
     window.addEventListener(
       "resize",
-      handleResize
+      handleResize,
+      {
+        passive: true,
+      }
     );
 
     return () => {
-      mounted = false;
+      mountedRef.current = false;
 
-      if (rafRef.current) {
-        window.cancelAnimationFrame(rafRef.current);
-        rafRef.current = 0;
+      if (rafRef.current !== null) {
+        window.cancelAnimationFrame(
+          rafRef.current
+        );
+
+        rafRef.current = null;
       }
+
+      tickingRef.current = false;
 
       window.removeEventListener(
         "scroll",
@@ -245,72 +363,100 @@ export default function Industries() {
         handleResize
       );
     };
-  }, [initializePath, movePinToProgress]);
+  }, [
+    initializePath,
+    requestScrollUpdate,
+  ]);
 
-  /*
-   * --------------------------------------------------
-   * ACTIVE INDEX → PIN
-   * --------------------------------------------------
-   */
-  useEffect(() => {
-    if (industries.length <= 1) return;
+  /* =====================================================
+     MOBILE / MANUAL NAVIGATION
+  ===================================================== */
 
-    const progress =
-      activeIndex /
-      (industries.length - 1);
+  const updateManualIndex = useCallback(
+    (next) => {
+      const safeIndex = Math.max(
+        0,
+        Math.min(
+          industries.length - 1,
+          next
+        )
+      );
 
-    movePinToProgress(progress);
-  }, [activeIndex, movePinToProgress]);
+      lastIndexRef.current = safeIndex;
 
-  const activeIndustry =
-    industries[activeIndex] || industries[0];
+      setActiveIndex(safeIndex);
+    },
+    []
+  );
 
-  const handlePrev = () => {
-    setActiveIndex((prev) => {
-      const next =
-        prev > 0
-          ? prev - 1
-          : industries.length - 1;
+  const handlePrev = useCallback(() => {
+    const next =
+      activeIndex > 0
+        ? activeIndex - 1
+        : industries.length - 1;
 
-      lastIndexRef.current = next;
-      return next;
-    });
-  };
+    updateManualIndex(next);
+  }, [
+    activeIndex,
+    updateManualIndex,
+  ]);
 
-  const handleNext = () => {
-    setActiveIndex((prev) => {
-      const next =
-        prev < industries.length - 1
-          ? prev + 1
-          : 0;
+  const handleNext = useCallback(() => {
+    const next =
+      activeIndex <
+      industries.length - 1
+        ? activeIndex + 1
+        : 0;
 
-      lastIndexRef.current = next;
-      return next;
-    });
-  };
+    updateManualIndex(next);
+  }, [
+    activeIndex,
+    updateManualIndex,
+  ]);
 
-  const handleDotClick = (index) => {
-    lastIndexRef.current = index;
-    setActiveIndex(index);
+  /* =====================================================
+     DOT NAVIGATION
+  ===================================================== */
 
-    const section = sectionRef.current;
+  const handleDotClick = useCallback(
+    (index) => {
+      updateManualIndex(index);
 
-    if (
-      window.innerWidth > 768 &&
-      section
-    ) {
+      const section =
+        sectionRef.current;
+
+      if (!section) return;
+
+      /*
+       * Mobile:
+       * Don't force scroll.
+       * The user can use the arrows.
+       */
+      if (window.innerWidth <= 768) {
+        return;
+      }
+
       const viewportHeight =
         window.innerHeight ||
-        document.documentElement.clientHeight;
+        document.documentElement.clientHeight ||
+        1;
 
       const scrollDistance =
         section.offsetHeight -
         viewportHeight;
 
+      if (scrollDistance <= 0) return;
+
+      /*
+       * Keep the same visual route timing.
+       */
+      const targetProgress =
+        index /
+        (industries.length - 1);
+
       const target =
         section.offsetTop +
-        (index /
-          (industries.length - 1)) *
+        targetProgress *
           scrollDistance;
 
       try {
@@ -318,12 +464,19 @@ export default function Industries() {
           top: target,
           behavior: "smooth",
         });
-      } catch (error) {
-        // Older Android WebViews may not support the options object.
-        window.scrollTo(0, target);
+      } catch {
+        window.scrollTo(
+          0,
+          target
+        );
       }
-    }
-  };
+    },
+    [updateManualIndex]
+  );
+
+  const activeIndustry =
+    industries[activeIndex] ||
+    industries[0];
 
   return (
     <section
@@ -331,6 +484,10 @@ export default function Industries() {
       className="industries-section"
     >
       <div className="industries-sticky">
+
+        {/* =================================================
+            HEADING
+        ================================================= */}
 
         <div className="industries-heading">
           <span className="eyebrow">
@@ -351,25 +508,53 @@ export default function Industries() {
           </p>
         </div>
 
+        {/* =================================================
+            TOP PILL
+        ================================================= */}
+
         <div className="top-pill">
-          <span className="pill-icon">✦</span>
-          <span>Different Industries</span>
+          <span className="pill-icon">
+            ✦
+          </span>
+
+          <span>
+            Different Industries
+          </span>
+
           <b>•</b>
-          <span>Same Goal</span>
+
+          <span>
+            Same Goal
+          </span>
+
           <b>→</b>
-          <span>Your Growth</span>
+
+          <span>
+            Your Growth
+          </span>
         </div>
+
+        {/* =================================================
+            MAIN STAGE
+        ================================================= */}
 
         <div className="industries-stage">
 
+          {/* =================================================
+              ROUTE
+          ================================================= */}
+
           <div className="route-container">
+
             <svg
               className="route-svg"
               viewBox="0 0 1400 700"
               preserveAspectRatio="xMidYMid meet"
               aria-hidden="true"
             >
+
               <defs>
+
                 <linearGradient
                   id="industriesRouteFade"
                   x1="0%"
@@ -382,16 +567,19 @@ export default function Industries() {
                     stopColor="white"
                     stopOpacity="0"
                   />
+
                   <stop
                     offset="14%"
                     stopColor="white"
                     stopOpacity="1"
                   />
+
                   <stop
                     offset="86%"
                     stopColor="white"
                     stopOpacity="1"
                   />
+
                   <stop
                     offset="100%"
                     stopColor="white"
@@ -399,7 +587,9 @@ export default function Industries() {
                   />
                 </linearGradient>
 
-                <mask id="industriesRouteMask">
+                <mask
+                  id="industriesRouteMask"
+                >
                   <rect
                     x="0"
                     y="0"
@@ -409,7 +599,7 @@ export default function Industries() {
                   />
                 </mask>
 
-                {/* Keep the filter lightweight */}
+                {/* Lightweight pin glow */}
                 <filter
                   id="industriesPinGlow"
                   x="-30%"
@@ -419,44 +609,58 @@ export default function Industries() {
                 >
                   <feDropShadow
                     dx="0"
-                    dy="5"
-                    stdDeviation="4"
+                    dy="4"
+                    stdDeviation="3"
                     floodColor="#1e88e5"
-                    floodOpacity="0.3"
+                    floodOpacity="0.25"
                   />
                 </filter>
+
               </defs>
+
+              {/* Route glow */}
 
               <path
                 className="route-glow"
                 mask="url(#industriesRouteMask)"
-                d="M 90 680 C 130 280 390 70 700 70 C 1010 70 1270 280 1310 680"
+                d={ROUTE_PATH}
               />
+
+              {/* Outer road */}
 
               <path
                 className="route-road"
                 mask="url(#industriesRouteMask)"
-                d="M 90 680 C 130 280 390 70 700 70 C 1010 70 1270 280 1310 680"
+                d={ROUTE_PATH}
               />
+
+              {/* Inner road */}
 
               <path
                 className="route-inner"
                 mask="url(#industriesRouteMask)"
-                d="M 90 680 C 130 280 390 70 700 70 C 1010 70 1270 280 1310 680"
+                d={ROUTE_PATH}
               />
+
+              {/* Center dashed route */}
 
               <path
                 ref={pathRef}
                 className="route-center"
                 mask="url(#industriesRouteMask)"
-                d="M 90 680 C 130 280 390 70 700 70 C 1010 70 1270 280 1310 680"
+                d={ROUTE_PATH}
               />
+
+              {/* =================================================
+                  MOVING LOCATION PIN
+              ================================================= */}
 
               <g
                 ref={pinRef}
                 className="moving-location-pin"
                 filter="url(#industriesPinGlow)"
               >
+
                 <circle
                   cx="0"
                   cy="0"
@@ -465,7 +669,14 @@ export default function Industries() {
                 />
 
                 <path
-                  d="M 0 6 C -14 6 -24 -4 -24 -18 C -24 -32 0 -54 0 -54 C 0 -54 24 -32 24 -18 C 24 -4 14 6 0 6 Z"
+                  d="
+                    M 0 6
+                    C -14 6 -24 -4 -24 -18
+                    C -24 -32 0 -54 0 -54
+                    C 0 -54 24 -32 24 -18
+                    C 24 -4 14 6 0 6
+                    Z
+                  "
                   fill="#ffffff"
                   stroke="#1e88e5"
                   strokeWidth="3.5"
@@ -484,8 +695,13 @@ export default function Industries() {
                   r="4"
                   fill="#ffffff"
                 />
+
               </g>
             </svg>
+
+            {/* =================================================
+                STATIONARY ROUTE POINTS
+            ================================================= */}
 
             <div className="route-point point-2 desktop-only">
               <span />
@@ -506,14 +722,21 @@ export default function Industries() {
             <div className="route-point point-6 desktop-only">
               <span />
             </div>
+
           </div>
+
+          {/* =================================================
+              INDUSTRY CARD
+          ================================================= */}
 
           <div
             className={`center-industry-card ${
               showCard ? "show" : ""
             }`}
           >
+
             <div className="center-card-image">
+
               <img
                 src={activeIndustry.image}
                 alt={activeIndustry.title}
@@ -524,22 +747,33 @@ export default function Industries() {
               <span className="card-counter-badge">
                 {activeIndustry.no} / 08
               </span>
+
             </div>
 
             <div className="center-card-content">
+
               <div className="center-card-number">
                 {activeIndustry.no}
               </div>
 
-              <h3>{activeIndustry.title}</h3>
+              <h3>
+                {activeIndustry.title}
+              </h3>
 
-              <p>{activeIndustry.text}</p>
+              <p>
+                {activeIndustry.text}
+              </p>
 
-              
             </div>
+
           </div>
 
+          {/* =================================================
+              MOBILE NAVIGATION
+          ================================================= */}
+
           <div className="mobile-nav-controls">
+
             <button
               type="button"
               className="nav-arrow-btn prev"
@@ -557,35 +791,55 @@ export default function Industries() {
             >
               ›
             </button>
+
           </div>
+
         </div>
+
+        {/* =================================================
+            DOT NAVIGATION
+        ================================================= */}
 
         <div className="route-message">
+
           <div className="small-dots">
-            {industries.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                aria-label={`Jump to industry ${
-                  index + 1
-                }`}
-                onClick={() =>
-                  handleDotClick(index)
-                }
-                className={`dot-btn ${
-                  index === activeIndex
-                    ? "active"
-                    : ""
-                }`}
-              />
-            ))}
+
+            {industries.map(
+              (_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  aria-label={`Jump to industry ${
+                    index + 1
+                  }`}
+                  onClick={() =>
+                    handleDotClick(index)
+                  }
+                  className={`dot-btn ${
+                    index === activeIndex
+                      ? "active"
+                      : ""
+                  }`}
+                />
+              )
+            )}
+
           </div>
+
         </div>
 
+        {/* =================================================
+            EXPLORE
+        ================================================= */}
+
         <div className="explore">
-          <span>SCROLL TO EXPLORE</span>
+          <span>
+            SCROLL TO EXPLORE
+          </span>
+
           <div>↓</div>
         </div>
+
       </div>
     </section>
   );

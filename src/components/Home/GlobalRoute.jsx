@@ -1,6 +1,14 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {
+  memo,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+
 import {
   motion,
+  useMotionValue,
   useMotionValueEvent,
   useScroll,
   useSpring,
@@ -21,7 +29,6 @@ import singapore from "../assets/images/home/singapore.jpg";
 
 /* =========================================================
    DESTINATIONS
-   Ordered path: Calicut -> Kochi -> Mumbai -> Hyderabad -> Delhi -> Dubai -> Singapore -> New York
 ========================================================= */
 
 const locations = [
@@ -156,7 +163,7 @@ const locations = [
 ];
 
 /* =========================================================
-   STRICT CONTINUOUS ROUTE PASSING EVERY PIN COORDINATE
+   ROUTE
 ========================================================= */
 
 const ROUTE_PATH = `
@@ -188,9 +195,14 @@ const LOCATION_PROGRESS = [
 export default function GlobalRoute() {
   const sectionRef = useRef(null);
   const routeRef = useRef(null);
+  const destinationContainerRef = useRef(null);
   const cardRefs = useRef([]);
 
-  const [pinPosition, setPinPosition] = useState({ x: 63, y: 63 });
+  // Pin position is now a MotionValue.
+  // This prevents React re-rendering on every scroll frame.
+  const pinX = useMotionValue(63);
+  const pinY = useMotionValue(63);
+
   const [activeLocation, setActiveLocation] = useState(0);
 
   const { scrollYProgress } = useScroll({
@@ -204,92 +216,165 @@ export default function GlobalRoute() {
     mass: 0.2,
   });
 
-  const routeDashOffset = useTransform(smoothProgress, [0, 1], [1, 0]);
+  const routeDashOffset = useTransform(
+    smoothProgress,
+    [0, 1],
+    [1, 0]
+  );
 
-  useMotionValueEvent(smoothProgress, "change", (progress) => {
+  /*
+   * Store route length.
+   * This is calculated only once instead of every scroll frame.
+   */
+  const routeLengthRef = useRef(0);
+
+  useLayoutEffect(() => {
     const path = routeRef.current;
+
     if (!path) return;
 
-    const totalLength = path.getTotalLength();
-    const distance = Math.min(progress * totalLength, totalLength);
-    const point = path.getPointAtLength(distance);
+    routeLengthRef.current = path.getTotalLength();
 
-    setPinPosition({ x: point.x, y: point.y });
+    const point = path.getPointAtLength(0);
 
-    let active = 0;
-    for (let i = 0; i < LOCATION_PROGRESS.length; i++) {
-      if (progress >= LOCATION_PROGRESS[i] - 0.03) {
-        active = i;
+    pinX.set(point.x);
+    pinY.set(point.y);
+  }, [pinX, pinY]);
+
+  /*
+   * Scroll animation
+   *
+   * IMPORTANT:
+   * No React state update for every frame.
+   */
+  useMotionValueEvent(
+    smoothProgress,
+    "change",
+    (progress) => {
+      const path = routeRef.current;
+
+      if (!path || !routeLengthRef.current) return;
+
+      const distance =
+        Math.min(Math.max(progress, 0), 1) *
+        routeLengthRef.current;
+
+      const point = path.getPointAtLength(distance);
+
+      // Update MotionValues directly.
+      pinX.set(point.x);
+      pinY.set(point.y);
+
+      /*
+       * Only update React state when the active
+       * destination actually changes.
+       */
+      let nextActive = 0;
+
+      for (let i = 0; i < LOCATION_PROGRESS.length; i++) {
+        if (progress >= LOCATION_PROGRESS[i] - 0.03) {
+          nextActive = i;
+        }
       }
-    }
-    setActiveLocation(active);
-  });
 
-  useEffect(() => {
-    const activeCard = cardRefs.current[activeLocation];
-    const container = document.querySelector(".destination-cards");
+      setActiveLocation((current) => {
+        if (current === nextActive) {
+          return current;
+        }
 
-    if (activeCard && container) {
-      const cardLeft = activeCard.offsetLeft;
-      const cardWidth = activeCard.offsetWidth;
-      const containerWidth = container.offsetWidth;
-
-      container.scrollTo({
-        left: cardLeft - containerWidth / 2 + cardWidth / 2,
-        behavior: "smooth",
+        return nextActive;
       });
     }
+  );
+
+  /*
+   * Automatically center active destination card.
+   */
+  useEffect(() => {
+    const activeCard = cardRefs.current[activeLocation];
+    const container = destinationContainerRef.current;
+
+    if (!activeCard || !container) return;
+
+    const cardLeft = activeCard.offsetLeft;
+    const cardWidth = activeCard.offsetWidth;
+    const containerWidth = container.offsetWidth;
+
+    container.scrollTo({
+      left:
+        cardLeft -
+        containerWidth / 2 +
+        cardWidth / 2,
+      behavior: "smooth",
+    });
   }, [activeLocation]);
 
-  useEffect(() => {
-    const path = routeRef.current;
-    if (!path) return;
-    const point = path.getPointAtLength(0);
-    setPinPosition({ x: point.x, y: point.y });
-  }, []);
-
+  /*
+   * Destination arrow controls
+   */
   const scrollDestinations = (direction) => {
-    const container = document.querySelector(".destination-cards");
+    const container = destinationContainerRef.current;
+
     if (!container) return;
-    const amount = window.innerWidth <= 800 ? 210 : 320;
+
+    const amount =
+      window.innerWidth <= 800 ? 210 : 320;
+
     container.scrollBy({
-      left: direction === "next" ? amount : -amount,
+      left:
+        direction === "next"
+          ? amount
+          : -amount,
       behavior: "smooth",
     });
   };
 
   return (
-    <section ref={sectionRef} className="global-route">
+    <section
+      ref={sectionRef}
+      className="global-route"
+    >
       <div className="route-scroll">
         <div className="route-sticky">
 
+          {/* =================================================
+              LEFT CONTENT
+          ================================================= */}
+
           <div className="route-content">
+
             <div className="route-eyebrow">
               <span>OUR GLOBAL ROUTE</span>
               <i />
             </div>
 
             <h2>
-              From Kerala<br />
+              From Kerala
+              <br />
               to the <em>World</em>
             </h2>
 
             <p className="route-lead">
-              One route. Many destinations.<br />
+              One route. Many destinations.
+              <br />
               Connected possibilities.
             </p>
 
             <p className="route-description">
-              We started in Kerala, grew across India, and <br />
+              We started in Kerala, grew across India, and
+              <br />
               are now serving clients worldwide. Our journey
               <br />
               continues, and so does yours.
             </p>
 
             <div className="route-selector">
+
               <div
                 className={`route-selector-item ${
-                  activeLocation <= 1 ? "active" : ""
+                  activeLocation <= 1
+                    ? "active"
+                    : ""
                 }`}
               >
                 <span className="selector-dot" />
@@ -298,7 +383,10 @@ export default function GlobalRoute() {
 
               <div
                 className={`route-selector-item ${
-                  activeLocation >= 2 && activeLocation <= 4 ? "active" : ""
+                  activeLocation >= 2 &&
+                  activeLocation <= 4
+                    ? "active"
+                    : ""
                 }`}
               >
                 <span className="selector-dot" />
@@ -307,18 +395,32 @@ export default function GlobalRoute() {
 
               <div
                 className={`route-selector-item ${
-                  activeLocation >= 5 ? "active" : ""
+                  activeLocation >= 5
+                    ? "active"
+                    : ""
                 }`}
               >
                 <span className="selector-dot" />
                 World
               </div>
+
             </div>
           </div>
 
+          {/* =================================================
+              MAP
+          ================================================= */}
+
           <div className="map-stage">
-            <img src={image} alt="Global Map" className="world-map-image" />
+
+            <img
+              src={image}
+              alt="Global Map"
+              className="world-map-image"
+            />
+
             <div className="map-vignette" />
+
             <div className="map-grid" />
 
             <svg
@@ -326,7 +428,12 @@ export default function GlobalRoute() {
               viewBox="0 0 100 100"
               preserveAspectRatio="none"
             >
-              <path ref={routeRef} d={ROUTE_PATH} className="route-base" />
+
+              <path
+                ref={routeRef}
+                d={ROUTE_PATH}
+                className="route-base"
+              />
 
               <motion.path
                 d={ROUTE_PATH}
@@ -335,24 +442,59 @@ export default function GlobalRoute() {
                 style={{
                   pathLength: 1,
                   strokeDasharray: 1,
-                  strokeDashoffset: routeDashOffset,
+                  strokeDashoffset:
+                    routeDashOffset,
                 }}
               />
 
-              <g
+              {/* ===============================
+                  MOVING PIN
+              =============================== */}
+
+              <motion.g
                 className="route-marker-pin"
-                transform={`translate(${pinPosition.x}, ${pinPosition.y})`}
+                style={{
+                  x: pinX,
+                  y: pinY,
+                }}
               >
-                <circle cx="0" cy="0" r="1.3" fill="rgba(0, 240, 255, 0.4)" />
+                <circle
+                  cx="0"
+                  cy="0"
+                  r="1.3"
+                  fill="rgba(0, 240, 255, 0.4)"
+                />
+
                 <path
-                  d="M 0 0 C -0.8 -1.1 -1.3 -1.8 -1.3 -2.7 C -1.3 -3.5 -0.7 -4.1 0 -4.1 C 0.7 -4.1 1.3 -3.5 1.3 -2.7 C 1.3 -1.8 0.8 -1.1 0 0 Z"
+                  d="
+                    M 0 0
+                    C -0.8 -1.1 -1.3 -1.8
+                    -1.3 -2.7
+                    C -1.3 -3.5 -0.7 -4.1
+                    0 -4.1
+                    C 0.7 -4.1 1.3 -3.5
+                    1.3 -2.7
+                    C 1.3 -1.8 0.8 -1.1
+                    0 0 Z
+                  "
                   fill="#00f0ff"
                   stroke="#ffffff"
                   strokeWidth="0.18"
                 />
-                <circle cx="0" cy="-2.7" r="0.45" fill="#02090d" />
-              </g>
+
+                <circle
+                  cx="0"
+                  cy="-2.7"
+                  r="0.45"
+                  fill="#02090d"
+                />
+              </motion.g>
+
             </svg>
+
+            {/* ===============================
+                MAP POINTS
+            =============================== */}
 
             {locations.map((location, index) => (
               <MapLocation
@@ -363,6 +505,10 @@ export default function GlobalRoute() {
               />
             ))}
 
+            {/* ===============================
+                FLOATING CARDS
+            =============================== */}
+
             {locations.map((location, index) => (
               <FloatingLocationCard
                 key={location.id}
@@ -371,27 +517,50 @@ export default function GlobalRoute() {
                 reached={index <= activeLocation}
               />
             ))}
+
           </div>
 
+          {/* =================================================
+              DESTINATION STRIP
+          ================================================= */}
+
           <div className="destination-strip">
+
             <div className="destination-header">
+
               <div className="destination-heading">
-                <span className="destination-eyebrow">GLOBAL DESTINATIONS</span>
+
+                <span className="destination-eyebrow">
+                  GLOBAL DESTINATIONS
+                </span>
+
                 <h3>
                   Explore our <em>locations.</em>
                 </h3>
+
               </div>
 
               <div className="destination-controls">
+
                 <span className="destination-counter">
-                  {String(activeLocation + 1).padStart(2, "0")}
+                  {String(activeLocation + 1).padStart(
+                    2,
+                    "0"
+                  )}
+
                   <i>/</i>
-                  {String(locations.length).padStart(2, "0")}
+
+                  {String(locations.length).padStart(
+                    2,
+                    "0"
+                  )}
                 </span>
 
                 <button
                   className="destination-arrow"
-                  onClick={() => scrollDestinations("prev")}
+                  onClick={() =>
+                    scrollDestinations("prev")
+                  }
                   aria-label="Previous destinations"
                 >
                   ←
@@ -399,16 +568,24 @@ export default function GlobalRoute() {
 
                 <button
                   className="destination-arrow"
-                  onClick={() => scrollDestinations("next")}
+                  onClick={() =>
+                    scrollDestinations("next")
+                  }
                   aria-label="Next destinations"
                 >
                   →
                 </button>
+
               </div>
             </div>
 
             <div className="destination-slider">
-              <div className="destination-cards">
+
+              <div
+                ref={destinationContainerRef}
+                className="destination-cards"
+              >
+
                 {locations.map((location, index) => (
                   <div
                     key={location.id}
@@ -418,13 +595,20 @@ export default function GlobalRoute() {
                   >
                     <DestinationCard
                       location={location}
-                      active={index === activeLocation}
-                      reached={index <= activeLocation}
+                      active={
+                        index === activeLocation
+                      }
+                      reached={
+                        index <= activeLocation
+                      }
                     />
                   </div>
                 ))}
+
               </div>
+
             </div>
+
           </div>
 
         </div>
@@ -434,79 +618,137 @@ export default function GlobalRoute() {
 }
 
 /* =========================================================
-   SUB-COMPONENTS
+   MAP LOCATION
 ========================================================= */
 
-function MapLocation({ location, active, reached }) {
+const MapLocation = memo(function MapLocation({
+  location,
+  active,
+  reached,
+}) {
   return (
     <div
-      className={`map-point ${active ? "active" : ""} ${
-        reached ? "reached" : ""
-      }`}
+      className={`map-point ${
+        active ? "active" : ""
+      } ${reached ? "reached" : ""}`}
       style={{
         left: `${location.mapX}%`,
         top: `${location.mapY}%`,
       }}
     >
       <div className="map-point-pulse" />
+
       <div className="map-point-ring">
         <span />
       </div>
     </div>
   );
-}
+});
 
-function FloatingLocationCard({ location, active, reached }) {
-  return (
-    <div
-      data-location={location.id}
-      className={`floating-location-card ${active ? "active" : ""} ${
-        reached ? "reached" : ""
-      }`}
-      style={{
-        left: `${location.cardX}%`,
-        top: `${location.cardY}%`,
-      }}
-    >
-      <div className="floating-card-header">
-        <span className="floating-flag">{location.flag}</span>
-        <strong>{location.name}</strong>
-        <span className="floating-country">/ {location.country}</span>
+/* =========================================================
+   FLOATING LOCATION CARD
+========================================================= */
+
+const FloatingLocationCard = memo(
+  function FloatingLocationCard({
+    location,
+    active,
+    reached,
+  }) {
+    return (
+      <div
+        data-location={location.id}
+        className={`floating-location-card ${
+          active ? "active" : ""
+        } ${reached ? "reached" : ""}`}
+        style={{
+          left: `${location.cardX}%`,
+          top: `${location.cardY}%`,
+        }}
+      >
+        <div className="floating-card-header">
+
+          <span className="floating-flag">
+            {location.flag}
+          </span>
+
+          <strong>{location.name}</strong>
+
+          <span className="floating-country">
+            / {location.country}
+          </span>
+
+        </div>
+
+        <div className="floating-services">
+          {location.services.map((service) => (
+            <span key={service}>
+              {service}
+            </span>
+          ))}
+        </div>
+
+        <div className="floating-arrow">
+          ↗
+        </div>
       </div>
+    );
+  }
+);
 
-      <div className="floating-services">
-        {location.services.map((service) => (
-          <span key={service}>{service}</span>
-        ))}
-      </div>
+/* =========================================================
+   DESTINATION CARD
+========================================================= */
 
-      <div className="floating-arrow">↗</div>
-    </div>
-  );
-}
+const DestinationCard = memo(
+  function DestinationCard({
+    location,
+    active,
+    reached,
+  }) {
+    return (
+      <article
+        className={`destination-card ${
+          active ? "active" : ""
+        } ${reached ? "reached" : ""}`}
+      >
+        <div className="destination-card-info">
 
-function DestinationCard({ location, active, reached }) {
-  return (
-    <article
-      className={`destination-card ${active ? "active" : ""} ${
-        reached ? "reached" : ""
-      }`}
-    >
-      <div className="destination-card-info">
-        <span className="destination-number">{location.number}</span>
-        <h3>{location.name}</h3>
-        <span className="destination-subtitle">{location.subtitle}</span>
-        <p>{location.description}</p>
-        <button>
-          View Details <span>→</span>
-        </button>
-      </div>
+          <span className="destination-number">
+            {location.number}
+          </span>
 
-      <div className="destination-image">
-        <img src={location.image} alt={location.name} loading="lazy" />
-        <div className="destination-image-overlay" />
-        <span className="destination-image-number">{location.number}</span>
-      </div>
-    </article>
-  );
-}
+          <h3>{location.name}</h3>
+
+          <span className="destination-subtitle">
+            {location.subtitle}
+          </span>
+
+          <p>{location.description}</p>
+
+          <button>
+            View Details <span>→</span>
+          </button>
+
+        </div>
+
+        <div className="destination-image">
+
+          <img
+            src={location.image}
+            alt={location.name}
+            loading="lazy"
+            decoding="async"
+          />
+
+          <div className="destination-image-overlay" />
+
+          <span className="destination-image-number">
+            {location.number}
+          </span>
+
+        </div>
+      </article>
+    );
+  }
+);

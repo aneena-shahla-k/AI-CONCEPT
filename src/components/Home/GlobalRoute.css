@@ -118,7 +118,7 @@
 
 .route-marker-pin {
   pointer-events: none;
-  transition: transform 0.04s linear;
+  transition: transform;
 }
 
 /* =========================================================
