@@ -1,0 +1,823 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap");
+
+/* =========================================================
+   CONTAINER & LOCK SETUP
+========================================================= */
+
+.global-route {
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+  background: #02090d;
+  color: #ffffff;
+  overflow-x: clip;
+  overflow-y: visible;
+  font-family: "Manrope", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.route-scroll {
+  position: relative;
+  width: 100%;
+  max-width: 100vw;
+  height: 480vh;
+}
+
+.route-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  max-width: 100vw;
+  height: 100vh;
+  min-height: 600px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 63% 43%, rgba(0, 240, 255, 0.08), transparent 30%),
+    radial-gradient(circle at 78% 15%, rgba(36, 120, 210, 0.12), transparent 30%),
+    #02090d;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  isolation: isolate;
+}
+
+/* =========================================================
+   MAP STAGE
+========================================================= */
+
+.map-stage {
+  position: absolute;
+  right: 2%;
+  top: 7%;
+  width: 68%;
+  height: 66%;
+  overflow: visible;
+  z-index: 10;
+}
+
+.world-map-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.map-vignette {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #02090d 0%, rgba(2, 9, 13, 0.85) 12%, rgba(2, 9, 13, 0.15) 35%, transparent 60%),
+    linear-gradient(180deg, rgba(2, 9, 13, 0.45) 0%, transparent 25%, transparent 70%, rgba(2, 9, 13, 0.95) 100%);
+}
+
+.map-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(140, 210, 255, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140, 210, 255, 0.4) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+/* =========================================================
+   SVG ROUTE & PIN
+========================================================= */
+
+.route-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 12;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.route-base {
+  fill: none;
+  stroke: rgba(0, 195, 255, 0.2);
+  stroke-width: 0.22;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 2 2.5;
+}
+
+.route-active {
+  fill: none;
+  stroke: #00f0ff;
+  stroke-width: 0.38;
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 4px rgba(0, 240, 255, 0.85));
+}
+
+.route-marker-pin {
+  pointer-events: none;
+  transition: transform 0.04s linear;
+}
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.route-content {
+  position: absolute;
+  left: 4.2%;
+  top: 14%;
+  width: 340px;
+  max-width: 90vw;
+  z-index: 30;
+  pointer-events: auto;
+}
+
+.route-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #8b9794;
+}
+
+.route-eyebrow i {
+  width: 44px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.route-content h2 {
+  margin: 0;
+  font-family: "Playfair Display", serif;
+  font-size: clamp(38px, 4vw, 54px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  font-weight: 500;
+  color: #f5f7f4;
+}
+
+.route-content h2 em {
+  font-style: italic;
+  font-weight: 400;
+  color: #00f0ff;
+  text-shadow: 0 0 24px rgba(0, 240, 255, 0.35);
+}
+
+.route-lead {
+  margin: 16px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #d5dcd8;
+}
+
+.route-description {
+  max-width: 290px;
+  margin: 14px 0 0;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.7;
+  color: #7d8985;
+}
+
+.route-selector {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  margin-top: 18px;
+  padding: 3px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(18px);
+}
+
+.route-selector-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 9px;
+  font-weight: 600;
+  color: #8d9794;
+  transition: all 0.35s ease;
+}
+
+.route-selector-item.active {
+  color: #021217;
+  background: #00f0ff;
+  box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
+}
+
+.selector-dot {
+  width: 6px;
+  height: 6px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+}
+
+/* =========================================================
+   MAP POINTS
+========================================================= */
+
+.map-point {
+  position: absolute;
+  z-index: 20;
+  width: 18px;
+  height: 18px;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.map-point-ring {
+  width: 8px;
+  height: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0, 240, 255, 0.45);
+  border-radius: 50%;
+  background: rgba(2, 16, 25, 0.85);
+  transition: all 0.3s ease;
+}
+
+.map-point-ring span {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #00f0ff;
+}
+
+.map-point.active .map-point-ring {
+  width: 14px;
+  height: 14px;
+  border-color: #ffffff;
+  background: #00f0ff;
+  box-shadow: 0 0 10px #00f0ff, 0 0 22px rgba(0, 240, 255, 0.8);
+}
+
+.map-point.active .map-point-ring span {
+  width: 5px;
+  height: 5px;
+  background: #ffffff;
+}
+
+.map-point-pulse {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(0, 240, 255, 0.55);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.map-point.active .map-point-pulse {
+  animation: locationPulse 2s ease-out infinite;
+}
+
+@keyframes locationPulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.85;
+  }
+  70% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   FLOATING LOCATION CARDS
+========================================================= */
+
+.floating-location-card {
+  position: absolute;
+  z-index: 25;
+  width: 120px;
+  min-height: 58px;
+  padding: 6px 8px;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(0, 210, 255, 0.2);
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(7, 24, 34, 0.9), rgba(2, 13, 20, 0.75));
+  backdrop-filter: blur(14px);
+  opacity: 0.55;
+  pointer-events: none;
+  transition: all 0.3s ease;
+}
+
+.floating-location-card.active {
+  opacity: 1;
+  z-index: 35;
+  border-color: #00f0ff;
+  transform: translate(-50%, -50%) scale(1.04);
+  box-shadow: 0 0 14px rgba(0, 240, 255, 0.45);
+}
+
+.floating-card-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+.floating-flag {
+  font-size: 11px;
+}
+
+.floating-card-header strong {
+  color: #e9efec;
+  font-size: 7.5px;
+  font-weight: 700;
+}
+
+.floating-location-card.active .floating-card-header strong {
+  color: #00f0ff;
+}
+
+.floating-country {
+  color: #778580;
+  font-size: 6.5px;
+}
+
+.floating-services {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-top: 5px;
+}
+
+.floating-services span {
+  color: #7f8d88;
+  font-size: 6.5px;
+}
+
+.floating-arrow {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  width: 15px;
+  height: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 50%;
+  color: #9ba7a2;
+  font-size: 8px;
+}
+
+.floating-location-card.active .floating-arrow {
+  border-color: #00f0ff;
+  color: #00f0ff;
+}
+
+/* =========================================================
+   BOTTOM DESTINATION STRIP
+========================================================= */
+
+.destination-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  width: 100%;
+  padding: 12px 4% 10px;
+  box-sizing: border-box;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(180deg, rgba(2, 10, 14, 0.85), rgba(2, 10, 14, 0.98));
+  backdrop-filter: blur(25px);
+}
+
+.destination-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  max-width: 1500px;
+  margin: 0 auto 8px;
+}
+
+.destination-eyebrow {
+  display: block;
+  margin-bottom: 3px;
+  color: #71807a;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+}
+
+.destination-header h3 {
+  margin: 0;
+  color: #e7eeea;
+  font-family: "Playfair Display", serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.destination-header h3 em {
+  color: #00f0ff;
+  font-style: italic;
+}
+
+.destination-controls {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.destination-counter {
+  margin-right: 4px;
+  color: #75827d;
+  font-size: 8px;
+  font-weight: 600;
+}
+
+.destination-counter i {
+  margin: 0 3px;
+  color: #3d4844;
+  font-style: normal;
+}
+
+.destination-arrow {
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.035);
+  color: #c4cfca;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.destination-arrow:hover {
+  background: #00f0ff;
+  border-color: #00f0ff;
+  color: #021217;
+}
+
+.destination-slider {
+  max-width: 1500px;
+  width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.destination-cards {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  padding: 4px 2px;
+  box-sizing: border-box;
+}
+
+.destination-cards::-webkit-scrollbar {
+  display: none;
+}
+
+.destination-card {
+  position: relative;
+  flex: 0 0 300px;
+  width: 300px;
+  height: 100px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px;
+  gap: 10px;
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.025);
+  transition: all 0.35s ease;
+}
+
+.destination-card.active {
+  background: rgba(0, 240, 255, 0.12);
+  border-color: #00f0ff;
+  box-shadow: 0 0 16px rgba(0, 240, 255, 0.35);
+}
+
+.destination-card-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.destination-number {
+  color: #38bdf8;
+  font-size: 7px;
+  font-weight: 700;
+}
+
+.destination-card h3 {
+  margin: 0;
+  color: #f0f4f1;
+  font-family: "Playfair Display", serif;
+  font-size: 14px;
+}
+
+.destination-card.active h3 {
+  color: #00f0ff;
+}
+
+.destination-subtitle {
+  color: #75817c;
+  font-size: 7px;
+  font-weight: 600;
+}
+
+.destination-card p {
+  margin: 3px 0;
+  color: #69756f;
+  font-size: 6.5px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.destination-card button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #aab4af;
+  font-size: 7px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.destination-image {
+  position: relative;
+  width: 90px;
+  height: 84px;
+  overflow: hidden;
+  border-radius: 7px;
+  background: #0b1518;
+}
+
+.destination-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.65;
+}
+
+.destination-card.active .destination-image img {
+  opacity: 0.95;
+}
+
+.destination-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.45));
+}
+
+.destination-image-number {
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #00f0ff;
+  color: #021217;
+  font-size: 7px;
+  font-weight: 700;
+}
+
+/* =========================================================
+   PERFECT MOBILE & TABLET ALIGNMENT (FIXED PROPORTIONS)
+========================================================= */
+
+@media (max-width: 900px) {
+  .route-scroll {
+    height: 300vh;
+  }
+
+  .route-sticky {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100dvh;
+    padding: 12px 0 0;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* --- 1. TOP HEADER --- */
+  .route-content {
+    position: relative;
+    top: 10%;
+    left: auto;
+    right: auto;
+    width: 100%;
+    padding: 0 16px;
+    box-sizing: border-box;
+    z-index: 30;
+    flex-shrink: 0;
+  }
+
+  .route-eyebrow {
+    margin-bottom: 8px;
+    font-size: 8.5px;
+    letter-spacing: 0.18em;
+  }
+
+  .route-eyebrow i {
+    width: 24px;
+  }
+
+  .route-content h2 {
+    font-size: 36px;
+    line-height: 1.05;
+  }
+
+  .route-lead {
+    margin-top: 8px;
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  .route-description {
+    display: none;
+  }
+
+  .route-selector {
+    margin-top: 8px;
+    padding: 2px 4px;
+    gap: 4px;
+  }
+
+  .route-selector-item {
+    padding: 3px 8px;
+    font-size: 7px;
+  }
+
+  /* --- 2. MAP STAGE (Fixed Aspect Ratio - No Height Stretch) --- */
+  .map-stage {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    max-height: 45vh;
+    aspect-ratio: 16 / 10;
+    /* margin: auto 0;  */
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .world-map-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+    object-position: center;
+  }
+
+  .map-vignette {
+    background:
+      radial-gradient(ellipse at center, transparent 40%, #02090d 95%),
+      linear-gradient(180deg, #02090d 0%, transparent 15%, transparent 85%, #02090d 100%);
+  }
+
+  /* Map Points & Pin Scale */
+  .map-point {
+    width: 12px;
+    height: 12px;
+  }
+
+  .map-point-ring {
+    width: 5px;
+    height: 5px;
+  }
+
+  .map-point.active .map-point-ring {
+    width: 10px;
+    height: 10px;
+  }
+
+  .floating-location-card {
+    width: auto;
+    min-width: 60px;
+    max-width: 82px;
+    min-height: auto;
+    padding: 2px 5px;
+    border-radius: 5px;
+  }
+
+  .floating-location-card:not(.active) {
+    display: none; 
+  }
+
+  .floating-location-card.active {
+    opacity: 1;
+    z-index: 40;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+
+  .floating-flag {
+    font-size: 8.5px;
+  }
+
+  .floating-card-header strong {
+    font-size: 6px;
+  }
+
+  .floating-country,
+  .floating-services,
+  .floating-arrow {
+    display: none;
+  }
+
+  /* --- 3. BOTTOM STRIP --- */
+  .destination-strip {
+    position: relative;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    padding: 8px 14px calc(8px + env(safe-area-inset-bottom, 0px));
+    box-sizing: border-box;
+    flex-shrink: 0;
+    z-index: 35;
+    background: linear-gradient(180deg, rgba(2, 10, 14, 0.95), #02090d);
+  }
+
+  .destination-header {
+    margin-bottom: 4px;
+  }
+
+  .destination-header h3 {
+    font-size: 13px;
+  }
+
+  .destination-eyebrow {
+    font-size: 6px;
+  }
+
+  .destination-arrow {
+    width: 22px;
+    height: 22px;
+    font-size: 9px;
+  }
+
+  .destination-cards {
+    padding: 2px 0;
+    gap: 8px;
+  }
+
+  .destination-card {
+    flex: 0 0 210px;
+    width: 210px;
+    height: 70px;
+    grid-template-columns: minmax(0, 1fr) 62px;
+    gap: 6px;
+    padding: 5px;
+  }
+
+  .destination-card h3 {
+    font-size: 11px;
+  }
+
+  .destination-subtitle {
+    font-size: 6px;
+  }
+
+  .destination-card p,
+  .destination-card button {
+    display: none;
+  }
+
+  .destination-image {
+    width: 62px;
+    height: 58px;
+  }
+
+  .destination-image-number {
+    width: 13px;
+    height: 13px;
+    font-size: 6px;
+  }
+}
