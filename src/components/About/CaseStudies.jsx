@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import "./CaseStudies.css";
-import img1 from "../../assets/images/about/lumiere.png";
-import img2 from "../../assets/images/about/honey.png";
-import img3 from "../../assets/images/about/kitchen.png";
-import img4 from "../../assets/images/about/nexora.png";
-import img6 from "../../assets/images/about/lumiere.png";
+import img1 from "../assets/images/about/lumiere.png";
+import img2 from "../assets/images/about/honey.png";
+import img3 from "../assets/images/about/kitchen.png";
+import img4 from "../assets/images/about/nexora.png";
+import img6 from "../assets/images/about/lumiere.png";
 
 const projects = [
   {

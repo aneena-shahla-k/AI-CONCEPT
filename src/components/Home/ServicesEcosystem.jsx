@@ -22,13 +22,13 @@ import {
 
 import "./servicesEcosystem.css";
 
-import previewMockup from "../../assets/images/home/web.jpg";
-import worldMap from "../../assets/images/home/world.jpg";
-import ecommerceImg from "../../assets/images/home/e-commerce.jpg";
-import mobileImg from "../../assets/images/home/app1.jpg";
-import bookingImg from "../../assets/images/home/booking.jpg";
-import erpImg from "../../assets/images/home/erp.jpg";
-import aiImg from "../../assets/images/home/ai.jpg";
+import previewMockup from "../assets/images/home/web.jpg";
+import worldMap from "../assets/images/home/world.jpg";
+import ecommerceImg from "../assets/images/home/e-commerce.jpg";
+import mobileImg from "../assets/images/home/app1.jpg";
+import bookingImg from "../assets/images/home/booking.jpg";
+import erpImg from "../assets/images/home/erp.jpg";
+import aiImg from "../assets/images/home/ai.jpg";
 
 /* =========================================================
    CANVAS DIMENSIONS & BALANCED COORDINATES

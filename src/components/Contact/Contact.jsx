@@ -26,9 +26,9 @@ import "./Contact.css";
 // CONTACT IMAGES
 // =========================================================
 
-import contactHeroImg from "../../assets/images/contact/contact-hero.png";
-import contactGlobeImg from "../../assets/images/contact/contact-globe.png";
-import contactOfficeImg from "../../assets/images/contact/contact-office.png";
+import contactHeroImg from "../assets/images/contact/contact-hero.png";
+import contactGlobeImg from "../assets/images/contact/contact-globe.png";
+import contactOfficeImg from "../assets/images/contact/contact-office.png";
 
 
 export default function Contact({ onOpenBooking }) {

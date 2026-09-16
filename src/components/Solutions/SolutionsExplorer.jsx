@@ -17,12 +17,12 @@ import {
 import gsap from "gsap";
 import "./SolutionsExplorer.css";
 
-import previewMockup from "../../assets/images/home/web.jpg";
-import ecommerceImg from "../../assets/images/home/e-commerce.jpg";
-import mobileImg from "../../assets/images/home/app1.jpg";
-import bookingImg from "../../assets/images/home/booking.jpg";
-import erpImg from "../../assets/images/home/erp.jpg";
-import aiImg from "../../assets/images/home/ai.jpg";
+import previewMockup from "../assets/images/home/web.jpg";
+import ecommerceImg from "../assets/images/home/e-commerce.jpg";
+import mobileImg from "../assets/images/home/app1.jpg";
+import bookingImg from "../assets/images/home/booking.jpg";
+import erpImg from "../assets/images/home/erp.jpg";
+import aiImg from "../assets/images/home/ai.jpg";
 
 const solutionData = [
   {

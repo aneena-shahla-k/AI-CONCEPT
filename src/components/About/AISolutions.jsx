@@ -21,7 +21,7 @@ import {
 
 import "./AISolutions.css";
 
-import robotImg from "../../assets/images/about/ai-robot.png";
+import robotImg from "../assets/images/about/ai-robot.png";
 
 const SERVICES = [
   {
