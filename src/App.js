@@ -14,17 +14,17 @@ const App = () => {
     <BrowserRouter>
       <Navbar />
       <ScrollToTop />
-      
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/solutions" element={<Solution />} />
       </Routes>
-      
+
       <Footer />
     </BrowserRouter>
   );
-}
+};
 
 export default App;
