@@ -15,100 +15,197 @@ export default function Hero() {
 
     if (!section || !video) return;
 
-    video.muted = true;
-    video.defaultMuted = true;
+    // -----------------------------------------
+    // VIDEO SETTINGS
+    // -----------------------------------------
+
     video.loop = false;
     video.autoplay = false;
+    video.muted = false;
+    video.volume = 1;
+
+    // -----------------------------------------
+    // PLAY VIDEO
+    // -----------------------------------------
 
     const playVideo = () => {
-      video.currentTime = 0;
-      video.loop = false;
+      try {
+        video.currentTime = 0;
+      } catch (error) {
+        // Ignore currentTime errors
+      }
 
-      const promise = video.play();
-      if (promise) {
-        promise.catch(() => {
-          // Autoplay fallback
+      video.loop = false;
+      video.muted = false;
+      video.volume = 1;
+
+      const playPromise = video.play();
+
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Browser blocked autoplay with sound.
+          // First user interaction will try again.
         });
       }
     };
 
+    // -----------------------------------------
+    // STOP VIDEO
+    // -----------------------------------------
+
     const stopVideo = () => {
       video.pause();
+
       try {
         video.currentTime = 0;
-      } catch (error) {}
+      } catch (error) {
+        // Ignore currentTime errors
+      }
     };
+
+    // -----------------------------------------
+    // WHEN VIDEO ENDS
+    // -----------------------------------------
 
     const handleVideoEnded = () => {
       video.pause();
+
       try {
         video.currentTime = video.duration;
-      } catch (error) {}
+      } catch (error) {
+        // Ignore duration errors
+      }
     };
 
     video.addEventListener("ended", handleVideoEnded);
 
-    /*
-     * HERO SCROLL CONTROL
-     */
+    // -----------------------------------------
+    // HERO SCROLLTRIGGER
+    // -----------------------------------------
+
     const heroTrigger = ScrollTrigger.create({
       trigger: section,
       start: "top top",
       end: "bottom top",
-      onEnter: () => playVideo(),
-      onEnterBack: () => playVideo(),
-      onLeave: () => stopVideo(),
-      onLeaveBack: () => stopVideo(),
+
+      onEnter: () => {
+        playVideo();
+      },
+
+      onEnterBack: () => {
+        playVideo();
+      },
+
+      onLeave: () => {
+        stopVideo();
+      },
+
+      onLeaveBack: () => {
+        stopVideo();
+      },
     });
 
-    // പേജ് ലോഡിൽ വീഡിയോ പ്ലേ ആകുന്നു (muted ആയി)
+    // -----------------------------------------
+    // INITIAL PLAY
+    // -----------------------------------------
+
+    // Try to start video with sound on page load.
+    // Browser autoplay policy may block this.
     playVideo();
 
-    /*
-     * ബട്ടൺ ഇല്ലാതെ യൂസറുടെ ആദ്യത്തെ ക്ലിക്കിലോ ടച്ചിലോ സൗണ്ട് ഓൺ ആക്കാനുള്ള ഫംഗ്ഷൻ
-     */
+    // -----------------------------------------
+    // FIRST USER INTERACTION
+    // -----------------------------------------
+
     const enableSoundOnFirstInteraction = () => {
       video.muted = false;
+      video.volume = 1;
 
-      // വീഡിയോ ഒരുപക്ഷേ പോസ് ആയിട്ടുണ്ടെങ്കിൽ വീണ്ടും പ്ലേ ചെയ്യുന്നു
       if (video.paused) {
         video.play().catch(() => {});
       }
 
-      // ഒരു തവണ സൗണ്ട് ഓൺ ആയാൽ ഈ ഇവന്റുകൾ റിമൂവ് ചെയ്യുക
-      window.removeEventListener("pointerdown", enableSoundOnFirstInteraction);
-      window.removeEventListener("touchstart", enableSoundOnFirstInteraction);
-      window.removeEventListener("keydown", enableSoundOnFirstInteraction);
+      // Remove listeners after first interaction
+      window.removeEventListener(
+        "pointerdown",
+        enableSoundOnFirstInteraction
+      );
+
+      window.removeEventListener(
+        "touchstart",
+        enableSoundOnFirstInteraction
+      );
+
+      window.removeEventListener(
+        "keydown",
+        enableSoundOnFirstInteraction
+      );
     };
 
-    // യൂസറുടെ ആദ്യത്തെ ക്ലിക്ക് അല്ലെങ്കിൽ ടച്ച് ഡിറ്റക്റ്റ് ചെയ്യുന്നു
-    window.addEventListener("pointerdown", enableSoundOnFirstInteraction);
-    window.addEventListener("touchstart", enableSoundOnFirstInteraction);
-    window.addEventListener("keydown", enableSoundOnFirstInteraction);
+    window.addEventListener(
+      "pointerdown",
+      enableSoundOnFirstInteraction
+    );
+
+    window.addEventListener(
+      "touchstart",
+      enableSoundOnFirstInteraction
+    );
+
+    window.addEventListener(
+      "keydown",
+      enableSoundOnFirstInteraction
+    );
+
+    // -----------------------------------------
+    // CLEANUP
+    // -----------------------------------------
 
     return () => {
       heroTrigger.kill();
+
       video.pause();
-      video.removeEventListener("ended", handleVideoEnded);
-      window.removeEventListener("pointerdown", enableSoundOnFirstInteraction);
-      window.removeEventListener("touchstart", enableSoundOnFirstInteraction);
-      window.removeEventListener("keydown", enableSoundOnFirstInteraction);
+
+      video.removeEventListener(
+        "ended",
+        handleVideoEnded
+      );
+
+      window.removeEventListener(
+        "pointerdown",
+        enableSoundOnFirstInteraction
+      );
+
+      window.removeEventListener(
+        "touchstart",
+        enableSoundOnFirstInteraction
+      );
+
+      window.removeEventListener(
+        "keydown",
+        enableSoundOnFirstInteraction
+      );
     };
   }, []);
 
   return (
-    <section ref={sectionRef} className="hero-section">
+    <section
+      ref={sectionRef}
+      className="hero-section"
+    >
       <div className="hero-video-wrap">
+
         <video
           ref={videoRef}
           className="hero-video"
-          src="/hero-video.mp4"
-          muted
+          src="https://res.cloudinary.com/zu7jndeq/video/upload/f_auto,q_auto/v1789555634/hero-video_xxcumg.mp4"
           playsInline
-          preload="auto"
+          preload="metadata"
           loop={false}
         />
+
         <div className="hero-overlay" />
+
       </div>
     </section>
   );
