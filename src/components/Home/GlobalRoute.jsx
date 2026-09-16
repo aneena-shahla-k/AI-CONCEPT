@@ -9,15 +9,15 @@ import {
 
 import "./GlobalRoute.css";
 
-import image from "../assets/images/home/map2.jpg";
-import kerala from "../assets/images/home/kerala.jpg";
-import newyork from "../assets/images/home/newyork.jpg";
-import sydney from "../assets/images/home/sydney.jpg";
-import mumbai from "../assets/images/home/mumbai.jpg";
-import dubai from "../assets/images/home/dxb.jpg";
-import berlin from "../assets/images/home/berlin.jpg";
-import london from "../assets/images/home/london.jpg";
-import singapore from "../assets/images/home/singapore.jpg";
+import image from "../../assets/images/home/map2.jpg";
+import kerala from "../../assets/images/home/kerala.jpg";
+import newyork from "../../assets/images/home/newyork.jpg";
+import sydney from "../../assets/images/home/sydney.jpg";
+import mumbai from "../../assets/images/home/mumbai.jpg";
+import dubai from "../../assets/images/home/dxb.jpg";
+import berlin from "../../assets/images/home/berlin.jpg";
+import london from "../../assets/images/home/london.jpg";
+import singapore from "../../assets/images/home/singapore.jpg";
 
 /* =========================================================
    DESTINATIONS

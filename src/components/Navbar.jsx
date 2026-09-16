@@ -1,35 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Menu, X, ChevronDown } from "lucide-react";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { NavLink, useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import "./Navbar.css";
-
-// =====================================================
-// SOLUTION ITEMS
-// =====================================================
-const solutionItems = [
-  { label: "Website Development", slug: "website-development" },
-  { label: "E-Commerce", slug: "e-commerce" },
-  { label: "App Development", slug: "app-development" },
-  { label: "Booking Platforms", slug: "booking-platforms" },
-  { label: "ERP Solutions", slug: "erp-solutions" },
-  { label: "Custom Software", slug: "custom-software" },
-  { label: "AI Solutions", slug: "ai-solutions" },
-];
 
 export default function Navbar({ onOpenProject }) {
   const navigate = useNavigate();
 
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileSolutionsOpen, setMobileSolutionsOpen] = useState(false);
 
   const navRef = useRef(null);
   const navLinksRef = useRef(null);
   const pillRef = useRef(null);
 
   const lastScrollY = useRef(0);
-  const closeTimeoutRef = useRef(null);
 
   // Scroll hide / show animation
   useEffect(() => {
@@ -75,32 +59,10 @@ export default function Navbar({ onOpenProject }) {
     });
   };
 
-  // Dropdown Handlers
-  const handleDropdownEnter = () => {
-    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
-    setDropdownOpen(true);
-  };
-
-  const handleDropdownLeave = () => {
-    closeTimeoutRef.current = setTimeout(() => {
-      setDropdownOpen(false);
-    }, 250);
-  };
-
   // Navigation Helper
   const goTo = (path) => {
     setMobileOpen(false);
-    setDropdownOpen(false);
-    setMobileSolutionsOpen(false);
     navigate(path);
-  };
-
-  // Solution Navigation
-  const goToSolution = (slug) => {
-    setMobileOpen(false);
-    setDropdownOpen(false);
-    setMobileSolutionsOpen(false);
-    navigate(`/solutions?type=${slug}`); 
   };
 
   return (
@@ -146,50 +108,16 @@ export default function Navbar({ onOpenProject }) {
             About
           </NavLink>
 
-          {/* SOLUTIONS DROPDOWN */}
-          <div
-            className="ac-nav__dropdown-wrap"
-            onMouseEnter={handleDropdownEnter}
-            onMouseLeave={handleDropdownLeave}
+          {/* NORMAL SOLUTIONS LINK */}
+          <NavLink
+            to="/solutions"
+            className={({ isActive }) =>
+              `ac-nav__link-btn ${isActive ? "active-link" : ""}`
+            }
+            onMouseEnter={handleItemHover}
           >
-            <NavLink
-              to="/solutions"
-              className={({ isActive }) =>
-                `ac-nav__link-btn ac-nav__dropdown-trigger ${
-                  isActive ? "active-link" : ""
-                }`
-              }
-              onMouseEnter={handleItemHover}
-            >
-              <span>Solutions</span>
-              <ChevronDown
-                size={13}
-                className={`ac-dropdown-chevron ${dropdownOpen ? "is-rotated" : ""}`}
-              />
-            </NavLink>
-
-            {dropdownOpen && (
-              <div
-                className="ac-nav__dropdown-menu"
-                onMouseEnter={handleDropdownEnter}
-                onMouseLeave={handleDropdownLeave}
-              >
-                <div className="ac-dropdown-grid">
-                  {solutionItems.map((item, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      className="ac-dropdown-item"
-                      onClick={() => goToSolution(item.slug)}
-                    >
-                      <span className="ac-dropdown-dot" />
-                      <span>{item.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+            Solutions
+          </NavLink>
 
           <NavLink
             to="/contact"
@@ -249,46 +177,16 @@ export default function Navbar({ onOpenProject }) {
               <span>About</span>
             </NavLink>
 
-            {/* MOBILE SOLUTIONS ACCORDION */}
-            <div className="ac-mobile-accordion">
-              <div className="ac-mobile-accordion-row">
-                <button
-                  type="button"
-                  className="ac-mobile-link ac-mobile-link-main"
-                  onClick={() => goTo("/solutions")}
-                >
-                  <span>Solutions</span>
-                </button>
-
-                <button
-                  type="button"
-                  className="ac-mobile-chevron-btn"
-                  onClick={() => setMobileSolutionsOpen(!mobileSolutionsOpen)}
-                  aria-label="Toggle solutions"
-                >
-                  <ChevronDown
-                    size={16}
-                    className={mobileSolutionsOpen ? "is-rotated" : ""}
-                  />
-                </button>
-              </div>
-
-              {mobileSolutionsOpen && (
-                <div className="ac-mobile-subitems">
-                  {solutionItems.map((item, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      className="ac-mobile-sublink"
-                      onClick={() => goToSolution(item.slug)}
-                    >
-                      <span className="ac-dropdown-dot" />
-                      <span>{item.label}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            {/* NORMAL MOBILE SOLUTIONS LINK */}
+            <NavLink
+              to="/solutions"
+              className={({ isActive }) =>
+                `ac-mobile-link ${isActive ? "active" : ""}`
+              }
+              onClick={() => setMobileOpen(false)}
+            >
+              <span>Solutions</span>
+            </NavLink>
 
             <NavLink
               to="/contact"

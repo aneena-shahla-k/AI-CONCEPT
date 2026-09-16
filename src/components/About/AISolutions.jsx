@@ -21,7 +21,7 @@ import {
 
 import "./AISolutions.css";
 
-import robotImg from "../assets/images/about/ai-robot.png";
+import robotImg from "../../assets/images/about/ai-robot.png";
 
 const SERVICES = [
   {
@@ -178,14 +178,6 @@ export default function AISolutionsSection() {
               </p>
             </div>
           </div>
-
-          <button className="cta" type="button">
-            <span>Explore AI Solutions</span>
-
-            <span className="cta-icon">
-              <ArrowRight size={16} />
-            </span>
-          </button>
 
           <div className="service-count">
             <span>15+</span>

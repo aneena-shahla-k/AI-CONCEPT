@@ -7,11 +7,11 @@ import {
   useTransform,
 } from "framer-motion";
 import "./HowWeWork.css";
-import img1 from "../assets/images/about/img1.png";
-import img2 from "../assets/images/about/img2.png";
-import img3 from "../assets/images/about/img3.png";
-import img4 from "../assets/images/about/img4.png";
-import img5 from "../assets/images/about/img5.png";
+import img1 from "../../assets/images/about/img1.png";
+import img2 from "../../assets/images/about/img2.png";
+import img3 from "../../assets/images/about/img3.png";
+import img4 from "../../assets/images/about/img4.png";
+import img5 from "../../assets/images/about/img5.png";
 
 const steps = [
   {

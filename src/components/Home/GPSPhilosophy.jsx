@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "./GPSPhilosophy.css";
 
 // Change this only if your actual map filename is different
-import worldMap from "../assets/images/home/world-map.avif";
-import successionImage from "../assets/images/home/succession1.png";
+import worldMap from "../../assets/images/home/world-map.avif";
+import successionImage from "../../assets/images/home/succession1.png";
 
 const routeSteps = [
   {

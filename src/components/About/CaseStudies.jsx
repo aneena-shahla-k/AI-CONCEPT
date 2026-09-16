@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import "./CaseStudies.css";
-import img1 from "../assets/images/about/lumiere.png";
-import img2 from "../assets/images/about/honey.png";
-import img3 from "../assets/images/about/kitchen.png";
-import img4 from "../assets/images/about/nexora.png";
-import img6 from "../assets/images/about/lumiere.png";
+import img1 from "../../assets/images/about/lumiere.png";
+import img2 from "../../assets/images/about/honey.png";
+import img3 from "../../assets/images/about/kitchen.png";
+import img4 from "../../assets/images/about/nexora.png";
+import img6 from "../../assets/images/about/lumiere.png";
 
 const projects = [
   {
@@ -18,6 +18,7 @@ const projects = [
     year: "2026",
     location: "Global",
     image: img1,
+    link: "https://lumiere-mocha-nine.vercel.app/", 
     description:
       "A premium digital experience designed to make product discovery feel immersive, intuitive and refined.",
     services: ["UI / UX", "E-Commerce", "Motion"],
@@ -31,6 +32,7 @@ const projects = [
     year: "2026",
     location: "Kerala, India",
     image: img3,
+    link: "https://kitchen-kohl-eight.vercel.app/",
     description:
       "A visual platform bringing contemporary kitchen design, materials and technology together.",
     services: ["Web Experience", "3D", "Configurator"],
@@ -44,6 +46,7 @@ const projects = [
     year: "2026",
     location: "Global",
     image: img4,
+    link: "https://nexora-store-eta.vercel.app/",
     description:
       "A flexible digital identity created for a modern technology-led brand.",
     services: ["Brand Strategy", "Web Design", "Motion"],
@@ -57,6 +60,7 @@ const projects = [
     year: "2026",
     location: "Kerala, India",
     image: img2,
+    link: "https://wayanad-honey.netlify.app/",
     description:
       "A cinematic property experience designed to make architecture feel tangible online.",
     services: ["Web Design", "Interaction", "Development"],
@@ -70,12 +74,12 @@ const projects = [
     year: "2026",
     location: "Global",
     image: img6,
+    link: "https://example.com/orbit",
     description:
       "A clean product experience built around simplicity, movement and intuitive interaction.",
     services: ["Product Design", "UX", "Development"],
   },
 ];
-
 export default function CaseStudies() {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -145,7 +149,7 @@ export default function CaseStudies() {
         (el.scrollLeft <= 0 && delta < 0) ||
         (el.scrollLeft >= maxScroll && delta > 0)
       ) {
-        return; // Allows normal page scroll instead of blank horizontal overflow
+        return; 
       }
 
       e.preventDefault();
@@ -372,10 +376,16 @@ export default function CaseStudies() {
               </div>
             </div>
 
-            <button type="button" className="case-studies__view">
+            <a 
+              href={project.link} 
+              target="_blank"
+              rel="noopener noreferrer" 
+              className="case-studies__view"
+              style={{ textDecoration: 'none' }}
+            >
               <span>VIEW PROJECT</span>
               <ArrowUpRight size={15} />
-            </button>
+            </a>
           </motion.div>
         </AnimatePresence>
       </div>

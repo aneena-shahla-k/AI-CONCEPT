@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import "./Industries.css";
 
-import retailImg from "../assets/images/about/retail.jpg";
-import healthcareImg from "../assets/images/about/hosp.jpg";
-import hospitalityImg from "../assets/images/about/hotel.jpg";
-import educationImg from "../assets/images/about/educa.jpg";
-import professionalImg from "../assets/images/about/prof.jpg";
-import logisticsImg from "../assets/images/about/logistic.jpg";
-import realEstateImg from "../assets/images/about/real.jpg";
-import startupsImg from "../assets/images/about/start.jpg";
+import retailImg from "../../assets/images/about/retail.jpg";
+import healthcareImg from "../../assets/images/about/hosp.jpg";
+import hospitalityImg from "../../assets/images/about/hotel.jpg";
+import educationImg from "../../assets/images/about/educa.jpg";
+import professionalImg from "../../assets/images/about/prof.jpg";
+import logisticsImg from "../../assets/images/about/logistic.jpg";
+import realEstateImg from "../../assets/images/about/real.jpg";
+import startupsImg from "../../assets/images/about/start.jpg";
 
 const industries = [
   { no: "01", title: "Retail", text: "E-commerce, inventory, POS, CRM, loyalty.", image: retailImg },
@@ -535,9 +535,7 @@ export default function Industries() {
 
               <p>{activeIndustry.text}</p>
 
-              <div className="center-card-arrow">
-                →
-              </div>
+              
             </div>
           </div>
 
