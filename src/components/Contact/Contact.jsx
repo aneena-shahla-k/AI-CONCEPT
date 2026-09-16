@@ -535,7 +535,7 @@ export default function Contact({ onOpenBooking }) {
                   </strong>
 
                   <small>
-                    Mon – Fri, 9AM – 6PM
+                    Mon – Sat, 10AM – 6PM
                   </small>
 
                 </div>
@@ -577,7 +577,7 @@ export default function Contact({ onOpenBooking }) {
                 <div>
 
                   <strong>
-                    Kochi, Kerala, India
+                    Calicut, Kerala, India
                   </strong>
 
                   <small>
@@ -637,9 +637,9 @@ export default function Contact({ onOpenBooking }) {
 
 
               <p>
-                NextGenAI Technologies
+                AI Concept llc
                 <br />
-                Infopark, Kochi
+                Hilite Business park, Calicut
                 <br />
                 Kerala - 682042, India
               </p>
