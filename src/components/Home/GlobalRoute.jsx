@@ -1,5 +1,6 @@
 import React, {
   memo,
+  useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
@@ -8,7 +9,6 @@ import React, {
 
 import {
   motion,
-  AnimatePresence,
   useMotionValue,
   useMotionValueEvent,
   useTransform,
@@ -187,6 +187,7 @@ const LOCATION_PROGRESS = [
    MAIN COMPONENT
 ========================================================= */
 export default function GlobalRoute() {
+  const sectionRef = useRef(null);
   const routeRef = useRef(null);
   const destinationContainerRef = useRef(null);
   const cardRefs = useRef([]);
@@ -194,9 +195,7 @@ export default function GlobalRoute() {
   const pinX = useMotionValue(63);
   const pinY = useMotionValue(63);
 
-  // Manual motion value to drive the progress programmatically
   const tourProgress = useMotionValue(0);
-  const [hasStarted, setHasStarted] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeLocation, setActiveLocation] = useState(0);
 
@@ -204,26 +203,39 @@ export default function GlobalRoute() {
   const routeLengthRef = useRef(0);
   const animationControls = useRef(null);
 
-  useLayoutEffect(() => {
+  const cachePathLength = useCallback(() => {
     const path = routeRef.current;
-    if (!path) return;
-
+    if (!path || typeof path.getTotalLength !== "function") return;
     routeLengthRef.current = path.getTotalLength();
     const point = path.getPointAtLength(0);
     pinX.set(point.x);
     pinY.set(point.y);
   }, [pinX, pinY]);
 
-  // Update pin & active card as tourProgress changes
+  useLayoutEffect(() => {
+    cachePathLength();
+  }, [cachePathLength]);
+
+  // Update pin and cards on progress change
   useMotionValueEvent(tourProgress, "change", (progress) => {
     const path = routeRef.current;
-    if (!path || !routeLengthRef.current) return;
+    let length = routeLengthRef.current;
 
-    const distance = Math.min(Math.max(progress, 0), 1) * routeLengthRef.current;
+    if (!length && path && typeof path.getTotalLength === "function") {
+      length = path.getTotalLength();
+      routeLengthRef.current = length;
+    }
+
+    if (!path || !length) return;
+
+    const safeProgress = Math.min(Math.max(progress, 0), 1);
+    const distance = safeProgress * length;
     const point = path.getPointAtLength(distance);
 
-    pinX.set(point.x);
-    pinY.set(point.y);
+    if (point && Number.isFinite(point.x) && Number.isFinite(point.y)) {
+      pinX.set(point.x);
+      pinY.set(point.y);
+    }
 
     let nextActive = 0;
     for (let i = 0; i < LOCATION_PROGRESS.length; i++) {
@@ -235,100 +247,116 @@ export default function GlobalRoute() {
     setActiveLocation((current) => (current === nextActive ? current : nextActive));
   });
 
-  // Auto center bottom card
+  // Auto scroll bottom card container
   useEffect(() => {
     const activeCard = cardRefs.current[activeLocation];
     const container = destinationContainerRef.current;
     if (!activeCard || !container) return;
 
     container.scrollTo({
-      left: activeCard.offsetLeft - container.offsetWidth / 2 + activeCard.offsetWidth / 2,
+      left:
+        activeCard.offsetLeft -
+        container.offsetWidth / 2 +
+        activeCard.offsetWidth / 2,
       behavior: "smooth",
     });
   }, [activeLocation]);
 
-  // Start Tour when tapping the glowing radiating button
-  const handleStartTour = () => {
-    setHasStarted(true);
+  /* =========================================================
+     AUTOMATIC ROUTE FLOW
+  ========================================================= */
+  const runAutoFlow = useCallback((fromStart = false) => {
+    if (animationControls.current) animationControls.current.stop();
     setIsPlaying(true);
 
+    if (fromStart) {
+      tourProgress.set(0);
+    }
+
+    const currentVal = fromStart
+      ? 0
+      : tourProgress.get() >= 0.98
+      ? 0
+      : tourProgress.get();
+
     animationControls.current = animate(tourProgress, 1, {
-      from: 0,
-      duration: 18,
+      from: currentVal,
+      duration: 16 * (1 - currentVal),
       ease: "easeInOut",
-      onComplete: () => setIsPlaying(false),
+      onComplete: () => {
+        setIsPlaying(false);
+        if (sectionRef.current) {
+          const nextTarget = sectionRef.current.nextElementSibling;
+          if (nextTarget) {
+            nextTarget.scrollIntoView({ behavior: "smooth" });
+          } else {
+            window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
+          }
+        }
+      },
     });
-  };
+  }, [tourProgress]);
 
   const togglePauseResume = () => {
     if (isPlaying) {
       if (animationControls.current) animationControls.current.stop();
       setIsPlaying(false);
     } else {
-      setIsPlaying(true);
-      const currentVal = tourProgress.get();
-      const startVal = currentVal >= 0.99 ? 0 : currentVal;
-      const duration = 18 * (1 - startVal);
-
-      animationControls.current = animate(tourProgress, 1, {
-        from: startVal,
-        duration: duration,
-        ease: "easeInOut",
-        onComplete: () => setIsPlaying(false),
-      });
+      runAutoFlow(false);
     }
   };
 
   const goToLocation = (index) => {
     if (animationControls.current) animationControls.current.stop();
     setIsPlaying(false);
-    if (!hasStarted) setHasStarted(true);
 
     const targetProgress = LOCATION_PROGRESS[index];
     animate(tourProgress, targetProgress, {
-      duration: 1.2,
+      duration: 0.9,
       ease: "easeInOut",
     });
   };
 
   const scrollDestinations = (direction) => {
-    let nextIndex = direction === "next" ? activeLocation + 1 : activeLocation - 1;
+    let nextIndex =
+      direction === "next" ? activeLocation + 1 : activeLocation - 1;
     if (nextIndex >= 0 && nextIndex < locations.length) {
       goToLocation(nextIndex);
     }
   };
 
+  /* =========================================================
+     AUTOPLAY ON VIEWPORT ENTER (RESTARTS EVERY TIME)
+  ========================================================= */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting) {
+          cachePathLength();
+          runAutoFlow(true);
+        } else {
+          if (animationControls.current) animationControls.current.stop();
+          setIsPlaying(false);
+          tourProgress.set(0);
+          setActiveLocation(0);
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    const currentSection = sectionRef.current;
+    if (currentSection) observer.observe(currentSection);
+
+    return () => {
+      if (currentSection) observer.unobserve(currentSection);
+      observer.disconnect();
+    };
+  }, [runAutoFlow, tourProgress, cachePathLength]);
+
   return (
-    <section className="global-route">
+    <section ref={sectionRef} className="global-route">
       <div className="route-wrapper">
-
-        {/* =================================================
-            TAP TO EXPLORE RADIATING OVERLAY
-        ================================================= */}
-        <AnimatePresence>
-          {!hasStarted && (
-            <motion.div
-              className="route-explore-overlay"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0, transition: { duration: 0.6 } }}
-              onClick={handleStartTour}
-            >
-              <div className="radiating-action-box">
-                {/* Multi-layered pulsating sonar rings */}
-                <div className="sonar-ring ring-1" />
-                <div className="sonar-ring ring-2" />
-                <div className="sonar-ring ring-3" />
-
-                <button className="radiate-explore-btn">
-                  <span className="radiate-play-icon">▶</span>
-                  <span className="radiate-text">Tap to Explore</span>
-                  <span className="radiate-subtext">Start our global route</span>
-                </button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* LEFT CONTENT */}
         <div className="route-content">
@@ -353,31 +381,40 @@ export default function GlobalRoute() {
             are now serving clients worldwide.
           </p>
 
-          {hasStarted && (
-            <div className="route-actions">
-              <button className="tour-control-btn" onClick={togglePauseResume}>
-                {isPlaying ? "⏸ Pause Tour" : "▶ Resume Tour"}
-              </button>
-            </div>
-          )}
+          <div className="route-actions">
+            <button
+              type="button"
+              className="tour-control-btn"
+              onClick={togglePauseResume}
+            >
+              <span>{isPlaying ? "⏸" : "▶"}</span>
+              {isPlaying ? "Pause Tour" : "Auto Play Tour"}
+            </button>
+          </div>
 
           <div className="route-selector">
             <div
-              className={`route-selector-item ${activeLocation <= 1 ? "active" : ""}`}
+              className={`route-selector-item ${
+                activeLocation <= 1 ? "active" : ""
+              }`}
               onClick={() => goToLocation(0)}
             >
               <span className="selector-dot" />
               Kerala
             </div>
             <div
-              className={`route-selector-item ${activeLocation >= 2 && activeLocation <= 4 ? "active" : ""}`}
+              className={`route-selector-item ${
+                activeLocation >= 2 && activeLocation <= 4 ? "active" : ""
+              }`}
               onClick={() => goToLocation(2)}
             >
               <span className="selector-dot" />
               India
             </div>
             <div
-              className={`route-selector-item ${activeLocation >= 5 ? "active" : ""}`}
+              className={`route-selector-item ${
+                activeLocation >= 5 ? "active" : ""
+              }`}
               onClick={() => goToLocation(5)}
             >
               <span className="selector-dot" />
@@ -420,7 +457,17 @@ export default function GlobalRoute() {
             >
               <circle cx="0" cy="0" r="1.3" fill="rgba(0, 240, 255, 0.4)" />
               <path
-                d="M 0 0 C -0.8 -1.1 -1.3 -1.8 -1.3 -2.7 C -1.3 -3.5 -0.7 -4.1 0 -4.1 C 0.7 -4.1 1.3 -3.5 1.3 -2.7 C 1.3 -1.8 0.8 -1.1 0 0 Z"
+                d="
+                  M 0 0
+                  C -0.8 -1.1 -1.3 -1.8
+                  -1.3 -2.7
+                  C -1.3 -3.5 -0.7 -4.1
+                  0 -4.1
+                  C 0.7 -4.1 1.3 -3.5
+                  1.3 -2.7
+                  C 1.3 -1.8 0.8 -1.1
+                  0 0 Z
+                "
                 fill="#00f0ff"
                 stroke="#ffffff"
                 strokeWidth="0.18"
@@ -465,7 +512,9 @@ export default function GlobalRoute() {
           <div className="destination-header">
             <div className="destination-heading">
               <span className="destination-eyebrow">GLOBAL DESTINATIONS</span>
-              <h3>Explore our <em>locations.</em></h3>
+              <h3>
+                Explore our <em>locations.</em>
+              </h3>
             </div>
 
             <div className="destination-controls">
@@ -475,6 +524,7 @@ export default function GlobalRoute() {
                 {String(locations.length).padStart(2, "0")}
               </span>
               <button
+                type="button"
                 className="destination-arrow"
                 onClick={() => scrollDestinations("prev")}
                 aria-label="Previous"
@@ -482,6 +532,7 @@ export default function GlobalRoute() {
                 ←
               </button>
               <button
+                type="button"
                 className="destination-arrow"
                 onClick={() => scrollDestinations("next")}
                 aria-label="Next"
@@ -521,7 +572,9 @@ export default function GlobalRoute() {
 const MapLocation = memo(function MapLocation({ location, active, reached }) {
   return (
     <div
-      className={`map-point ${active ? "active" : ""} ${reached ? "reached" : ""}`}
+      className={`map-point ${active ? "active" : ""} ${
+        reached ? "reached" : ""
+      }`}
       style={{ left: `${location.mapX}%`, top: `${location.mapY}%` }}
     >
       <div className="map-point-pulse" />
@@ -532,11 +585,17 @@ const MapLocation = memo(function MapLocation({ location, active, reached }) {
   );
 });
 
-const FloatingLocationCard = memo(function FloatingLocationCard({ location, active, reached }) {
+const FloatingLocationCard = memo(function FloatingLocationCard({
+  location,
+  active,
+  reached,
+}) {
   return (
     <div
       data-location={location.id}
-      className={`floating-location-card ${active ? "active" : ""} ${reached ? "reached" : ""}`}
+      className={`floating-location-card ${active ? "active" : ""} ${
+        reached ? "reached" : ""
+      }`}
       style={{ left: `${location.cardX}%`, top: `${location.cardY}%` }}
     >
       <div className="floating-card-header">
@@ -554,20 +613,33 @@ const FloatingLocationCard = memo(function FloatingLocationCard({ location, acti
   );
 });
 
-const DestinationCard = memo(function DestinationCard({ location, active, reached }) {
+const DestinationCard = memo(function DestinationCard({
+  location,
+  active,
+  reached,
+}) {
   return (
-    <article className={`destination-card ${active ? "active" : ""} ${reached ? "reached" : ""}`}>
+    <article
+      className={`destination-card ${active ? "active" : ""} ${
+        reached ? "reached" : ""
+      }`}
+    >
       <div className="destination-card-info">
         <span className="destination-number">{location.number}</span>
         <h3>{location.name}</h3>
         <span className="destination-subtitle">{location.subtitle}</span>
         <p>{location.description}</p>
-        <button>
+        <button type="button">
           View Details <span>→</span>
         </button>
       </div>
       <div className="destination-image">
-        <img src={location.image} alt={location.name} loading="lazy" decoding="async" />
+        <img
+          src={location.image}
+          alt={location.name}
+          loading="lazy"
+          decoding="async"
+        />
         <div className="destination-image-overlay" />
         <span className="destination-image-number">{location.number}</span>
       </div>
