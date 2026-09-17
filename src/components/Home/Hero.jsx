@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./Hero.css";
@@ -8,6 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 export default function Hero() {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
+  const [isAudioBlocked, setIsAudioBlocked] = useState(false);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
@@ -15,197 +16,133 @@ export default function Hero() {
 
     if (!section || !video) return;
 
-    // -----------------------------------------
-    // VIDEO SETTINGS
-    // -----------------------------------------
-
-    video.loop = false;
-    video.autoplay = false;
-    video.muted = false;
     video.volume = 1;
 
     // -----------------------------------------
-    // PLAY VIDEO
+    // PLAY WITH SOUND (FALLBACK TO MUTED IF BLOCKED)
     // -----------------------------------------
-
-    const playVideo = () => {
-      try {
-        video.currentTime = 0;
-      } catch (error) {
-        // Ignore currentTime errors
-      }
-
-      video.loop = false;
+    const playHeroVideo = () => {
       video.muted = false;
       video.volume = 1;
 
       const playPromise = video.play();
 
       if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Browser blocked autoplay with sound.
-          // First user interaction will try again.
-        });
+        playPromise
+          .then(() => {
+            setIsAudioBlocked(false);
+          })
+          .catch(() => {
+            video.muted = true;
+            video.play().catch(() => {});
+            setIsAudioBlocked(true);
+          });
       }
     };
 
     // -----------------------------------------
-    // STOP VIDEO
+    // STOP VIDEO & SOUND ON LEAVING SECTION
     // -----------------------------------------
-
-    const stopVideo = () => {
+    const stopHeroVideo = () => {
       video.pause();
-
-      try {
-        video.currentTime = 0;
-      } catch (error) {
-        // Ignore currentTime errors
-      }
+      video.muted = true;
     };
 
     // -----------------------------------------
-    // WHEN VIDEO ENDS
+    // UNMUTE ON USER INTERACTION
     // -----------------------------------------
-
-    const handleVideoEnded = () => {
-      video.pause();
-
-      try {
-        video.currentTime = video.duration;
-      } catch (error) {
-        // Ignore duration errors
+    const handleFirstInteraction = () => {
+      if (video) {
+        video.muted = false;
+        video.volume = 1;
+        if (video.paused) {
+          video.play().catch(() => {});
+        }
+        setIsAudioBlocked(false);
       }
+
+      window.removeEventListener("pointerdown", handleFirstInteraction);
+      window.removeEventListener("touchstart", handleFirstInteraction);
+      window.removeEventListener("keydown", handleFirstInteraction);
     };
 
-    video.addEventListener("ended", handleVideoEnded);
+    window.addEventListener("pointerdown", handleFirstInteraction);
+    window.addEventListener("touchstart", handleFirstInteraction);
+    window.addEventListener("keydown", handleFirstInteraction);
+
+    playHeroVideo();
 
     // -----------------------------------------
-    // HERO SCROLLTRIGGER
+    // SCROLL TRIGGER HANDLERS
     // -----------------------------------------
-
     const heroTrigger = ScrollTrigger.create({
       trigger: section,
       start: "top top",
       end: "bottom top",
 
       onEnter: () => {
-        playVideo();
+        playHeroVideo();
       },
 
       onEnterBack: () => {
-        playVideo();
+        playHeroVideo();
       },
 
       onLeave: () => {
-        stopVideo();
+        stopHeroVideo();
       },
 
       onLeaveBack: () => {
-        stopVideo();
+        stopHeroVideo();
       },
     });
 
-    // -----------------------------------------
-    // INITIAL PLAY
-    // -----------------------------------------
-
-    // Try to start video with sound on page load.
-    // Browser autoplay policy may block this.
-    playVideo();
-
-    // -----------------------------------------
-    // FIRST USER INTERACTION
-    // -----------------------------------------
-
-    const enableSoundOnFirstInteraction = () => {
-      video.muted = false;
-      video.volume = 1;
-
-      if (video.paused) {
-        video.play().catch(() => {});
-      }
-
-      // Remove listeners after first interaction
-      window.removeEventListener(
-        "pointerdown",
-        enableSoundOnFirstInteraction
-      );
-
-      window.removeEventListener(
-        "touchstart",
-        enableSoundOnFirstInteraction
-      );
-
-      window.removeEventListener(
-        "keydown",
-        enableSoundOnFirstInteraction
-      );
-    };
-
-    window.addEventListener(
-      "pointerdown",
-      enableSoundOnFirstInteraction
-    );
-
-    window.addEventListener(
-      "touchstart",
-      enableSoundOnFirstInteraction
-    );
-
-    window.addEventListener(
-      "keydown",
-      enableSoundOnFirstInteraction
-    );
-
-    // -----------------------------------------
-    // CLEANUP
-    // -----------------------------------------
-
     return () => {
       heroTrigger.kill();
+      stopHeroVideo();
 
-      video.pause();
-
-      video.removeEventListener(
-        "ended",
-        handleVideoEnded
-      );
-
-      window.removeEventListener(
-        "pointerdown",
-        enableSoundOnFirstInteraction
-      );
-
-      window.removeEventListener(
-        "touchstart",
-        enableSoundOnFirstInteraction
-      );
-
-      window.removeEventListener(
-        "keydown",
-        enableSoundOnFirstInteraction
-      );
+      window.removeEventListener("pointerdown", handleFirstInteraction);
+      window.removeEventListener("touchstart", handleFirstInteraction);
+      window.removeEventListener("keydown", handleFirstInteraction);
     };
   }, []);
 
-  return (
-    <section
-      ref={sectionRef}
-      className="hero-section"
-    >
-      <div className="hero-video-wrap">
+  const handleManualUnmute = (e) => {
+    e.stopPropagation();
+    const video = videoRef.current;
+    if (video) {
+      video.muted = false;
+      video.volume = 1;
+      video.play().catch(() => {});
+      setIsAudioBlocked(false);
+    }
+  };
 
+  return (
+    <section ref={sectionRef} className="hero-section">
+      <div className="hero-video-wrap">
         <video
           ref={videoRef}
           className="hero-video"
           src="https://res.cloudinary.com/zu7jndeq/video/upload/f_auto,q_auto/v1789555634/hero-video_xxcumg.mp4"
           playsInline
-          preload="metadata"
+          autoPlay
+          preload="auto"
           loop={false}
         />
 
         <div className="hero-overlay" />
 
+        {isAudioBlocked && (
+          <button
+            type="button"
+            className="hero-unmute-btn"
+            onClick={handleManualUnmute}
+          >
+            <span className="unmute-icon">🔊</span>
+            <span>Tap for Sound</span>
+          </button>
+        )}
       </div>
     </section>
   );
