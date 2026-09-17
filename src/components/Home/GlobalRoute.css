@@ -1,42 +1,172 @@
 @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap");
 
 /* =========================================================
-   CONTAINER & LOCK SETUP
+   CONTAINER & LAYOUT SETUP
 ========================================================= */
 
 .global-route {
   position: relative;
   width: 100%;
   max-width: 100vw;
-  background: #02090d;
-  color: #ffffff;
-  overflow-x: clip;
-  overflow-y: visible;
-  font-family: "Manrope", sans-serif;
-  -webkit-font-smoothing: antialiased;
-}
-
-.route-scroll {
-  position: relative;
-  width: 100%;
-  max-width: 100vw;
-  height: 480vh;
-}
-
-.route-sticky {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  max-width: 100vw;
   height: 100vh;
-  min-height: 600px;
-  overflow: hidden;
+  min-height: 680px;
   background:
     radial-gradient(circle at 63% 43%, rgba(0, 240, 255, 0.08), transparent 30%),
     radial-gradient(circle at 78% 15%, rgba(36, 120, 210, 0.12), transparent 30%),
     #02090d;
+  color: #ffffff;
+  overflow: hidden;
+  font-family: "Manrope", sans-serif;
+  -webkit-font-smoothing: antialiased;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   isolation: isolate;
+}
+
+.route-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* =========================================================
+   RADIATING "TAP TO EXPLORE" OVERLAY
+========================================================= */
+
+.route-explore-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(2, 9, 13, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: pointer;
+  user-select: none;
+}
+
+.radiating-action-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 260px;
+  height: 260px;
+}
+
+/* Sonar radiating rings */
+.sonar-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid #00f0ff;
+  pointer-events: none;
+  animation: radiatePulse 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) infinite;
+}
+
+.ring-1 {
+  width: 150px;
+  height: 150px;
+  animation-delay: 0s;
+}
+
+.ring-2 {
+  width: 150px;
+  height: 150px;
+  animation-delay: 0.9s;
+}
+
+.ring-3 {
+  width: 150px;
+  height: 150px;
+  animation-delay: 1.8s;
+}
+
+@keyframes radiatePulse {
+  0% {
+    transform: scale(0.65);
+    opacity: 0.9;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.8);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(2.2);
+    opacity: 0;
+    box-shadow: 0 0 35px rgba(0, 240, 255, 0);
+  }
+}
+
+.radiate-explore-btn {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #00f0ff, #0088cc);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  color: #021217;
+  cursor: pointer;
+  box-shadow: 
+    0 0 30px rgba(0, 240, 255, 0.6),
+    inset 0 0 15px rgba(255, 255, 255, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.radiate-explore-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 
+    0 0 45px rgba(0, 240, 255, 0.9),
+    inset 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+.radiate-play-icon {
+  font-size: 20px;
+  margin-bottom: 2px;
+  transform: translateX(1px);
+}
+
+.radiate-text {
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.radiate-subtext {
+  font-size: 7.5px;
+  font-weight: 600;
+  opacity: 0.85;
+  margin-top: 2px;
+}
+
+/* Pause/Resume tour control button */
+.route-actions {
+  margin-top: 14px;
+}
+
+.tour-control-btn {
+  padding: 6px 14px;
+  border-radius: 30px;
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid #00f0ff;
+  color: #00f0ff;
+  font-size: 9px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tour-control-btn:hover {
+  background: #00f0ff;
+  color: #02090d;
 }
 
 /* =========================================================
@@ -128,7 +258,7 @@
 .route-content {
   position: absolute;
   left: 4.2%;
-  top: 14%;
+  top: 13%;
   width: 340px;
   max-width: 90vw;
   z-index: 30;
@@ -139,7 +269,7 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 18px;
+  margin-bottom: 16px;
   font-size: 9px;
   font-weight: 700;
   letter-spacing: 0.22em;
@@ -155,8 +285,8 @@
 .route-content h2 {
   margin: 0;
   font-family: "Playfair Display", serif;
-  font-size: clamp(38px, 4vw, 54px);
-  line-height: 0.98;
+  font-size: clamp(34px, 3.8vw, 50px);
+  line-height: 1;
   letter-spacing: -0.035em;
   font-weight: 500;
   color: #f5f7f4;
@@ -170,8 +300,8 @@
 }
 
 .route-lead {
-  margin: 16px 0 0;
-  font-size: 14px;
+  margin: 14px 0 0;
+  font-size: 13px;
   font-weight: 500;
   line-height: 1.5;
   color: #d5dcd8;
@@ -179,10 +309,10 @@
 
 .route-description {
   max-width: 290px;
-  margin: 14px 0 0;
-  font-size: 10px;
+  margin: 10px 0 0;
+  font-size: 9.5px;
   font-weight: 400;
-  line-height: 1.7;
+  line-height: 1.6;
   color: #7d8985;
 }
 
@@ -190,7 +320,7 @@
   display: flex;
   align-items: center;
   width: fit-content;
-  margin-top: 18px;
+  margin-top: 16px;
   padding: 3px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 50px;
@@ -207,7 +337,13 @@
   font-size: 9px;
   font-weight: 600;
   color: #8d9794;
+  cursor: pointer;
   transition: all 0.35s ease;
+  user-select: none;
+}
+
+.route-selector-item:hover {
+  color: #f5f7f4;
 }
 
 .route-selector-item.active {
@@ -236,7 +372,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+  cursor: pointer;
 }
 
 .map-point-ring {
@@ -316,8 +452,12 @@
   background: linear-gradient(135deg, rgba(7, 24, 34, 0.9), rgba(2, 13, 20, 0.75));
   backdrop-filter: blur(14px);
   opacity: 0.55;
-  pointer-events: none;
+  cursor: pointer;
   transition: all 0.3s ease;
+}
+
+.floating-location-card:hover {
+  opacity: 0.85;
 }
 
 .floating-location-card.active {
@@ -508,6 +648,11 @@
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.025);
   transition: all 0.35s ease;
+  cursor: pointer;
+}
+
+.destination-card:hover {
+  border-color: rgba(0, 240, 255, 0.4);
 }
 
 .destination-card.active {
@@ -608,28 +753,54 @@
 }
 
 /* =========================================================
-   PERFECT MOBILE & TABLET ALIGNMENT (FIXED PROPORTIONS)
+   MOBILE & TABLET RESPONSIVE
 ========================================================= */
 
 @media (max-width: 900px) {
-  .route-scroll {
-    height: 300vh;
+  .global-route {
+    height: 100dvh;
+    min-height: auto;
   }
 
-  .route-sticky {
+  .route-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100dvh;
+    height: 100%;
     padding: 12px 0 0;
     box-sizing: border-box;
-    overflow: hidden;
   }
 
-  /* --- 1. TOP HEADER --- */
+  .radiating-action-box {
+    width: 200px;
+    height: 200px;
+  }
+
+  .ring-1, .ring-2, .ring-3 {
+    width: 110px;
+    height: 110px;
+  }
+
+  .radiate-explore-btn {
+    width: 105px;
+    height: 105px;
+  }
+
+  .radiate-play-icon {
+    font-size: 16px;
+  }
+
+  .radiate-text {
+    font-size: 9.5px;
+  }
+
+  .radiate-subtext {
+    font-size: 6.5px;
+  }
+
   .route-content {
     position: relative;
-    top: 10%;
+    top: auto;
     left: auto;
     right: auto;
     width: 100%;
@@ -650,12 +821,12 @@
   }
 
   .route-content h2 {
-    font-size: 36px;
+    font-size: 30px;
     line-height: 1.05;
   }
 
   .route-lead {
-    margin-top: 8px;
+    margin-top: 6px;
     font-size: 11px;
     line-height: 1.3;
   }
@@ -675,16 +846,14 @@
     font-size: 7px;
   }
 
-  /* --- 2. MAP STAGE (Fixed Aspect Ratio - No Height Stretch) --- */
   .map-stage {
     position: relative;
     top: auto;
     left: auto;
     right: auto;
     width: 100%;
-    max-height: 45vh;
+    max-height: 40vh;
     aspect-ratio: 16 / 10;
-    /* margin: auto 0;  */
     flex-shrink: 0;
     overflow: hidden;
   }
@@ -692,7 +861,7 @@
   .world-map-image {
     width: 100%;
     height: 100%;
-    object-fit: contain; 
+    object-fit: contain;
     object-position: center;
   }
 
@@ -702,7 +871,6 @@
       linear-gradient(180deg, #02090d 0%, transparent 15%, transparent 85%, #02090d 100%);
   }
 
-  /* Map Points & Pin Scale */
   .map-point {
     width: 12px;
     height: 12px;
@@ -728,7 +896,7 @@
   }
 
   .floating-location-card:not(.active) {
-    display: none; 
+    display: none;
   }
 
   .floating-location-card.active {
@@ -751,7 +919,6 @@
     display: none;
   }
 
-  /* --- 3. BOTTOM STRIP --- */
   .destination-strip {
     position: relative;
     left: auto;

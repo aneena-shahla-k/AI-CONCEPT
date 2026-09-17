@@ -8,11 +8,11 @@ import React, {
 
 import {
   motion,
+  AnimatePresence,
   useMotionValue,
   useMotionValueEvent,
-  useScroll,
-  useSpring,
   useTransform,
+  animate,
 } from "framer-motion";
 
 import "./GlobalRoute.css";
@@ -30,7 +30,6 @@ import singapore from "../assets/images/home/singapore.jpg";
 /* =========================================================
    DESTINATIONS
 ========================================================= */
-
 const locations = [
   {
     id: "calicut",
@@ -162,10 +161,6 @@ const locations = [
   },
 ];
 
-/* =========================================================
-   ROUTE
-========================================================= */
-
 const ROUTE_PATH = `
   M 63 63
   C 63.3 64.5, 63.7 65.8, 64 67
@@ -191,453 +186,345 @@ const LOCATION_PROGRESS = [
 /* =========================================================
    MAIN COMPONENT
 ========================================================= */
-
 export default function GlobalRoute() {
-  const sectionRef = useRef(null);
   const routeRef = useRef(null);
   const destinationContainerRef = useRef(null);
   const cardRefs = useRef([]);
 
-  // Pin position is now a MotionValue.
-  // This prevents React re-rendering on every scroll frame.
   const pinX = useMotionValue(63);
   const pinY = useMotionValue(63);
 
+  // Manual motion value to drive the progress programmatically
+  const tourProgress = useMotionValue(0);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [activeLocation, setActiveLocation] = useState(0);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 90,
-    damping: 26,
-    mass: 0.2,
-  });
-
-  const routeDashOffset = useTransform(
-    smoothProgress,
-    [0, 1],
-    [1, 0]
-  );
-
-  /*
-   * Store route length.
-   * This is calculated only once instead of every scroll frame.
-   */
+  const routeDashOffset = useTransform(tourProgress, [0, 1], [1, 0]);
   const routeLengthRef = useRef(0);
+  const animationControls = useRef(null);
 
   useLayoutEffect(() => {
     const path = routeRef.current;
-
     if (!path) return;
 
     routeLengthRef.current = path.getTotalLength();
-
     const point = path.getPointAtLength(0);
-
     pinX.set(point.x);
     pinY.set(point.y);
   }, [pinX, pinY]);
 
-  /*
-   * Scroll animation
-   *
-   * IMPORTANT:
-   * No React state update for every frame.
-   */
-  useMotionValueEvent(
-    smoothProgress,
-    "change",
-    (progress) => {
-      const path = routeRef.current;
+  // Update pin & active card as tourProgress changes
+  useMotionValueEvent(tourProgress, "change", (progress) => {
+    const path = routeRef.current;
+    if (!path || !routeLengthRef.current) return;
 
-      if (!path || !routeLengthRef.current) return;
+    const distance = Math.min(Math.max(progress, 0), 1) * routeLengthRef.current;
+    const point = path.getPointAtLength(distance);
 
-      const distance =
-        Math.min(Math.max(progress, 0), 1) *
-        routeLengthRef.current;
+    pinX.set(point.x);
+    pinY.set(point.y);
 
-      const point = path.getPointAtLength(distance);
-
-      // Update MotionValues directly.
-      pinX.set(point.x);
-      pinY.set(point.y);
-
-      /*
-       * Only update React state when the active
-       * destination actually changes.
-       */
-      let nextActive = 0;
-
-      for (let i = 0; i < LOCATION_PROGRESS.length; i++) {
-        if (progress >= LOCATION_PROGRESS[i] - 0.03) {
-          nextActive = i;
-        }
+    let nextActive = 0;
+    for (let i = 0; i < LOCATION_PROGRESS.length; i++) {
+      if (progress >= LOCATION_PROGRESS[i] - 0.03) {
+        nextActive = i;
       }
-
-      setActiveLocation((current) => {
-        if (current === nextActive) {
-          return current;
-        }
-
-        return nextActive;
-      });
     }
-  );
 
-  /*
-   * Automatically center active destination card.
-   */
+    setActiveLocation((current) => (current === nextActive ? current : nextActive));
+  });
+
+  // Auto center bottom card
   useEffect(() => {
     const activeCard = cardRefs.current[activeLocation];
     const container = destinationContainerRef.current;
-
     if (!activeCard || !container) return;
 
-    const cardLeft = activeCard.offsetLeft;
-    const cardWidth = activeCard.offsetWidth;
-    const containerWidth = container.offsetWidth;
-
     container.scrollTo({
-      left:
-        cardLeft -
-        containerWidth / 2 +
-        cardWidth / 2,
+      left: activeCard.offsetLeft - container.offsetWidth / 2 + activeCard.offsetWidth / 2,
       behavior: "smooth",
     });
   }, [activeLocation]);
 
-  /*
-   * Destination arrow controls
-   */
-  const scrollDestinations = (direction) => {
-    const container = destinationContainerRef.current;
+  // Start Tour when tapping the glowing radiating button
+  const handleStartTour = () => {
+    setHasStarted(true);
+    setIsPlaying(true);
 
-    if (!container) return;
-
-    const amount =
-      window.innerWidth <= 800 ? 210 : 320;
-
-    container.scrollBy({
-      left:
-        direction === "next"
-          ? amount
-          : -amount,
-      behavior: "smooth",
+    animationControls.current = animate(tourProgress, 1, {
+      from: 0,
+      duration: 18,
+      ease: "easeInOut",
+      onComplete: () => setIsPlaying(false),
     });
   };
 
+  const togglePauseResume = () => {
+    if (isPlaying) {
+      if (animationControls.current) animationControls.current.stop();
+      setIsPlaying(false);
+    } else {
+      setIsPlaying(true);
+      const currentVal = tourProgress.get();
+      const startVal = currentVal >= 0.99 ? 0 : currentVal;
+      const duration = 18 * (1 - startVal);
+
+      animationControls.current = animate(tourProgress, 1, {
+        from: startVal,
+        duration: duration,
+        ease: "easeInOut",
+        onComplete: () => setIsPlaying(false),
+      });
+    }
+  };
+
+  const goToLocation = (index) => {
+    if (animationControls.current) animationControls.current.stop();
+    setIsPlaying(false);
+    if (!hasStarted) setHasStarted(true);
+
+    const targetProgress = LOCATION_PROGRESS[index];
+    animate(tourProgress, targetProgress, {
+      duration: 1.2,
+      ease: "easeInOut",
+    });
+  };
+
+  const scrollDestinations = (direction) => {
+    let nextIndex = direction === "next" ? activeLocation + 1 : activeLocation - 1;
+    if (nextIndex >= 0 && nextIndex < locations.length) {
+      goToLocation(nextIndex);
+    }
+  };
+
   return (
-    <section
-      ref={sectionRef}
-      className="global-route"
-    >
-      <div className="route-scroll">
-        <div className="route-sticky">
+    <section className="global-route">
+      <div className="route-wrapper">
 
-          {/* =================================================
-              LEFT CONTENT
-          ================================================= */}
+        {/* =================================================
+            TAP TO EXPLORE RADIATING OVERLAY
+        ================================================= */}
+        <AnimatePresence>
+          {!hasStarted && (
+            <motion.div
+              className="route-explore-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.6 } }}
+              onClick={handleStartTour}
+            >
+              <div className="radiating-action-box">
+                {/* Multi-layered pulsating sonar rings */}
+                <div className="sonar-ring ring-1" />
+                <div className="sonar-ring ring-2" />
+                <div className="sonar-ring ring-3" />
 
-          <div className="route-content">
-
-            <div className="route-eyebrow">
-              <span>OUR GLOBAL ROUTE</span>
-              <i />
-            </div>
-
-            <h2>
-              From Kerala
-              <br />
-              to the <em>World</em>
-            </h2>
-
-            <p className="route-lead">
-              One route. Many destinations.
-              <br />
-              Connected possibilities.
-            </p>
-
-            <p className="route-description">
-              We started in Kerala, grew across India, and
-              <br />
-              are now serving clients worldwide. Our journey
-              <br />
-              continues, and so does yours.
-            </p>
-
-            <div className="route-selector">
-
-              <div
-                className={`route-selector-item ${
-                  activeLocation <= 1
-                    ? "active"
-                    : ""
-                }`}
-              >
-                <span className="selector-dot" />
-                Kerala
+                <button className="radiate-explore-btn">
+                  <span className="radiate-play-icon">▶</span>
+                  <span className="radiate-text">Tap to Explore</span>
+                  <span className="radiate-subtext">Start our global route</span>
+                </button>
               </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-              <div
-                className={`route-selector-item ${
-                  activeLocation >= 2 &&
-                  activeLocation <= 4
-                    ? "active"
-                    : ""
-                }`}
-              >
-                <span className="selector-dot" />
-                India
-              </div>
-
-              <div
-                className={`route-selector-item ${
-                  activeLocation >= 5
-                    ? "active"
-                    : ""
-                }`}
-              >
-                <span className="selector-dot" />
-                World
-              </div>
-
-            </div>
+        {/* LEFT CONTENT */}
+        <div className="route-content">
+          <div className="route-eyebrow">
+            <span>OUR GLOBAL ROUTE</span>
+            <i />
           </div>
 
-          {/* =================================================
-              MAP
-          ================================================= */}
+          <h2>
+            From Kerala
+            <br />
+            to the <em>World</em>
+          </h2>
 
-          <div className="map-stage">
+          <p className="route-lead">
+            One route. Many destinations. Connected possibilities.
+          </p>
 
-            <img
-              src={image}
-              alt="Global Map"
-              className="world-map-image"
+          <p className="route-description">
+            We started in Kerala, grew across India, and
+            <br />
+            are now serving clients worldwide.
+          </p>
+
+          {hasStarted && (
+            <div className="route-actions">
+              <button className="tour-control-btn" onClick={togglePauseResume}>
+                {isPlaying ? "⏸ Pause Tour" : "▶ Resume Tour"}
+              </button>
+            </div>
+          )}
+
+          <div className="route-selector">
+            <div
+              className={`route-selector-item ${activeLocation <= 1 ? "active" : ""}`}
+              onClick={() => goToLocation(0)}
+            >
+              <span className="selector-dot" />
+              Kerala
+            </div>
+            <div
+              className={`route-selector-item ${activeLocation >= 2 && activeLocation <= 4 ? "active" : ""}`}
+              onClick={() => goToLocation(2)}
+            >
+              <span className="selector-dot" />
+              India
+            </div>
+            <div
+              className={`route-selector-item ${activeLocation >= 5 ? "active" : ""}`}
+              onClick={() => goToLocation(5)}
+            >
+              <span className="selector-dot" />
+              World
+            </div>
+          </div>
+        </div>
+
+        {/* MAP STAGE */}
+        <div className="map-stage">
+          <img src={image} alt="Global Map" className="world-map-image" />
+          <div className="map-vignette" />
+          <div className="map-grid" />
+
+          <svg
+            className="route-svg"
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+          >
+            <path ref={routeRef} d={ROUTE_PATH} className="route-base" />
+
+            <motion.path
+              d={ROUTE_PATH}
+              className="route-active"
+              pathLength="1"
+              style={{
+                pathLength: 1,
+                strokeDasharray: 1,
+                strokeDashoffset: routeDashOffset,
+              }}
             />
 
-            <div className="map-vignette" />
-
-            <div className="map-grid" />
-
-            <svg
-              className="route-svg"
-              viewBox="0 0 100 100"
-              preserveAspectRatio="none"
+            {/* MOVING PIN */}
+            <motion.g
+              className="route-marker-pin"
+              style={{
+                x: pinX,
+                y: pinY,
+              }}
             >
-
+              <circle cx="0" cy="0" r="1.3" fill="rgba(0, 240, 255, 0.4)" />
               <path
-                ref={routeRef}
-                d={ROUTE_PATH}
-                className="route-base"
+                d="M 0 0 C -0.8 -1.1 -1.3 -1.8 -1.3 -2.7 C -1.3 -3.5 -0.7 -4.1 0 -4.1 C 0.7 -4.1 1.3 -3.5 1.3 -2.7 C 1.3 -1.8 0.8 -1.1 0 0 Z"
+                fill="#00f0ff"
+                stroke="#ffffff"
+                strokeWidth="0.18"
               />
+              <circle cx="0" cy="-2.7" r="0.45" fill="#02090d" />
+            </motion.g>
+          </svg>
 
-              <motion.path
-                d={ROUTE_PATH}
-                className="route-active"
-                pathLength="1"
-                style={{
-                  pathLength: 1,
-                  strokeDasharray: 1,
-                  strokeDashoffset:
-                    routeDashOffset,
-                }}
-              />
-
-              {/* ===============================
-                  MOVING PIN
-              =============================== */}
-
-              <motion.g
-                className="route-marker-pin"
-                style={{
-                  x: pinX,
-                  y: pinY,
-                }}
-              >
-                <circle
-                  cx="0"
-                  cy="0"
-                  r="1.3"
-                  fill="rgba(0, 240, 255, 0.4)"
-                />
-
-                <path
-                  d="
-                    M 0 0
-                    C -0.8 -1.1 -1.3 -1.8
-                    -1.3 -2.7
-                    C -1.3 -3.5 -0.7 -4.1
-                    0 -4.1
-                    C 0.7 -4.1 1.3 -3.5
-                    1.3 -2.7
-                    C 1.3 -1.8 0.8 -1.1
-                    0 0 Z
-                  "
-                  fill="#00f0ff"
-                  stroke="#ffffff"
-                  strokeWidth="0.18"
-                />
-
-                <circle
-                  cx="0"
-                  cy="-2.7"
-                  r="0.45"
-                  fill="#02090d"
-                />
-              </motion.g>
-
-            </svg>
-
-            {/* ===============================
-                MAP POINTS
-            =============================== */}
-
-            {locations.map((location, index) => (
+          {/* MAP POINTS */}
+          {locations.map((location, index) => (
+            <div
+              key={location.id}
+              onClick={() => goToLocation(index)}
+              style={{ cursor: "pointer" }}
+            >
               <MapLocation
-                key={location.id}
                 location={location}
                 active={index === activeLocation}
                 reached={index <= activeLocation}
               />
-            ))}
+            </div>
+          ))}
 
-            {/* ===============================
-                FLOATING CARDS
-            =============================== */}
-
-            {locations.map((location, index) => (
+          {/* FLOATING CARDS */}
+          {locations.map((location, index) => (
+            <div
+              key={location.id}
+              onClick={() => goToLocation(index)}
+              style={{ cursor: "pointer" }}
+            >
               <FloatingLocationCard
-                key={location.id}
                 location={location}
                 active={index === activeLocation}
                 reached={index <= activeLocation}
               />
-            ))}
-
-          </div>
-
-          {/* =================================================
-              DESTINATION STRIP
-          ================================================= */}
-
-          <div className="destination-strip">
-
-            <div className="destination-header">
-
-              <div className="destination-heading">
-
-                <span className="destination-eyebrow">
-                  GLOBAL DESTINATIONS
-                </span>
-
-                <h3>
-                  Explore our <em>locations.</em>
-                </h3>
-
-              </div>
-
-              <div className="destination-controls">
-
-                <span className="destination-counter">
-                  {String(activeLocation + 1).padStart(
-                    2,
-                    "0"
-                  )}
-
-                  <i>/</i>
-
-                  {String(locations.length).padStart(
-                    2,
-                    "0"
-                  )}
-                </span>
-
-                <button
-                  className="destination-arrow"
-                  onClick={() =>
-                    scrollDestinations("prev")
-                  }
-                  aria-label="Previous destinations"
-                >
-                  ←
-                </button>
-
-                <button
-                  className="destination-arrow"
-                  onClick={() =>
-                    scrollDestinations("next")
-                  }
-                  aria-label="Next destinations"
-                >
-                  →
-                </button>
-
-              </div>
             </div>
-
-            <div className="destination-slider">
-
-              <div
-                ref={destinationContainerRef}
-                className="destination-cards"
-              >
-
-                {locations.map((location, index) => (
-                  <div
-                    key={location.id}
-                    ref={(el) => {
-                      cardRefs.current[index] = el;
-                    }}
-                  >
-                    <DestinationCard
-                      location={location}
-                      active={
-                        index === activeLocation
-                      }
-                      reached={
-                        index <= activeLocation
-                      }
-                    />
-                  </div>
-                ))}
-
-              </div>
-
-            </div>
-
-          </div>
-
+          ))}
         </div>
+
+        {/* BOTTOM DESTINATION STRIP */}
+        <div className="destination-strip">
+          <div className="destination-header">
+            <div className="destination-heading">
+              <span className="destination-eyebrow">GLOBAL DESTINATIONS</span>
+              <h3>Explore our <em>locations.</em></h3>
+            </div>
+
+            <div className="destination-controls">
+              <span className="destination-counter">
+                {String(activeLocation + 1).padStart(2, "0")}
+                <i>/</i>
+                {String(locations.length).padStart(2, "0")}
+              </span>
+              <button
+                className="destination-arrow"
+                onClick={() => scrollDestinations("prev")}
+                aria-label="Previous"
+              >
+                ←
+              </button>
+              <button
+                className="destination-arrow"
+                onClick={() => scrollDestinations("next")}
+                aria-label="Next"
+              >
+                →
+              </button>
+            </div>
+          </div>
+
+          <div className="destination-slider">
+            <div ref={destinationContainerRef} className="destination-cards">
+              {locations.map((location, index) => (
+                <div
+                  key={location.id}
+                  ref={(el) => {
+                    cardRefs.current[index] = el;
+                  }}
+                  onClick={() => goToLocation(index)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <DestinationCard
+                    location={location}
+                    active={index === activeLocation}
+                    reached={index <= activeLocation}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
   );
 }
 
-/* =========================================================
-   MAP LOCATION
-========================================================= */
-
-const MapLocation = memo(function MapLocation({
-  location,
-  active,
-  reached,
-}) {
+const MapLocation = memo(function MapLocation({ location, active, reached }) {
   return (
     <div
-      className={`map-point ${
-        active ? "active" : ""
-      } ${reached ? "reached" : ""}`}
-      style={{
-        left: `${location.mapX}%`,
-        top: `${location.mapY}%`,
-      }}
+      className={`map-point ${active ? "active" : ""} ${reached ? "reached" : ""}`}
+      style={{ left: `${location.mapX}%`, top: `${location.mapY}%` }}
     >
       <div className="map-point-pulse" />
-
       <div className="map-point-ring">
         <span />
       </div>
@@ -645,110 +532,45 @@ const MapLocation = memo(function MapLocation({
   );
 });
 
-/* =========================================================
-   FLOATING LOCATION CARD
-========================================================= */
-
-const FloatingLocationCard = memo(
-  function FloatingLocationCard({
-    location,
-    active,
-    reached,
-  }) {
-    return (
-      <div
-        data-location={location.id}
-        className={`floating-location-card ${
-          active ? "active" : ""
-        } ${reached ? "reached" : ""}`}
-        style={{
-          left: `${location.cardX}%`,
-          top: `${location.cardY}%`,
-        }}
-      >
-        <div className="floating-card-header">
-
-          <span className="floating-flag">
-            {location.flag}
-          </span>
-
-          <strong>{location.name}</strong>
-
-          <span className="floating-country">
-            / {location.country}
-          </span>
-
-        </div>
-
-        <div className="floating-services">
-          {location.services.map((service) => (
-            <span key={service}>
-              {service}
-            </span>
-          ))}
-        </div>
-
-        <div className="floating-arrow">
-          ↗
-        </div>
+const FloatingLocationCard = memo(function FloatingLocationCard({ location, active, reached }) {
+  return (
+    <div
+      data-location={location.id}
+      className={`floating-location-card ${active ? "active" : ""} ${reached ? "reached" : ""}`}
+      style={{ left: `${location.cardX}%`, top: `${location.cardY}%` }}
+    >
+      <div className="floating-card-header">
+        <span className="floating-flag">{location.flag}</span>
+        <strong>{location.name}</strong>
+        <span className="floating-country">/ {location.country}</span>
       </div>
-    );
-  }
-);
+      <div className="floating-services">
+        {location.services.map((service) => (
+          <span key={service}>{service}</span>
+        ))}
+      </div>
+      <div className="floating-arrow">↗</div>
+    </div>
+  );
+});
 
-/* =========================================================
-   DESTINATION CARD
-========================================================= */
-
-const DestinationCard = memo(
-  function DestinationCard({
-    location,
-    active,
-    reached,
-  }) {
-    return (
-      <article
-        className={`destination-card ${
-          active ? "active" : ""
-        } ${reached ? "reached" : ""}`}
-      >
-        <div className="destination-card-info">
-
-          <span className="destination-number">
-            {location.number}
-          </span>
-
-          <h3>{location.name}</h3>
-
-          <span className="destination-subtitle">
-            {location.subtitle}
-          </span>
-
-          <p>{location.description}</p>
-
-          <button>
-            View Details <span>→</span>
-          </button>
-
-        </div>
-
-        <div className="destination-image">
-
-          <img
-            src={location.image}
-            alt={location.name}
-            loading="lazy"
-            decoding="async"
-          />
-
-          <div className="destination-image-overlay" />
-
-          <span className="destination-image-number">
-            {location.number}
-          </span>
-
-        </div>
-      </article>
-    );
-  }
-);
+const DestinationCard = memo(function DestinationCard({ location, active, reached }) {
+  return (
+    <article className={`destination-card ${active ? "active" : ""} ${reached ? "reached" : ""}`}>
+      <div className="destination-card-info">
+        <span className="destination-number">{location.number}</span>
+        <h3>{location.name}</h3>
+        <span className="destination-subtitle">{location.subtitle}</span>
+        <p>{location.description}</p>
+        <button>
+          View Details <span>→</span>
+        </button>
+      </div>
+      <div className="destination-image">
+        <img src={location.image} alt={location.name} loading="lazy" decoding="async" />
+        <div className="destination-image-overlay" />
+        <span className="destination-image-number">{location.number}</span>
+      </div>
+    </article>
+  );
+});

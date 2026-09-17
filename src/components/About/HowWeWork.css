@@ -1,18 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap");
 
 /* =========================================================
-   STICKY SCROLL WRAPPER
+   WRAPPER SETUP (SINGLE SCREEN, NO 450VH SCROLL)
 ========================================================= */
 
-.how-work-sticky-wrapper {
+.how-work-wrapper {
   position: relative;
-  height: 450vh;
+  width: 100%;
+  height: 100vh;
+  min-height: 750px;
+  overflow: hidden;
 }
 
-.how-work-sticky-wrapper .how-work {
-  position: sticky;
-  top: 0;
-  height: 100vh;
+.how-work-wrapper .how-work {
+  position: relative;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,9 +28,7 @@
 .how-work {
   position: relative;
   width: 100%;
-  min-height: 850px;
   overflow: hidden;
-
   background:
     radial-gradient(
       circle at 80% 50%,
@@ -35,15 +36,11 @@
       transparent 42%
     ),
     #f7f8fa;
-
   color: #152226;
   font-family: "Manrope", sans-serif;
-
   border-top: 1px solid #dce8ef;
   border-bottom: 1px solid #dce8ef;
-
   box-sizing: border-box;
-
   isolation: isolate;
 }
 
@@ -55,7 +52,7 @@
   position: relative;
   width: min(1320px, 91.6%);
   margin: 0 auto;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 /* =========================================================
@@ -67,54 +64,35 @@
   border-radius: 50%;
   pointer-events: none;
   z-index: -1;
-
   will-change: opacity;
 }
 
 .glow-one {
   width: 420px;
   height: 420px;
-
   right: -100px;
   top: 100px;
-
-  background:
-    radial-gradient(
-      ellipse,
-      rgba(14, 165, 233, 0.15),
-      transparent 70%
-    );
-
+  background: radial-gradient(ellipse, rgba(14, 165, 233, 0.15), transparent 70%);
   filter: blur(80px);
 }
 
 .glow-two {
   width: 300px;
   height: 300px;
-
   left: -100px;
   bottom: 80px;
-
-  background:
-    radial-gradient(
-      ellipse,
-      rgba(0, 200, 255, 0.12),
-      transparent 70%
-    );
-
+  background: radial-gradient(ellipse, rgba(0, 200, 255, 0.12), transparent 70%);
   filter: blur(80px);
 }
 
 /* =========================================================
-   HEADER
+   HEADER & AUTO-PLAY BUTTON
 ========================================================= */
 
 .how-work-header {
   position: relative;
   z-index: 5;
-
   text-align: left;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -124,78 +102,72 @@
   display: flex;
   align-items: center;
   gap: 13px;
-
-  margin-bottom: 22px;
-
+  margin-bottom: 16px;
   font-family: "Manrope", sans-serif;
   font-size: 10px;
   font-weight: 700;
-
   letter-spacing: 0.22em;
-
   color: #69787a;
-
   text-transform: uppercase;
 }
 
 .section-label::before {
   content: "";
-
   width: 47px;
   height: 1.5px;
-
   background: #cbd3d1;
-
   display: inline-block;
 }
 
 .how-work-header h2 {
   margin: 0;
-
   font-family: "Playfair Display", serif;
-
-  font-size: clamp(44px, 4.4vw, 62px);
+  font-size: clamp(38px, 4vw, 54px);
   line-height: 1.04;
-
   font-weight: 500;
-
   letter-spacing: -0.03em;
-
   color: #101c1e;
-
   text-align: left;
-}
-
-.how-work-header h2 em,
-.how-work-header h2 i {
-  font-family: "Playfair Display", serif;
-
-  font-style: italic;
-  font-weight: 400;
-
-  color: #0284c7;
-
-  text-shadow:
-    0 0 20px rgba(2, 132, 199, 0.25);
 }
 
 .how-work-header p {
-  margin: 24px 0 0;
-
+  margin: 14px 0 0;
   font-family: "Manrope", sans-serif;
-
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-
-  line-height: 1.65;
-
+  line-height: 1.55;
   letter-spacing: -0.015em;
-
   color: #5d6d70;
-
   max-width: 520px;
-
   text-align: left;
+}
+
+.header-action-row {
+  margin-top: 14px;
+}
+
+.how-work-play-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 30px;
+  background: #0284c7;
+  color: #ffffff;
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(2, 132, 199, 0.25);
+  transition: all 0.25s ease;
+}
+
+.how-work-play-btn:hover {
+  background: #0369a1;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35);
 }
 
 /* =========================================================
@@ -204,29 +176,17 @@
 
 .route-tags {
   position: absolute;
-
   right: 0;
-  top: 35px;
-
+  top: 25px;
   display: flex;
   align-items: center;
-
   gap: 15px;
-
-  padding: 10px 18px;
-
+  padding: 8px 16px;
   border: 1px solid rgba(166, 197, 205, 0.75);
-
   border-radius: 50px;
-
-  background: rgba(255, 255, 255, 0.86);
-
-  box-shadow:
-    0 12px 35px rgba(26, 57, 64, 0.05);
-
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 12px 35px rgba(26, 57, 64, 0.05);
   font-family: "Manrope", sans-serif;
-
-  /* Less expensive than large backdrop blur */
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
@@ -234,12 +194,16 @@
 .route-tag {
   display: flex;
   align-items: center;
-
   gap: 7px;
-
   font-size: 12px;
-
   color: #69787a;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.2s ease;
+}
+
+.route-tag:hover {
+  color: #101c1e;
 }
 
 .route-tag.active {
@@ -248,16 +212,12 @@
 }
 
 .tag-icon {
-  width: 27px;
-  height: 27px;
-
+  width: 26px;
+  height: 26px;
   display: grid;
   place-items: center;
-
   border-radius: 50%;
-
   background: rgba(2, 132, 199, 0.1);
-
   color: #0284c7;
 }
 
@@ -271,22 +231,16 @@
 
 .desktop-route-area {
   position: relative;
-
-  height: 570px;
-
-  margin-top: 15px;
+  height: 520px;
+  margin-top: 5px;
 }
 
 .map-line {
   position: absolute;
-
   left: -10%;
-
   width: 120%;
   height: 1px;
-
   background: rgba(111, 145, 153, 0.15);
-
   pointer-events: none;
 }
 
@@ -311,62 +265,37 @@
 
 .desktop-route-svg {
   position: absolute;
-
   left: 0;
   top: 20px;
-
   width: 100%;
   height: 500px;
-
   overflow: visible;
-
   z-index: 2;
-
   pointer-events: none;
 }
 
 .route-glow {
   fill: none;
-
   stroke: #38bdf8;
   stroke-width: 58;
-
   opacity: 0.17;
-
-  /*
-    Keep one soft glow, but don't animate it.
-  */
   filter: blur(12px);
 }
 
 .route-road {
   fill: none;
-
   stroke: rgba(255, 255, 255, 0.96);
-
   stroke-width: 46;
-
   stroke-linecap: round;
-
-  /*
-    Lighter shadow than before.
-  */
-  filter: drop-shadow(
-    0 7px 12px rgba(26, 57, 64, 0.07)
-  );
+  filter: drop-shadow(0 7px 12px rgba(26, 57, 64, 0.07));
 }
 
 .route-dashed {
   fill: none;
-
   stroke: #0284c7;
-
   stroke-width: 3;
-
   stroke-linecap: round;
-
   stroke-dasharray: 12 13;
-
   opacity: 0.75;
 }
 
@@ -376,113 +305,60 @@
 
 .route-location-tag {
   position: absolute;
-
   z-index: 35;
-
   pointer-events: none;
-
   transform: translate(-50%, -100%);
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
   will-change: left, top;
 }
-
-.desktop-pin-tag {
-  will-change: left, top;
-}
-
-.mobile-pin-tag {
-  will-change: left, top;
-}
-
-/* =========================================================
-   PIN BUBBLE
-========================================================= */
 
 .tag-pin-bubble {
   display: inline-flex;
-
   align-items: center;
   justify-content: center;
-
   gap: 7px;
-
   padding: 6px 12px;
-
   border-radius: 24px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #0284c7,
-      #0369a1
-    );
-
+  background: linear-gradient(135deg, #0284c7, #0369a1);
   color: #ffffff;
-
   font-family: "Manrope", sans-serif;
-
   font-size: 11px;
   font-weight: 700;
-
   letter-spacing: 0.05em;
-
   text-transform: uppercase;
-
-  box-shadow:
-    0 10px 24px rgba(2, 132, 199, 0.35),
-    0 0 15px rgba(56, 189, 248, 0.35);
-
+  box-shadow: 0 10px 24px rgba(2, 132, 199, 0.35), 0 0 15px rgba(56, 189, 248, 0.35);
   border: 1.5px solid rgba(255, 255, 255, 0.85);
-
   animation: floatTag 2s ease-in-out infinite alternate;
-
-  will-change: transform;
 }
 
 .tag-pin-icon {
   width: 14px;
   height: 14px;
-
   color: #e0f2fe;
 }
 
 .tag-pointer-tip {
   width: 0;
   height: 0;
-
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: 7px solid #0369a1;
-
   margin-top: -1px;
 }
 
 .tag-ripple-ring {
   position: absolute;
-
   bottom: -6px;
   left: 50%;
-
   transform: translateX(-50%);
-
   width: 18px;
   height: 18px;
-
   border-radius: 50%;
-
   background: rgba(2, 132, 199, 0.4);
-
-  animation:
-    markerPulse 1.6s cubic-bezier(0, 0.2, 0.8, 1)
-    infinite;
-
+  animation: markerPulse 1.6s cubic-bezier(0, 0.2, 0.8, 1) infinite;
   z-index: -1;
-
-  will-change: transform, opacity;
 }
 
 @keyframes markerPulse {
@@ -490,7 +366,6 @@
     transform: translateX(-50%) scale(0.6);
     opacity: 0.9;
   }
-
   100% {
     transform: translateX(-50%) scale(2.8);
     opacity: 0;
@@ -501,7 +376,6 @@
   0% {
     transform: translateY(0);
   }
-
   100% {
     transform: translateY(-4px);
   }
@@ -513,56 +387,34 @@
 
 .route-pin {
   position: absolute;
-
   width: 26px;
   height: 26px;
-
   z-index: 15;
-
   transform: translate(-50%, -50%);
-
   display: grid;
   place-items: center;
-
   border-radius: 50%;
-
   background: rgba(255, 255, 255, 0.95);
-
-  box-shadow:
-    0 7px 18px rgba(2, 132, 199, 0.2);
-
-  pointer-events: none;
-
-  will-change: transform;
+  box-shadow: 0 7px 18px rgba(2, 132, 199, 0.2);
+  cursor: pointer;
 }
 
 .route-pin::before {
   content: "";
-
   position: absolute;
-
   width: 14px;
   height: 14px;
-
   border-radius: 50%;
-
   background: #0284c7;
-
-  box-shadow:
-    0 0 0 5px rgba(2, 132, 199, 0.15),
-    0 0 17px rgba(2, 132, 199, 0.5);
+  box-shadow: 0 0 0 5px rgba(2, 132, 199, 0.15), 0 0 17px rgba(2, 132, 199, 0.5);
 }
 
 .route-pin::after {
   content: "";
-
   position: absolute;
-
   width: 5px;
   height: 5px;
-
   border-radius: 50%;
-
   background: white;
 }
 
@@ -572,64 +424,34 @@
 
 .work-card {
   position: absolute;
-
   width: 195px;
-  min-height: 240px;
-
+  min-height: 230px;
   transform: translateX(-50%);
-
   z-index: 10;
-
-  padding: 18px 18px 14px;
-
+  padding: 16px 16px 12px;
   border-radius: 20px;
-
   border: 1px solid rgba(166, 197, 205, 0.75);
-
   background: rgba(255, 255, 255, 0.9);
-
-  /*
-    Reduced from 24px.
-  */
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-
-  box-shadow:
-    0 12px 30px rgba(26, 57, 64, 0.06);
-
+  box-shadow: 0 12px 30px rgba(26, 57, 64, 0.06);
   overflow: hidden;
-
-  /*
-    Only transform and opacity are animated.
-  */
   will-change: transform, opacity;
-
   contain: layout paint;
+  transition: border-color 0.25s ease;
 }
 
-/* =========================================================
-   ACTIVE CARD GLOW
-========================================================= */
+.work-card:hover {
+  border-color: #0284c7;
+}
 
 .card-active-glow {
   position: absolute;
-
   inset: 0;
-
-  background:
-    radial-gradient(
-      circle at 50% 0%,
-      rgba(2, 132, 199, 0.2),
-      transparent 75%
-    );
-
+  background: radial-gradient(circle at 50% 0%, rgba(2, 132, 199, 0.2), transparent 75%);
   border-radius: 20px;
-
   pointer-events: none;
-
   z-index: 0;
-
-  will-change: opacity;
 }
 
 .work-card > * {
@@ -637,62 +459,38 @@
   z-index: 1;
 }
 
-/* =========================================================
-   CARD CONTENT
-========================================================= */
-
 .card-number {
   margin-bottom: 5px;
-
   font-family: "Manrope", sans-serif;
-
   font-size: 11px;
   font-weight: 800;
-
   letter-spacing: 0.14em;
-
   color: #0284c7;
 }
 
 .work-card h3 {
   margin: 0;
-
   font-family: "Manrope", sans-serif;
-
   font-size: 14px;
   line-height: 1.3;
-
   font-weight: 800;
-
   letter-spacing: 0.04em;
-
   color: #101c1e;
 }
 
 .work-card p {
-  margin: 7px 0 0;
-
+  margin: 6px 0 0;
   font-family: "Manrope", sans-serif;
-
-  font-size: 10px;
-  line-height: 1.55;
-
+  font-size: 9.5px;
+  line-height: 1.5;
   color: #5d6d70;
 }
 
-/* =========================================================
-   CARD IMAGE
-========================================================= */
-
 .card-image {
   position: relative;
-
-  height: 95px;
-
-  margin-top: 10px;
-
+  height: 85px;
+  margin-top: 8px;
   display: flex;
-
   align-items: center;
   justify-content: center;
 }
@@ -700,14 +498,7 @@
 .card-image img {
   width: 100%;
   height: 100%;
-
   object-fit: contain;
-
-  /*
-    Removed animated/expensive filtering from the image.
-  */
-  filter: none;
-
   display: block;
 }
 
@@ -717,427 +508,149 @@
 
 .route-progress {
   position: absolute;
-
-  bottom: 18px;
+  bottom: 12px;
   left: 50%;
-
   transform: translateX(-50%);
-
   display: flex;
-
   align-items: center;
-
   gap: 8px;
-
   z-index: 40;
 }
 
 .progress-dot {
   display: block;
-
   width: 32px;
   height: 4px;
-
   border-radius: 10px;
-
   background: #d8e2e5;
-
+  cursor: pointer;
   will-change: transform, opacity;
+  transition: background-color 0.25s ease;
 }
 
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (max-width: 1100px) {
-  .how-work-container {
-    width: 91.6%;
-  }
-
-  .how-work-header {
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .route-tags {
-    top: 25px;
-
-    padding: 8px 14px;
-  }
+.progress-dot:hover {
+  background: #0284c7;
 }
 
 /* =========================================================
    MOBILE
 ========================================================= */
 
-@media (max-width: 700px) {
-  .how-work-sticky-wrapper {
-    height: 450vh !important;
+@media (max-width: 850px) {
+  .how-work-wrapper {
+    height: 100dvh;
+    min-height: auto;
   }
 
-  .how-work-sticky-wrapper .how-work {
-    height: 100dvh !important;
-
-    min-height: 100dvh !important;
-
-    padding: 50px 15px 15px;
-
+  .how-work-wrapper .how-work {
+    height: 100%;
+    padding: 30px 15px 10px;
     justify-content: flex-start;
-
-    box-sizing: border-box;
-
-    overflow: hidden;
   }
 
   .how-work-container {
     width: 100%;
     height: 100%;
-
     display: flex;
-
     flex-direction: column;
-
     padding-top: 0;
-
-    position: relative;
-  }
-
-  /* ---------------------------------------------------------
-     HEADER
-  --------------------------------------------------------- */
-
-  .how-work-header {
-    width: 100%;
-
-    align-items: flex-start;
-
-    text-align: left;
-
-    flex-shrink: 0;
-  }
-
-  .section-label {
-    justify-content: flex-start;
-
-    margin-bottom: 16px;
   }
 
   .how-work-header h2 {
-    font-size: 36px;
-
-    line-height: 1.1;
-
-    text-align: left;
+    font-size: 30px;
   }
 
   .how-work-header p {
-    font-size: 14px;
-
-    line-height: 1.5;
-
-    margin: 14px 0 0;
-
-    text-align: left;
-
-    max-width: 100%;
+    font-size: 12px;
+    margin-top: 8px;
   }
-
-  .desktop-break {
-    display: none;
-  }
-
-  /* ---------------------------------------------------------
-     TAGS
-  --------------------------------------------------------- */
 
   .route-tags {
     position: static;
-
     display: inline-flex;
-
-    margin-top: 14px;
-    margin-bottom: 4px;
-
-    padding: 6px 12px;
-
+    margin-top: 10px;
+    padding: 5px 10px;
     gap: 8px;
-
-    flex-shrink: 0;
-
-    align-self: flex-start;
-
-    /*
-      Disable expensive blur on mobile.
-    */
     backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-
     background: rgba(255, 255, 255, 0.95);
   }
 
-  .route-tag {
-    font-size: 10px;
-  }
-
-  .tag-icon {
-    width: 20px;
-    height: 20px;
-
-    font-size: 10px;
-  }
-
-  /* ---------------------------------------------------------
-     MOBILE STAGE
-  --------------------------------------------------------- */
-
   .mobile-stage-area {
     position: relative;
-
     width: 100%;
-
     flex: 1;
-
     min-height: 0;
-
     margin-top: 8px;
-
-    margin-bottom: 15px;
-
-    contain: layout paint;
+    margin-bottom: 10px;
   }
 
   .mobile-stage-svg {
     position: absolute;
-
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     overflow: visible;
-
     z-index: 1;
-
     pointer-events: none;
   }
+  .mobile-stage-area {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+  margin-top: 8px;
+  margin-bottom: 10px;
+}
 
-  /* ---------------------------------------------------------
-     MOBILE ROAD
-  --------------------------------------------------------- */
+.mobile-pin-tag {
+  position: absolute;
+  z-index: 35;
+  pointer-events: none;
+  transform: translate(-50%, -100%);
+  will-change: left, top;
+}
 
   .mobile-road-glow {
     fill: none;
-
     stroke: #38bdf8;
-
     stroke-width: 48;
-
     opacity: 0.15;
-
     filter: blur(7px);
   }
 
   .mobile-road-base {
     fill: none;
-
     stroke: rgba(255, 255, 255, 0.98);
-
     stroke-width: 36;
-
     stroke-linecap: round;
-
-    /*
-      Reduced shadow.
-    */
-    filter: drop-shadow(
-      0 5px 10px rgba(26, 57, 64, 0.08)
-    );
+    filter: drop-shadow(0 5px 10px rgba(26, 57, 64, 0.08));
   }
 
   .mobile-road-dashed {
     fill: none;
-
     stroke: #0284c7;
-
     stroke-width: 2.8;
-
     stroke-linecap: round;
-
     stroke-dasharray: 9 10;
-
     opacity: 0.85;
   }
 
-  /* ---------------------------------------------------------
-     MOBILE PIN
-  --------------------------------------------------------- */
-
-  .mobile-pin-tag {
-    position: absolute;
-
-    z-index: 35;
-
-    pointer-events: none;
-
-    transform: translate(-50%, -100%) !important;
-  }
-
-  /* ---------------------------------------------------------
-     MOBILE CARDS
-  --------------------------------------------------------- */
-
   .work-card.mobile-step-card {
     position: absolute;
-
     transform: translate(-50%, -50%) !important;
-
-    width: min(76%, 250px);
-
-    padding: 14px 15px 12px;
-
+    width: min(76%, 240px);
+    padding: 12px 14px 10px;
     border-radius: 16px;
-
-    box-shadow:
-      0 10px 25px rgba(2, 132, 199, 0.12);
-
-    border: 1px solid rgba(166, 197, 205, 0.75);
-
-    background: rgba(255, 255, 255, 0.96);
-
-    /*
-      Disable mobile backdrop blur.
-      This is one of the most important performance changes.
-    */
     backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-
-    z-index: 10;
-
-    text-align: left;
-
-    pointer-events: none;
-
-    contain: layout paint;
+    background: rgba(255, 255, 255, 0.96);
   }
-
-  .work-card.mobile-step-card .card-number {
-    font-size: 11px;
-
-    margin-bottom: 3px;
-  }
-
-  .work-card.mobile-step-card h3 {
-    font-size: 14px;
-
-    text-align: left;
-  }
-
-  .work-card.mobile-step-card p {
-    font-size: 10px;
-
-    line-height: 1.45;
-
-    margin-top: 4px;
-
-    text-align: left;
-  }
-
-  .work-card.mobile-step-card .card-image {
-    height: 70px;
-
-    margin-top: 8px;
-  }
-
-  /* ---------------------------------------------------------
-     PROGRESS
-  --------------------------------------------------------- */
 
   .route-progress {
-    position: absolute;
-
-    bottom: 4px;
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    gap: 6px;
+    bottom: 6px;
   }
 
   .progress-dot {
-    width: 26px;
-
-    height: 3.5px;
-  }
-}
-
-/* =========================================================
-   SMALL MOBILE
-========================================================= */
-
-@media (max-width: 430px) {
-  .how-work-header h2 {
-    font-size: 30px;
-  }
-
-  .section-label {
-    font-size: 8px;
-
-    letter-spacing: 0.15em;
-  }
-
-  .how-work-header p {
-    font-size: 13px;
-  }
-
-  .work-card.mobile-step-card {
-    width: min(82%, 230px);
-  }
-}
-
-/* =========================================================
-   ANDROID / LOW GPU
-========================================================= */
-
-@media (max-width: 850px) {
-  .how-work-sticky-wrapper {
-    height: 450vh;
-  }
-
-  .how-work-sticky-wrapper .how-work {
-    height: 100vh !important;
-
-    min-height: 0 !important;
-
-    max-height: 100vh;
-  }
-
-  /*
-    Lower GPU cost of background effects.
-  */
-  .how-work-glow {
-    filter: blur(35px);
-  }
-
-  /*
-    No backdrop blur on the top tags.
-  */
-  .route-tags {
-    -webkit-backdrop-filter: none;
-
-    backdrop-filter: none;
-
-    background: rgba(255, 255, 255, 0.95);
-  }
-}
-
-/* =========================================================
-   REDUCED MOTION
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-  .how-work-glow,
-  .tag-pin-bubble,
-  .tag-ripple-ring {
-    animation: none !important;
+    width: 24px;
+    height: 3px;
   }
 }
