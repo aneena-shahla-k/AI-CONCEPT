@@ -336,7 +336,7 @@
   top: 67%;
   z-index: 60;
   width: 250px;
-  min-height: 310px;
+  min-height: 270px;
   transform: translate(-50%, -50%);
   border: 1px solid rgba(166, 197, 205, 0.75);
   border-radius: 20px;
@@ -572,7 +572,7 @@
   .center-industry-card {
     position: relative;
     left: auto;
-    top: auto;
+    top: 50%;
     transform: none;
     width: 82%;
     max-width: 285px;
