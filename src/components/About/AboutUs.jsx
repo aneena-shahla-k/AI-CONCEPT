@@ -28,16 +28,15 @@ const AboutUs = () => {
           {/* Heading */}
           <h2 className="about-us__title">
             We turn business ideas
-            <br />
-            into{" "}
-            <span>connected digital systems.</span>
+            into <br/>
+            <span className="heading-gradient">connected digital systems.</span>
           </h2>
 
           {/* Description */}
           <p className="about-us__description">
             AI concept combines business strategy, software development,
             artificial intelligence, automation, and digital growth planning
-            to help businesses move from idea to execution.
+            to help businesses <br/>move from idea to execution.
           </p>
 
           {/* Quote card */}
@@ -84,23 +83,7 @@ const AboutUs = () => {
           }}
         >
 
-          {/* AI CONCEPT label */}
-          <motion.div
-            className="about-us__concept"
-            initial={{ opacity: 0, y: -15 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-          >
-            <span className="about-us__concept-title">
-              AI CONCEPT
-            </span>
-
-            <span className="about-us__concept-subtitle">
-              Strategy&nbsp; · &nbsp;Technology&nbsp; · &nbsp;Growth
-            </span>
-          </motion.div>
-
+          
           {/* Image */}
           <div className="about-us__image-wrapper">
             <img

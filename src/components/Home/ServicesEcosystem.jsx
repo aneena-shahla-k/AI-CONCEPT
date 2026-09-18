@@ -22,12 +22,12 @@ import {
 
 import "./servicesEcosystem.css";
 
-import previewMockup from "../assets/images/web1.png";
+import previewMockup from "../assets/images/web2.png";
 import worldMap from "../assets/images/home/world.jpg";
-import ecommerceImg from "../assets/images/e-com.png";
-import mobileImg from "../assets/images/app.png";
-import bookingImg from "../assets/images/booking.png";
-import erpImg from "../assets/images/erp.png";
+import ecommerceImg from "../assets/images/e-com1.png";
+import mobileImg from "../assets/images/app1.png";
+import bookingImg from "../assets/images/booking1.png";
+import erpImg from "../assets/images/erp1.png";
 import aiImg from "../assets/images/robo-ai.png";
 
 /* =========================================================

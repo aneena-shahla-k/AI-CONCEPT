@@ -317,9 +317,8 @@ export default function HowWeWork() {
             </div>
 
             <h2>
-              From idea to
-              <br />
-              Execution
+              From idea to<br />
+             <span className="heading-gradient">Execution </span>  
             </h2>
 
             <p>
@@ -366,9 +365,6 @@ export default function HowWeWork() {
           {/* DESKTOP STAGE */}
           {!isMobile && (
             <div className="route-area desktop-route-area">
-              <div className="map-line map-line-1" />
-              <div className="map-line map-line-2" />
-              <div className="map-line map-line-3" />
 
               <svg
                 className="route-svg desktop-route-svg"

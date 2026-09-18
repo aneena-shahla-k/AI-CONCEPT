@@ -156,9 +156,7 @@
   letter-spacing: -0.03px;
 }
 
-.about-us__title span {
-  color: #163e55;
-}
+
 
 
 /* =========================================
@@ -363,7 +361,7 @@
   position: absolute;
   width: 125%;
   height: 100%;
-  right: -13%;
+  right: 5%;
   top: 10%;
 
   display: flex;
@@ -377,16 +375,26 @@
   height: 600px;
   margin-top: 80px;
   object-fit: contain;
-
   display: block;
 
-  filter:
-    saturate(0.95)
-    contrast(0.98);
-
+  filter: saturate(0.95) contrast(0.98);
   user-select: none;
-
   mix-blend-mode: multiply;
+
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 18%,
+    black 82%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 18%,
+    black 82%,
+    transparent 100%
+  );
 }
 
 
@@ -707,3 +715,5 @@
     animation: none !important;
   }
 }
+
+

@@ -245,15 +245,12 @@ export default function Industries() {
         <div className="industries-heading">
           <span className="eyebrow">INDUSTRIES WE SERVE</span>
 
-          <h2>
-            Powered Businesses
-            <br />
-            Across Industries
+          <h2>Powered Businesses<br />
+            <span className="heading-gradient">Across Industries</span>
           </h2>
 
           <p>
-            We build digital solutions tailored to the unique needs of different
-            industries, helping them grow, innovate and stay ahead.
+            Tailored digital solutions driving industry innovation.
           </p>
 
           <div className="industries-action-row">
