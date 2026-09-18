@@ -32,7 +32,6 @@ import aiImg from "../assets/images/robo-ai.png";
 
 /* =========================================================
    CANVAS DIMENSIONS & BALANCED COORDINATES
-   Exact Circle Radius around HUB
    ========================================================= */
 const VIEWBOX_WIDTH = 570;
 const VIEWBOX_HEIGHT = 500;
@@ -42,19 +41,8 @@ const HUB = {
   y: 250,
 };
 
-// Exact circle radius for circular path
 const ORBIT_RADIUS = 185;
 
-/* 
- * CIRCULAR CLOCKWISE SEQUENCE (Equally spaced around 360°):
- * Angles (in radians):
- * 0: WEB       -> 120° (2.094 rad)
- * 1: MOBILE    -> 180° (3.141 rad)
- * 2: AI        -> 270° (4.712 rad)
- * 3: COMMERCE  -> 0°   (0 rad)
- * 4: BOOKING   -> 45°  (0.785 rad)
- * 5: ERP       -> 90°  (1.570 rad)
- */
 const services = [
   {
     id: "01",
@@ -160,7 +148,6 @@ const services = [
   },
 ].map((s) => ({
   ...s,
-  // Coordinates calculated directly along the exact circle circumference
   x: Math.round(HUB.x + ORBIT_RADIUS * Math.cos(s.angle)),
   y: Math.round(HUB.y + ORBIT_RADIUS * Math.sin(s.angle)),
 }));
@@ -177,9 +164,7 @@ export default function ServicesEcosystem() {
 
   const activeService = services[activeIdx];
 
-  /* =======================================================
-     SCROLL DETECTION
-     ======================================================= */
+  /* SCROLL DETECTION */
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -198,9 +183,7 @@ export default function ServicesEcosystem() {
     return () => observer.disconnect();
   }, []);
 
-  /* =======================================================
-     INITIAL CAR EMERGENCE FROM HUB TO ORBIT CIRCLE
-     ======================================================= */
+  /* INITIAL CAR EMERGENCE */
   useEffect(() => {
     const car = document.querySelector(".eco-route-car");
     if (!car) return;
@@ -231,8 +214,6 @@ export default function ServicesEcosystem() {
         const currentRadius = ORBIT_RADIUS * progress;
         const curX = HUB.x + currentRadius * Math.cos(targetAngle);
         const curY = HUB.y + currentRadius * Math.sin(targetAngle);
-
-        // Circular tangent angle for vehicle alignment
         const tangentDeg = ((targetAngle + Math.PI / 2) * 180) / Math.PI;
 
         car.style.left = `${curX}px`;
@@ -253,16 +234,13 @@ export default function ServicesEcosystem() {
     return () => clearTimeout(timer);
   }, [hasScrolledIntoView]);
 
-  /* =======================================================
-     EXACT CIRCULAR ARC TRANSIT (CONSTANT RADIUS)
-     ======================================================= */
+  /* CIRCULAR ARC TRANSIT */
   useEffect(() => {
     if (isFirstRender.current || !hasScrolledIntoView) return;
 
     const startAngle = carAngleRef.current;
     let targetAngle = services[activeIdx].angle;
 
-    // Ensure strictly clockwise forward motion
     while (targetAngle <= startAngle) {
       targetAngle += 2 * Math.PI;
     }
@@ -280,12 +258,9 @@ export default function ServicesEcosystem() {
           ? 4 * rawProgress * rawProgress * rawProgress
           : 1 - Math.pow(-2 * rawProgress + 2, 3) / 2;
 
-      // Pure Polar Coordinates: x = Hub.x + R*cos(θ), y = Hub.y + R*sin(θ)
       const currentAngle = startAngle + angularDistance * progress;
       const curX = HUB.x + ORBIT_RADIUS * Math.cos(currentAngle);
       const curY = HUB.y + ORBIT_RADIUS * Math.sin(currentAngle);
-
-      // Tangent to circle is exactly perpendicular to radius (θ + 90°)
       const tangentDeg = ((currentAngle + Math.PI / 2) * 180) / Math.PI;
 
       const car = document.querySelector(".eco-route-car");
@@ -299,13 +274,6 @@ export default function ServicesEcosystem() {
 
       if (rawProgress < 1) {
         animIdRef.current = requestAnimationFrame(animate);
-      } else {
-        if (isPaused) {
-          clearTimeout(window.resumeTourTimeout);
-          window.resumeTourTimeout = setTimeout(() => {
-            setIsPaused(false);
-          }, 15000);
-        }
       }
     };
 
@@ -319,11 +287,9 @@ export default function ServicesEcosystem() {
         cancelAnimationFrame(animIdRef.current);
       }
     };
-  }, [activeIdx, hasScrolledIntoView, isPaused]);
+  }, [activeIdx, hasScrolledIntoView]);
 
-  /* =======================================================
-     AUTOMATIC ROTATION LOOP
-     ======================================================= */
+  /* AUTOMATIC ROTATION LOOP */
   useEffect(() => {
     if (!hasScrolledIntoView || isPaused) return;
 
@@ -403,7 +369,6 @@ export default function ServicesEcosystem() {
           <div className="eco-center-canvas">
             <div className="eco-map-glow" />
 
-            {/* SVG EXACT CIRCLE TRACK AND SPOKES */}
             <svg
               className="eco-svg-network"
               viewBox={`0 0 ${VIEWBOX_WIDTH} ${VIEWBOX_HEIGHT}`}
@@ -419,7 +384,6 @@ export default function ServicesEcosystem() {
 
               <circle cx={HUB.x} cy={HUB.y} r="130" fill="url(#hubRadial)" />
 
-              {/* Exact Circular Orbit Track */}
               <circle
                 cx={HUB.x}
                 cy={HUB.y}
@@ -428,7 +392,6 @@ export default function ServicesEcosystem() {
                 style={{ strokeDasharray: "3 5" }}
               />
 
-              {/* Connecting Spoke Lines & Circle Endpoints */}
               {services.map((service, index) => {
                 const isActive = index === activeIdx;
                 return (
@@ -456,7 +419,7 @@ export default function ServicesEcosystem() {
               })}
             </svg>
 
-            {/* SMOOTH ROTATING CAR */}
+            {/* ROTATING CAR */}
             <div className="eco-route-car">
               <svg viewBox="0 0 28 50" width="22" height="40">
                 <ellipse cx="14" cy="25" rx="8" ry="18" fill="rgba(0,0,0,.35)" />
@@ -471,7 +434,7 @@ export default function ServicesEcosystem() {
               </svg>
             </div>
 
-            {/* STATIC HUB NODE */}
+            {/* STATIC HUB */}
             <div
               className="eco-hub-node"
               style={{ left: `${HUB.x}px`, top: `${HUB.y}px` }}
@@ -480,15 +443,13 @@ export default function ServicesEcosystem() {
               <div className="eco-hub-ring" />
               <div className="eco-hub-inner">
                 <span className="eco-hub-title">YOUR<br />BUSINESS</span>
-                {/* <span className="eco-hub-desc">{isPaused ? "Paused" : "Auto-Pilot"}</span> */}
               </div>
             </div>
 
-            {/* SERVICE CARD NODES */}
+            {/* NODES */}
             {services.map((service, index) => {
               const Icon = service.icon;
               const selected = index === activeIdx;
-
               const offsetX = service.x - HUB.x;
               const offsetY = service.y - HUB.y;
 
@@ -566,6 +527,7 @@ export default function ServicesEcosystem() {
               <ArrowRight size={14} />
             </button>
 
+            {/* ENHANCED IMAGE CONTAINER */}
             <div className="eco-mockup-frame">
               <img 
                 src={activeService.image || previewMockup} 
