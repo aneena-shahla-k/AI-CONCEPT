@@ -572,7 +572,7 @@
   .center-industry-card {
     position: relative;
     left: auto;
-    top: 50%;
+    top: 20%;
     transform: none;
     width: 82%;
     max-width: 285px;
