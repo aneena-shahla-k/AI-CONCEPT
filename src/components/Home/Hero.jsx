@@ -124,7 +124,8 @@ export default function Hero() {
         <video
           ref={videoRef}
           className="hero-video"
-          src="https://res.cloudinary.com/zu7jndeq/video/upload/f_auto,q_auto/v1789555634/hero-video_xxcumg.mp4"
+          src="https://res.cloudinary.com/zu7jndeq/video/upload/v1789730087/hero-video_xxcumg.mp4"
+          
           playsInline
           autoPlay
           preload="auto"

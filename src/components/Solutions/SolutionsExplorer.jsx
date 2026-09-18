@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   Globe,
   Smartphone,
@@ -243,9 +244,27 @@ const solutionData = [
 ];
 
 export default function SolutionsExplorer({ onOpenProject }) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [activeIdx, setActiveIdx] = useState(0);
   const detailRef = useRef(null);
   const visualRef = useRef(null);
+
+  // Handle URL Query Params (e.g., /solutions?tab=app-development)
+  useEffect(() => {
+    const tabParam = searchParams.get("tab");
+    if (tabParam) {
+      const foundIndex = solutionData.findIndex((s) => s.slug === tabParam);
+      if (foundIndex !== -1) {
+        setActiveIdx(foundIndex);
+        setTimeout(() => {
+          const section = document.querySelector(".sol-explorer-container");
+          if (section) {
+            section.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 100);
+      }
+    }
+  }, [searchParams]);
 
   const active = solutionData[activeIdx];
   const ActiveIcon = active.icon;
@@ -257,16 +276,8 @@ export default function SolutionsExplorer({ onOpenProject }) {
 
     gsap.fromTo(
       detailRef.current,
-      {
-        opacity: 0,
-        y: 18,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.45,
-        ease: "power3.out",
-      }
+      { opacity: 0, y: 18 },
+      { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }
     );
   }, [activeIdx]);
 
@@ -277,34 +288,23 @@ export default function SolutionsExplorer({ onOpenProject }) {
 
     gsap.fromTo(
       visualRef.current,
-      {
-        opacity: 0,
-        scale: 0.96,
-        x: 20,
-      },
-      {
-        opacity: 1,
-        scale: 1,
-        x: 0,
-        duration: 0.55,
-        ease: "power3.out",
-      }
+      { opacity: 0, scale: 0.96, x: 20 },
+      { opacity: 1, scale: 1, x: 0, duration: 0.55, ease: "power3.out" }
     );
   }, [activeIdx]);
 
   const handleSolutionChange = (index) => {
     if (index === activeIdx) return;
     setActiveIdx(index);
+    setSearchParams({ tab: solutionData[index].slug }, { replace: true });
   };
 
   return (
     <section className="sol-explorer-container">
-      {/* BACKGROUND */}
       <div className="sol-background-glow sol-glow-one" />
       <div className="sol-background-glow sol-glow-two" />
       <div className="sol-background-grid" />
 
-      {/* HEADER */}
       <div className="sol-header">
         <div className="sol-eyebrow">
           <span className="sol-eyebrow-line" />
@@ -313,8 +313,7 @@ export default function SolutionsExplorer({ onOpenProject }) {
         </div>
 
         <h1 className="sol-title">
-          Build Smarter. Grow{" "}
-          <em>Faster.</em>
+          Build Smarter. Grow <em>Faster.</em>
         </h1>
 
         <p className="sol-lead">
@@ -324,7 +323,6 @@ export default function SolutionsExplorer({ onOpenProject }) {
         </p>
       </div>
 
-      {/* SMALL TOP RIGHT STAT */}
       <div className="sol-header-stat">
         <span className="sol-stat-dot" />
         <div>
@@ -333,10 +331,7 @@ export default function SolutionsExplorer({ onOpenProject }) {
         </div>
       </div>
 
-      {/* MAIN AREA */}
       <div className="sol-workbench">
-
-        {/* FLOATING NAVIGATION */}
         <aside className="sol-floating-nav">
           <div className="sol-nav-track" />
 
@@ -349,9 +344,7 @@ export default function SolutionsExplorer({ onOpenProject }) {
                 key={item.id}
                 type="button"
                 aria-label={`Select ${item.title}`}
-                className={`sol-float-item ${
-                  isActive ? "is-active" : ""
-                }`}
+                className={`sol-float-item ${isActive ? "is-active" : ""}`}
                 onClick={() => handleSolutionChange(idx)}
               >
                 <span className="sol-float-icon">
@@ -371,15 +364,12 @@ export default function SolutionsExplorer({ onOpenProject }) {
           })}
         </aside>
 
-        {/* DETAIL */}
         <main className="sol-detail-stage" ref={detailRef}>
-          {/* TOP META */}
           <div className="sol-detail-meta">
             <div className="sol-meta-label">
               <span className="sol-meta-icon">
                 <ActiveIcon size={15} />
               </span>
-
               <span>{active.id}</span>
               <span className="sol-meta-divider" />
               <span>{active.tag}</span>
@@ -391,30 +381,19 @@ export default function SolutionsExplorer({ onOpenProject }) {
             </div>
           </div>
 
-          {/* CONTENT + VISUAL */}
           <div className="sol-main-content">
-
-            {/* LEFT CONTENT */}
             <div className="sol-copy-area">
-              <h2 className="sol-detail-title">
-                {active.title}
-              </h2>
+              <h2 className="sol-detail-title">{active.title}</h2>
+              <p className="sol-detail-sub">{active.subtitle}</p>
 
-              <p className="sol-detail-sub">
-                {active.subtitle}
-              </p>
-
-              {/* METRICS */}
               <div className="sol-metrics-grid">
                 {active.metrics.map((metric, i) => {
                   const MetricIcon = metric.icon;
-
                   return (
                     <div className="sol-metric-box" key={i}>
                       <span className="sol-metric-icon">
                         <MetricIcon size={16} strokeWidth={1.8} />
                       </span>
-
                       <div className="sol-metric-content">
                         <strong>{metric.value}</strong>
                         <span>{metric.label}</span>
@@ -424,23 +403,17 @@ export default function SolutionsExplorer({ onOpenProject }) {
                 })}
               </div>
 
-              {/* ARCHITECTURE */}
               <div className="sol-arch-callout">
                 <div className="sol-arch-icon">
                   <Layers size={17} />
                 </div>
-
                 <div>
-                  <div className="sol-arch-label">
-                    ARCHITECTURE
-                  </div>
-
+                  <div className="sol-arch-label">ARCHITECTURE</div>
                   <p>{active.architecture}</p>
                 </div>
               </div>
             </div>
 
-            {/* RIGHT VISUAL */}
             <div className="sol-visual-area" ref={visualRef}>
               <div className="sol-orbit sol-orbit-one" />
               <div className="sol-orbit sol-orbit-two" />
@@ -466,10 +439,7 @@ export default function SolutionsExplorer({ onOpenProject }) {
             </div>
           </div>
 
-          {/* LOWER INFORMATION */}
           <div className="sol-lower-grid">
-
-            {/* MODULES */}
             <div className="sol-modules-block">
               <div className="sol-block-head">
                 <span className="sol-block-icon">
@@ -484,14 +454,12 @@ export default function SolutionsExplorer({ onOpenProject }) {
                     <span className="sol-mod-check">
                       <Check size={10} strokeWidth={3} />
                     </span>
-
                     <span>{mod}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* TECH STACK */}
             <div className="sol-tech-block">
               <div className="sol-block-head">
                 <span className="sol-block-icon">
@@ -509,7 +477,6 @@ export default function SolutionsExplorer({ onOpenProject }) {
               </div>
             </div>
 
-            {/* CTA */}
             <div className="sol-action-area">
               <div className="sol-actions">
                 <button
@@ -520,8 +487,6 @@ export default function SolutionsExplorer({ onOpenProject }) {
                   <span>Get Started</span>
                   <ArrowRight size={14} />
                 </button>
-
-               
               </div>
             </div>
           </div>

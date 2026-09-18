@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./GPSPhilosophy.css";
 
-// Change this only if your actual map filename is different
 import worldMap from "../assets/images/home/world-map.avif";
 import successionImage from "../assets/images/home/succession1.png";
 
@@ -58,18 +57,12 @@ export default function GPSPhilosophy() {
   const [progress, setProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
 
-  /*
-   * ---------------------------------------------------------
-   * SUBTLE WEB AUDIO API BEEP (MOBILE SAFE)
-   * ---------------------------------------------------------
-   */
   const playMilestoneSound = () => {
     try {
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       if (!AudioContextClass) return;
       const ctx = new AudioContextClass();
 
-      // Mobile Safari / Chrome audio unlock fallback
       if (ctx.state === "suspended") {
         ctx.resume().catch(() => {});
       }
@@ -78,7 +71,7 @@ export default function GPSPhilosophy() {
       const gain = ctx.createGain();
 
       osc.type = "sine";
-      osc.frequency.setValueAtTime(587.33, ctx.currentTime); // D5 note
+      osc.frequency.setValueAtTime(587.33, ctx.currentTime);
       osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.1);
 
       gain.gain.setValueAtTime(0.03, ctx.currentTime);
@@ -90,7 +83,7 @@ export default function GPSPhilosophy() {
       osc.start();
       osc.stop(ctx.currentTime + 0.15);
     } catch (e) {
-      // Audio autoplay policy might restrict sound before user interaction
+      // Audio autoplay restrictions
     }
   };
 
@@ -102,11 +95,6 @@ export default function GPSPhilosophy() {
     prevActiveStepRef.current = activeStep;
   }, [activeStep]);
 
-  /*
-   * ---------------------------------------------------------
-   * ANIMATION ENGINE WITH RESILIENT MOBILE INTERSECTION
-   * ---------------------------------------------------------
-   */
   useEffect(() => {
     const sectionNode = sectionRef.current;
     if (!sectionNode) return;
@@ -119,7 +107,7 @@ export default function GPSPhilosophy() {
         cancelAnimationFrame(animationRef.current);
       }
 
-      const duration = 12000; // 12 seconds
+      const duration = 12000;
       let startTime = null;
 
       const stepAnimation = (timestamp) => {
@@ -128,7 +116,6 @@ export default function GPSPhilosophy() {
 
         const rawProgress = Math.min(elapsed / duration, 1);
 
-        // Smooth acceleration + deceleration
         const easedProgress =
           rawProgress < 0.5
             ? 2 * rawProgress * rawProgress
@@ -155,7 +142,6 @@ export default function GPSPhilosophy() {
       animationRef.current = requestAnimationFrame(stepAnimation);
     };
 
-    // Mobile-friendly low threshold trigger
     const observerThreshold = window.innerWidth <= 768 ? 0.15 : 0.45;
 
     const observer = new IntersectionObserver(
@@ -187,11 +173,6 @@ export default function GPSPhilosophy() {
     };
   }, []);
 
-  /*
-   * ---------------------------------------------------------
-   * GET PIN POSITION FROM SVG PATH
-   * ---------------------------------------------------------
-   */
   let pinX = 80;
   let pinY = 445;
 
@@ -204,9 +185,7 @@ export default function GPSPhilosophy() {
 
       pinX = currentPoint.x;
       pinY = currentPoint.y;
-    } catch (e) {
-      // SVG measurement fallback
-    }
+    } catch (e) {}
   }
 
   const pinLeft = (pinX / 900) * 100;
@@ -322,7 +301,6 @@ export default function GPSPhilosophy() {
                 </filter>
               </defs>
 
-              {/* ROUTE GLOW */}
               <path
                 className="gps-route-glow"
                 d="
@@ -341,7 +319,6 @@ export default function GPSPhilosophy() {
                 "
               />
 
-              {/* MAIN ROUTE */}
               <path
                 ref={routePathRef}
                 className="gps-route-path"
@@ -362,7 +339,7 @@ export default function GPSPhilosophy() {
               />
             </svg>
 
-            {/* STATIC ROUTE POINTS */}
+            {/* ROUTE POINTS */}
             <div
               className={`gps-route-point gps-point-idea ${
                 activeStep >= 1 ? "active" : ""
@@ -411,7 +388,7 @@ export default function GPSPhilosophy() {
               <span></span>
             </div>
 
-            {/* MOVING LOCATION PIN */}
+            {/* MOVING PIN */}
             <div
               className="gps-moving-pin"
               style={{
@@ -485,28 +462,29 @@ export default function GPSPhilosophy() {
                 <small>YOUR NEXT DESTINATION</small>
               </div>
             </div>
+          </div> 
+          {/* gps-map-wrapper ends here */}
 
-            {/* STATS */}
-            <div className="gps-route-stats">
-              <div className="gps-route-stat">
-                <strong>{Math.round(progress * 100)}%</strong>
-                <span>LIVE PROGRESS</span>
-              </div>
+          {/* STATS (OUTSIDE & BELOW MAP) */}
+          <div className="gps-route-stats">
+            <div className="gps-route-stat">
+              <strong>{Math.round(progress * 100)}%</strong>
+              <span>LIVE PROGRESS</span>
+            </div>
 
-              <div className="gps-route-stat">
-                <strong>01</strong>
-                <span>CONNECTED ECOSYSTEM</span>
-              </div>
+            <div className="gps-route-stat">
+              <strong>01</strong>
+              <span>CONNECTED ECOSYSTEM</span>
+            </div>
 
-              <div className="gps-route-stat">
-                <strong>∞</strong>
-                <span>POSSIBILITIES</span>
-              </div>
+            <div className="gps-route-stat">
+              <strong>∞</strong>
+              <span>POSSIBILITIES</span>
+            </div>
 
-              <div className="gps-route-stat-route">
-                <span>FROM KERALA</span>
-                <span>TO THE WORLD</span>
-              </div>
+            <div className="gps-route-stat-route">
+              <span>FROM KERALA</span>
+              <span>TO THE WORLD</span>
             </div>
           </div>
         </div>
