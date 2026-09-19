@@ -67,7 +67,7 @@ export default function Contact({ onOpenBooking }) {
             </h1>
 
             <p>
-              Have an idea, challenge, or transformation in mind?
+              Have an idea, challenge, or transformation in mind?<br/>
               Let's turn it into something real.
             </p>
 
@@ -624,18 +624,12 @@ export default function Contact({ onOpenBooking }) {
 
 
             <div className="office-card">
-
               <div className="office-title">
-
                 <MapPin size={18} />
-
                 <strong>
                   Our Office
                 </strong>
-
               </div>
-
-
               <p>
                 AI Concept llc
                 <br />
@@ -643,16 +637,10 @@ export default function Contact({ onOpenBooking }) {
                 <br />
                 Kerala - 682042, India
               </p>
-
-
               <div className="office-divider" />
-
-
               <strong className="follow-title">
                 Follow Us
               </strong>
-
-
               <div className="social-links">
 
                 <a

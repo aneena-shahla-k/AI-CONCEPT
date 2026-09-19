@@ -898,7 +898,7 @@
 
   .contact-hero-content {
     padding: 70px 0 15px;
-    text-align: center;
+    text-align: start;
   }
 
   .contact-hero-content > p {
@@ -906,11 +906,11 @@
   }
 
   .section-eyebrow {
-    justify-content: center;
+    justify-content: start;
   }
 
   .hero-trust-row {
-    justify-content: center;
+    justify-content: start;
   }
 
   .contact-hero-visual {
@@ -1057,7 +1057,7 @@
     top: auto;
     bottom: 0;
     width: auto;
-    height: 190px;
+    height: 220px;
   }
 
   .final-cta-box {
