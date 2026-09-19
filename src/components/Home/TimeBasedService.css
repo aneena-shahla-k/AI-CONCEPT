@@ -1,13 +1,17 @@
 /* =========================================================
-   TIME-BASED SERVICE SECTION (SCOPED WITH tm-tbs PREFIX)
-========================================================= */
+   TIME-BASED SERVICE / DEVELOPMENT ALLOCATION
+   ========================================================= */
 
 .tm-tbs-section {
   position: relative;
   width: 100%;
-  padding: 80px 4.2% 0; /* GPS & Eco-system മാതൃകയിൽ ടോപ്പ് പാഡിംഗ് സിങ്ക് ചെയ്തു */
-  background: 
-    radial-gradient(circle at 80% 50%, rgba(0, 200, 255, 0.13), transparent 42%),
+  padding: 80px 4.2% 50px;
+  background:
+    radial-gradient(
+      circle at 80% 50%,
+      rgba(0, 200, 255, 0.13),
+      transparent 42%
+    ),
     #f7f8fa;
   color: #152226;
   font-family: "Manrope", sans-serif;
@@ -17,12 +21,22 @@
   border-bottom: 1px solid #dce8ef;
 }
 
+.tm-tbs-section *,
+.tm-tbs-section *::before,
+.tm-tbs-section *::after {
+  box-sizing: border-box;
+}
+
 .tm-tbs-container {
+  width: 100%;
   max-width: 1320px;
   margin: 0 auto;
 }
 
-/* TOP HEADER */
+/* =========================================================
+   TOP HEADER
+   ========================================================= */
+
 .tm-tbs-top-header {
   display: flex;
   justify-content: space-between;
@@ -127,7 +141,10 @@
   font-weight: 200;
 }
 
-/* 4 TIME CARDS ROW */
+/* =========================================================
+   PACKAGE CARDS
+   ========================================================= */
+
 .tm-tbs-cards-row {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -142,11 +159,16 @@
   padding: 24px;
   cursor: pointer;
   position: relative;
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
   box-shadow: 0 12px 35px rgba(26, 57, 64, 0.05);
   text-align: left;
+  min-height: 245px;
 }
 
 .tm-tbs-plan-card:hover {
@@ -154,10 +176,17 @@
   transform: translateY(-3px);
 }
 
+.tm-tbs-plan-card:focus-visible {
+  outline: 2px solid #0284c7;
+  outline-offset: 3px;
+}
+
 .tm-tbs-plan-card.active {
   background: rgba(232, 250, 255, 0.96);
   border: 1.5px solid #0284c7;
-  box-shadow: 0 0 0 6px rgba(2, 132, 199, 0.08), 0 15px 35px rgba(2, 132, 199, 0.15);
+  box-shadow:
+    0 0 0 6px rgba(2, 132, 199, 0.08),
+    0 15px 35px rgba(2, 132, 199, 0.15);
 }
 
 .tm-tbs-card-top {
@@ -185,6 +214,13 @@
   background: #ffffff;
 }
 
+.tm-tbs-radio-inner {
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  border-radius: 50%;
+}
+
 .tm-tbs-plan-card.active .tm-tbs-radio-dot {
   border-color: #0284c7;
   background: #0284c7;
@@ -192,7 +228,7 @@
 }
 
 .tm-tbs-card-time {
-  font-size: 24px;
+  font-size: 23px;
   font-weight: 500;
   margin: 0 0 4px;
   color: #101c1e;
@@ -212,25 +248,51 @@
   font-size: 10px;
   color: #7a898c;
   line-height: 1.55;
-  margin: 0 0 20px;
+  margin: 0 0 15px;
+  min-height: 31px;
+}
+
+.tm-tbs-card-price {
+  font-family: "Playfair Display", serif;
+  font-size: 21px;
+  color: #101c1e;
+  font-weight: 500;
+  margin-top: 4px;
+}
+
+.tm-tbs-card-price-label {
+  margin-top: 3px;
+  font-size: 8px;
+  color: #7a898c;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 .tm-tbs-card-arrow {
+  position: absolute;
+  bottom: 20px;
+  right: 23px;
   font-size: 16px;
   color: #0284c7;
   font-weight: 800;
 }
 
-/* MIDDLE INTERACTIVE GRID */
+/* =========================================================
+   INTERACTIVE GRID
+   ========================================================= */
+
 .tm-tbs-interactive-grid {
   display: grid;
   grid-template-columns: 0.95fr 1.55fr 1fr;
   gap: 25px;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
   align-items: stretch;
 }
 
-/* COUNTDOWN PANEL */
+/* =========================================================
+   ALLOCATION PANEL
+   ========================================================= */
+
 .tm-tbs-countdown-panel {
   background: #101c1e;
   color: #ffffff;
@@ -241,6 +303,7 @@
   justify-content: space-between;
   box-shadow: 0 15px 40px rgba(16, 28, 30, 0.15);
   text-align: left;
+  min-height: 330px;
 }
 
 .tm-tbs-panel-tag {
@@ -257,27 +320,37 @@
   font-weight: 800;
   letter-spacing: 0.14em;
   color: #8b9794;
-  margin-top: 10px;
+  margin-top: 12px;
+  display: block;
 }
 
 .tm-tbs-timer-digits {
   font-family: "Playfair Display", serif;
-  font-size: 38px;
+  font-size: 48px;
   font-weight: 500;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.03em;
   color: #f5f7f4;
-  margin: 10px 0 2px;
+  margin: 18px 0 2px;
+  line-height: 1;
+}
+
+.tm-tbs-hours-suffix {
+  font-family: "Manrope", sans-serif;
+  font-size: 11px;
+  font-weight: 800;
+  color: #38bdf8;
+  letter-spacing: 0.12em;
 }
 
 .tm-tbs-timer-labels {
   display: flex;
   justify-content: space-between;
+  gap: 10px;
   font-size: 7px;
   color: #89928f;
   font-weight: 700;
-  letter-spacing: 0.16em;
-  margin-bottom: 22px;
-  padding-right: 15px;
+  letter-spacing: 0.14em;
+  margin: 10px 0 22px;
 }
 
 .tm-tbs-route-status {
@@ -299,6 +372,7 @@
   background: #0284c7;
   border-radius: 50%;
   box-shadow: 0 0 10px rgba(2, 132, 199, 0.8);
+  flex-shrink: 0;
 }
 
 .tm-tbs-progress-footer {
@@ -311,9 +385,14 @@
 .tm-tbs-progress-text {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
+  gap: 10px;
+  font-size: 9px;
   margin-bottom: 8px;
   color: #d5dcd8;
+}
+
+.tm-tbs-progress-text strong {
+  text-align: right;
 }
 
 .tm-tbs-progress-bar-bg {
@@ -322,13 +401,15 @@
   background: rgba(255, 255, 255, 0.15);
   border-radius: 20px;
   overflow: hidden;
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .tm-tbs-progress-bar-fill {
   height: 100%;
   background: #0284c7;
   box-shadow: 0 0 10px rgba(2, 132, 199, 0.7);
+  border-radius: inherit;
+  transition: width 0.6s ease;
 }
 
 .tm-tbs-perc {
@@ -338,7 +419,10 @@
   letter-spacing: 0.1em;
 }
 
-/* MAP PANEL */
+/* =========================================================
+   ROUTE / MAP PANEL
+   ========================================================= */
+
 .tm-tbs-map-panel-clean {
   position: relative;
   background: #f7f8fa;
@@ -350,19 +434,63 @@
   justify-content: space-between;
   overflow: hidden;
   box-shadow: 0 12px 35px rgba(26, 57, 64, 0.04);
+  min-height: 330px;
+    position: relative;
+  overflow: hidden;
+  background:
+     linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(255, 255, 255, 0.95)
+    ),
+    url("../assets/images/home/map.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 28px;
 }
 
+.tm-tbs-map-panel-clean > * {
+  position: relative;
+  z-index: 2;
+}
 .tm-tbs-map-panel-clean::before {
   content: "";
   position: absolute;
   inset: 0;
   opacity: 0.18;
-  background-image: 
-    radial-gradient(circle at 30% 40%, rgba(2, 132, 199, 0.2) 0%, transparent 60%),
-    repeating-linear-gradient(90deg, transparent 0, transparent 40px, rgba(111, 145, 153, 0.06) 41px, transparent 42px);
+  background-image:
+    radial-gradient(
+      circle at 30% 40%,
+      rgba(2, 132, 199, 0.2) 0%,
+      transparent 60%
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 40px,
+      rgba(111, 145, 153, 0.06) 41px,
+      transparent 42px
+    );
   pointer-events: none;
   z-index: 1;
+    /* existing styles should remain */
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.82),
+      rgba(255, 255, 255, 0.90)
+    ),
+    url("../assets/images/home/map.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  border-radius: 28px;
 }
+
 
 .tm-tbs-map-top-label {
   position: relative;
@@ -378,7 +506,7 @@
 .tm-tbs-curved-route-container {
   position: relative;
   width: 100%;
-  height: 140px;
+  height: 150px;
   margin: 15px 0;
   z-index: 5;
 }
@@ -398,12 +526,32 @@
   z-index: 6;
   text-align: center;
   transform: translate(-50%, -50%);
+  transition: transform 0.2s ease;
 }
 
-.tm-node-24 { left: 12%; top: 65px; }
-.tm-node-48 { left: 38%; top: 40px; }
-.tm-node-72 { left: 66%; top: 72px; }
-.tm-node-custom { left: 90%; top: 45px; }
+.tm-tbs-map-node:hover {
+  transform: translate(-50%, -50%) scale(1.04);
+}
+
+.tm-node-24 {
+  left: 12%;
+  top: 65px;
+}
+
+.tm-node-48 {
+  left: 38%;
+  top: 40px;
+}
+
+.tm-node-72 {
+  left: 66%;
+  top: 72px;
+}
+
+.tm-node-custom {
+  left: 90%;
+  top: 45px;
+}
 
 .tm-node-info {
   margin-bottom: 6px;
@@ -462,7 +610,9 @@
   height: 28px;
   border-color: #0284c7;
   background: rgba(232, 249, 255, 0.98);
-  box-shadow: 0 0 0 6px rgba(2, 132, 199, 0.12), 0 0 25px rgba(2, 132, 199, 0.85);
+  box-shadow:
+    0 0 0 6px rgba(2, 132, 199, 0.12),
+    0 0 25px rgba(2, 132, 199, 0.85);
 }
 
 .tm-tbs-map-node.active-glow .tm-node-dot-inner {
@@ -477,14 +627,17 @@
   bottom: -22px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 9px;
+  font-size: 8px;
   font-weight: 800;
   color: #0284c7;
   white-space: nowrap;
   letter-spacing: 0.05em;
 }
 
-/* CAR MOVEMENT */
+/* =========================================================
+   MOVING ROUTE INDICATOR
+   ========================================================= */
+
 .tm-tbs-moving-car-wrapper {
   position: absolute;
   top: 50px;
@@ -534,6 +687,10 @@
   border-radius: 1px;
 }
 
+/* =========================================================
+   MAP FOOTER
+   ========================================================= */
+
 .tm-tbs-map-footer {
   position: relative;
   z-index: 5;
@@ -543,6 +700,7 @@
   font-size: 10px;
   color: #7a898c;
   font-weight: 700;
+  gap: 15px;
 }
 
 .tm-tbs-idea-badge {
@@ -583,7 +741,14 @@
   letter-spacing: 0.08em;
 }
 
-/* CALCULATOR PANEL */
+.tm-tbs-gps-text small {
+  font-size: 8px;
+}
+
+/* =========================================================
+   CALCULATOR PANEL
+   ========================================================= */
+
 .tm-tbs-calculator-panel {
   background: rgba(255, 255, 255, 0.86);
   border: 1px solid rgba(166, 197, 205, 0.75);
@@ -596,6 +761,7 @@
   -webkit-backdrop-filter: blur(15px);
   box-shadow: 0 12px 35px rgba(26, 57, 64, 0.05);
   text-align: left;
+  min-height: 330px;
 }
 
 .tm-tbs-calc-header-tag {
@@ -604,6 +770,36 @@
   letter-spacing: 0.17em;
   color: #69787a;
   text-transform: uppercase;
+}
+
+.tm-tbs-rate-display {
+  padding: 14px 0 7px;
+  border-bottom: 1px solid #d8e2e5;
+}
+
+.tm-tbs-rate-display span {
+  display: block;
+  font-size: 8px;
+  color: #7a898c;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 800;
+}
+
+.tm-tbs-rate-display strong {
+  display: inline-block;
+  margin-top: 3px;
+  font-family: "Playfair Display", serif;
+  font-size: 25px;
+  font-weight: 500;
+  color: #101c1e;
+}
+
+.tm-tbs-rate-display small {
+  margin-left: 6px;
+  color: #7a898c;
+  font-size: 8px;
+  font-weight: 700;
 }
 
 .tm-tbs-input-group {
@@ -621,6 +817,7 @@
 }
 
 .tm-tbs-input-group select {
+  width: 100%;
   padding: 11px 15px;
   background: #ffffff;
   border: 1px solid #d8e2e5;
@@ -631,6 +828,11 @@
   color: #101c1e;
   outline: none;
   cursor: pointer;
+}
+
+.tm-tbs-input-group select:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.08);
 }
 
 .tm-tbs-value-box {
@@ -652,14 +854,17 @@
 }
 
 .tm-tbs-value-box strong {
-  font-size: 22px;
+  display: block;
+  font-size: 23px;
   font-family: "Playfair Display", serif;
   color: #101c1e;
   font-weight: 500;
 }
 
 .tm-tbs-value-box small {
-  font-size: 9px;
+  display: block;
+  margin-top: 3px;
+  font-size: 8px;
   color: #839195;
   font-family: "Manrope", sans-serif;
 }
@@ -677,7 +882,9 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
   margin-top: 10px;
 }
 
@@ -686,7 +893,117 @@
   transform: translateY(-2px);
 }
 
-/* BOTTOM METRICS BAR */
+.tm-tbs-start-route-btn:focus-visible {
+  outline: 2px solid #0284c7;
+  outline-offset: 3px;
+}
+
+/* =========================================================
+   SELECTED SCOPE PANEL
+   ========================================================= */
+
+.tm-tbs-scope-panel {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid #d5e0e3;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 12px 35px rgba(26, 57, 64, 0.04);
+}
+
+.tm-tbs-scope-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dce5e7;
+}
+
+.tm-tbs-scope-tag {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  color: #0284c7;
+  text-transform: uppercase;
+}
+
+.tm-tbs-scope-header h3 {
+  margin: 5px 0 4px;
+  font-family: "Playfair Display", serif;
+  font-size: 29px;
+  line-height: 1.1;
+  font-weight: 500;
+  color: #101c1e;
+}
+
+.tm-tbs-scope-header p {
+  margin: 0;
+  color: #7a898c;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.tm-tbs-scope-hours {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.tm-tbs-scope-hours strong {
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  font-weight: 500;
+  color: #101c1e;
+}
+
+.tm-tbs-scope-hours span {
+  font-size: 8px;
+  font-weight: 800;
+  color: #69787a;
+  letter-spacing: 0.12em;
+}
+
+.tm-tbs-scope-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding-top: 20px;
+}
+
+.tm-tbs-scope-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 37px;
+  padding: 9px 11px;
+  background: #f7f9fa;
+  border: 1px solid #e0e8ea;
+  border-radius: 7px;
+  color: #344447;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.tm-tbs-scope-check {
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: rgba(2, 132, 199, 0.1);
+  color: #0284c7;
+  font-size: 9px;
+  font-weight: 900;
+}
+
+/* =========================================================
+   BOTTOM METRICS
+   ========================================================= */
+
 .tm-tbs-bottom-metrics {
   display: grid;
   grid-template-columns: 1.7fr 0.8fr 0.8fr 0.8fr 0.8fr;
@@ -760,8 +1077,9 @@
 }
 
 /* =========================================================
-   TABLET (MATCHED & LEFT-ALIGNED)
-========================================================= */
+   TABLET
+   ========================================================= */
+
 @media (max-width: 1100px) {
   .tm-tbs-section {
     padding: 60px 4.2% 40px;
@@ -798,6 +1116,10 @@
     gap: 20px;
   }
 
+  .tm-tbs-scope-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .tm-tbs-bottom-metrics {
     grid-template-columns: 1fr 1fr;
     gap: 20px;
@@ -810,8 +1132,9 @@
 }
 
 /* =========================================================
-   MOBILE (MATCHED PERFECTLY TO PREVIOUS SECTIONS)
-========================================================= */
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 700px) {
   .tm-tbs-section {
     padding: 50px 15px 30px;
@@ -862,6 +1185,8 @@
     font-size: 9px;
   }
 
+  /* PACKAGE CARDS */
+
   .tm-tbs-cards-row {
     display: flex;
     overflow-x: auto;
@@ -880,7 +1205,10 @@
     flex: 0 0 82%;
     scroll-snap-align: center;
     padding: 20px;
+    min-height: 245px;
   }
+
+  /* INTERACTIVE */
 
   .tm-tbs-interactive-grid {
     display: flex;
@@ -893,7 +1221,37 @@
   .tm-tbs-map-panel-clean,
   .tm-tbs-calculator-panel {
     padding: 20px;
+    min-height: 0;
   }
+
+  .tm-tbs-timer-digits {
+    font-size: 42px;
+  }
+
+  /* SCOPE */
+
+  .tm-tbs-scope-panel {
+    padding: 20px;
+  }
+
+  .tm-tbs-scope-header {
+    gap: 15px;
+  }
+
+  .tm-tbs-scope-header h3 {
+    font-size: 25px;
+  }
+
+  .tm-tbs-scope-list {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .tm-tbs-scope-item {
+    font-size: 8px;
+  }
+
+  /* METRICS */
 
   .tm-tbs-bottom-metrics {
     grid-template-columns: 1fr 1fr;
@@ -915,7 +1273,8 @@
 
 /* =========================================================
    SMALL MOBILE
-========================================================= */
+   ========================================================= */
+
 @media (max-width: 430px) {
   .tm-tbs-title {
     font-size: 30px;
@@ -927,7 +1286,51 @@
   }
 
   .tm-tbs-timer-digits {
-    font-size: 30px;
+    font-size: 34px;
+  }
+
+  .tm-tbs-hours-suffix {
+    font-size: 9px;
+  }
+
+  .tm-tbs-timer-labels {
+    font-size: 6px;
+  }
+
+  .tm-tbs-map-panel-clean {
+    padding: 18px;
+  }
+
+  .tm-tbs-curved-route-container {
+    height: 140px;
+  }
+
+  .tm-node-val {
+    font-size: 13px;
+  }
+
+  .tm-node-info small {
+    font-size: 7px;
+  }
+
+  .tm-node-lbl {
+    font-size: 6px;
+  }
+
+  .tm-node-idea {
+    font-size: 7px;
+  }
+
+  .tm-tbs-scope-header {
+    flex-direction: column;
+  }
+
+  .tm-tbs-scope-hours {
+    align-self: flex-start;
+  }
+
+  .tm-tbs-scope-list {
+    grid-template-columns: 1fr;
   }
 
   .tm-tbs-bottom-metrics {
